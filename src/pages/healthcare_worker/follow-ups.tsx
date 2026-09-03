@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { getFollowUps, completeFollowUp } from "@/api/healthcare_worker/follow-up";
-import type { FollowUp } from "@/api/healthcare_worker/follow-up";
+import type { FollowUp } from "@/dto/follow-up/FollowUp";
 
 const tone: Record<FollowUp["status"], "INFO" | "GREEN" | "YELLOW" | "RED"> = {
   SCHEDULED: "INFO",

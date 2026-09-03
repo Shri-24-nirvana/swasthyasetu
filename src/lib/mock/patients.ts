@@ -1,4 +1,4 @@
-import type { Patient } from "@/dto/Patient";
+import type { Patient } from "@/dto/patient/Patient";
 import { RiskLevel } from "@/dto/constants/RiskLevel";
 
 export const patients: Patient[] = [

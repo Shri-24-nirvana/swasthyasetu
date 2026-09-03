@@ -1,14 +1,5 @@
+import type { TeleconsultSlot } from "@/dto/teleconsultation/TeleconsultSlot";
 import { delay } from "../utils/mock-delay";
-
-export interface TeleconsultSlot {
-  id: string;
-  doctorName: string;
-  specialty: string;
-  facilityId: string;
-  date: string;
-  time: string;
-  available: boolean;
-}
 
 const slots: TeleconsultSlot[] = [
   { id: "tc-1", doctorName: "Dr. Anita Rao", specialty: "General Medicine", facilityId: "phc-1", date: "2026-09-03", time: "11:00", available: true },

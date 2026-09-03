@@ -1,7 +1,8 @@
-import type { TriageEntry } from "@/dto/Triage";
+import type { Triage } from "@/dto/triage/Triage";
+import type { CreateTriageRequest } from "@/dto/triage/CreateTriageRequest";
 import { delay } from "../utils/mock-delay";
 
-const seedTriage: TriageEntry[] = [
+const seedTriage: Triage[] = [
   {
     id: "tr-1",
     patientId: "SWA-9284-1829",
@@ -24,15 +25,15 @@ const seedTriage: TriageEntry[] = [
   },
 ];
 
-export async function getTriageQueue(facilityId?: string): Promise<TriageEntry[]> {
+export async function getTriageQueue(facilityId?: string): Promise<Triage[]> {
   await delay();
   if (facilityId) return seedTriage.filter((t) => t.facilityId === facilityId);
   return seedTriage;
 }
 
 export async function createTriage(
-  input: Omit<TriageEntry, "id">
-): Promise<TriageEntry> {
+  input: CreateTriageRequest
+): Promise<Triage> {
   await delay();
   return { ...input, id: `tr-${Date.now()}` };
 }

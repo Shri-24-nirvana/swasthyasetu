@@ -1,12 +1,5 @@
+import type { OfflineItem } from "@/dto/offline-sync/OfflineItem";
 import { delay } from "../utils/mock-delay";
-
-export interface OfflineItem {
-  id: string;
-  type: "CONSULTATION" | "REFERRAL" | "TRIAGE" | "PATIENT";
-  patientName: string;
-  synced: boolean;
-  queuedAt: string;
-}
 
 const seed: OfflineItem[] = [
   { id: "o-1", type: "CONSULTATION", patientName: "Kavita Joshi", synced: true, queuedAt: "2026-09-02 10:12" },

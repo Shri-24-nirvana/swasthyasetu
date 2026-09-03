@@ -1,5 +1,5 @@
-import type { HealthRecord } from "@/dto/HealthRecord";
-import type { Consultation } from "@/dto/Consultation";
+import type { HealthRecordResponse } from "@/dto/health-record/HealthRecordResponse";
+import type { Consultation } from "@/dto/consultation/Consultation";
 import { RiskLevel } from "@/dto/constants/RiskLevel";
 import { patientById } from "./patients";
 import { referralsByPatient } from "./referrals";
@@ -75,7 +75,7 @@ const consultations: Consultation[] = [
   },
 ];
 
-export const healthRecord: HealthRecord = {
+export const healthRecord: HealthRecordResponse = {
   patient: patientById("SWA-9284-1829")!,
   conditions: [
     { condition: "Hypertension (Stage 2)", since: "2025-09-01", status: "ACTIVE" },

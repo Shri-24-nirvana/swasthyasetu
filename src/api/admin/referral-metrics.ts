@@ -1,18 +1,10 @@
 import { allReferrals } from "@/lib/mock/referrals";
-import type { Referral } from "@/dto/Referral";
+import type { ReferralResponse } from "@/dto/referral/ReferralResponse";
+import type { ReferralMetricsResponse } from "@/dto/referral/ReferralMetricsResponse";
 import { ReferralStatus } from "@/dto/constants/ReferralStatus";
 import { delay } from "../utils/mock-delay";
 
-export interface ReferralMetrics {
-  total: number;
-  completed: number;
-  active: number;
-  completionRate: number;
-  avgJourneyDays: number;
-  byStatus: Record<ReferralStatus, number>;
-}
-
-export async function getReferralMetrics(): Promise<ReferralMetrics> {
+export async function getReferralMetrics(): Promise<ReferralMetricsResponse> {
   await delay();
   const byStatus: Record<ReferralStatus, number> = {
     [ReferralStatus.CREATED]: 0,
@@ -36,7 +28,7 @@ export async function getReferralMetrics(): Promise<ReferralMetrics> {
   };
 }
 
-export async function getAllReferrals(): Promise<Referral[]> {
+export async function getAllReferrals(): Promise<ReferralResponse[]> {
   await delay();
   return allReferrals;
 }

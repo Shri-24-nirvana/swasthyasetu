@@ -1,8 +1,8 @@
 import { healthRecord } from "@/lib/mock/healthRecord";
-import type { DiagnosticReport } from "@/dto/DiagnosticReport";
+import type { DiagnosticReportResponse } from "@/dto/diagnostics/DiagnosticReportResponse";
 import { delay } from "../utils/mock-delay";
 
-export async function getDiagnosticReports(): Promise<DiagnosticReport[]> {
+export async function getDiagnosticReports(): Promise<DiagnosticReportResponse[]> {
   await delay();
   return healthRecord.diagnostics;
 }

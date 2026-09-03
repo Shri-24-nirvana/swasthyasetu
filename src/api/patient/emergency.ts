@@ -1,14 +1,8 @@
 import { facilities } from "@/lib/mock/facilities";
-import type { Facility } from "@/dto/Facility";
+import type { EmergencyInfoResponse } from "@/dto/emergency/EmergencyInfoResponse";
 import { delay } from "../utils/mock-delay";
 
-export interface EmergencyInfo {
-  nearestFacility: Facility;
-  emergencyNumbers: Array<{ name: string; number: string }>;
-  ambulanceETA: string;
-}
-
-export async function getEmergencyAssistance(): Promise<EmergencyInfo> {
+export async function getEmergencyAssistance(): Promise<EmergencyInfoResponse> {
   await delay(300);
   const sorted = [...facilities].sort((a, b) => (a.distanceKm ?? 0) - (b.distanceKm ?? 0));
   return {

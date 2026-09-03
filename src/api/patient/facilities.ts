@@ -1,5 +1,5 @@
 import { facilities } from "@/lib/mock/facilities";
-import type { Facility } from "@/dto/Facility";
+import type { Facility } from "@/dto/facility/Facility";
 import { delay } from "../utils/mock-delay";
 
 export async function findNearbyFacilities(): Promise<Facility[]> {

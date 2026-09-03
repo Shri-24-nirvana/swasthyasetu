@@ -1,11 +1,11 @@
 import { medicineAvailability } from "@/lib/mock/medicines";
-import type { MedicineAvailability } from "@/dto/Medicine";
+import type { MedicineResponse } from "@/dto/medicine/MedicineResponse";
 import { delay } from "../utils/mock-delay";
 
 export async function searchMedicineAvailability(
   query?: string,
   facilityId?: string
-): Promise<MedicineAvailability[]> {
+): Promise<MedicineResponse[]> {
   await delay();
   let result = medicineAvailability;
   if (query) {

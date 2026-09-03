@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { getOfflineQueue, syncAll } from "@/api/healthcare_worker/offline-sync";
-import type { OfflineItem } from "@/api/healthcare_worker/offline-sync";
+import type { OfflineItem } from "@/dto/offline-sync/OfflineItem";
 
 const typeIcon: Record<OfflineItem["type"], string> = {
   CONSULTATION: "🩺",

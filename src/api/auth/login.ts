@@ -1,5 +1,6 @@
 import { UserRole } from "@/dto/constants/UserRole";
-import type { AuthSession, User } from "@/dto/User";
+import type { AuthSessionResponse } from "@/dto/auth/AuthSessionResponse";
+import type { User } from "@/dto/auth/User";
 import { delay } from "../utils/mock-delay";
 
 const demoUsers: User[] = [
@@ -8,11 +9,7 @@ const demoUsers: User[] = [
   { id: "u-admin", name: "Aditya Malhotra", role: UserRole.ADMIN, facilityId: "dh-1" },
 ];
 
-export interface LoginResult {
-  session: AuthSession;
-}
-
-export async function login(_identifier: string, role: UserRole): Promise<AuthSession> {
+export async function login(_identifier: string, role: UserRole): Promise<AuthSessionResponse> {
   await delay(600);
   const user = demoUsers.find((u) => u.role === role) ?? demoUsers[0];
   return { token: `mock-token-${user.id}`, user };
@@ -21,7 +18,7 @@ export async function login(_identifier: string, role: UserRole): Promise<AuthSe
 export async function register(
   name: string,
   role: UserRole
-): Promise<AuthSession> {
+): Promise<AuthSessionResponse> {
   await delay(600);
   const user: User = { id: `u-${Date.now()}`, name, role };
   return { token: `mock-token-${user.id}`, user };

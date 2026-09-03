@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Modal } from "@/components/ui/Modal";
 import { getTeleconsultSlots, bookTeleconsult } from "@/api/patient/teleconsultation";
-import type { TeleconsultSlot } from "@/api/patient/teleconsultation";
+import type { TeleconsultSlot } from "@/dto/teleconsultation/TeleconsultSlot";
 
 export function TeleconsultationPage() {
   const [slots, setSlots] = useState<TeleconsultSlot[]>([]);

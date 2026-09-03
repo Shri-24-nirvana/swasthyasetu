@@ -1,14 +1,5 @@
+import type { FollowUp } from "@/dto/follow-up/FollowUp";
 import { delay } from "../utils/mock-delay";
-
-export interface FollowUp {
-  id: string;
-  patientId: string;
-  patientName: string;
-  dueDate: string;
-  reason: string;
-  status: "SCHEDULED" | "DUE" | "OVERDUE" | "COMPLETED";
-  specialty?: string;
-}
 
 const seed: FollowUp[] = [
   { id: "fu-1", patientId: "SWA-9284-1829", patientName: "Meera Sharma", dueDate: "2026-09-10", reason: "BP & glucose review", status: "SCHEDULED", specialty: "General Medicine" },

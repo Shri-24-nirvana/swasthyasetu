@@ -4,10 +4,10 @@ import { PageHeader, LoadingBlob } from "@/components/shared/PageHeader";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { getEmergencyAssistance } from "@/api/patient/emergency";
-import type { EmergencyInfo } from "@/api/patient/emergency";
+import type { EmergencyInfoResponse, EmergencyContact } from "@/dto/emergency/EmergencyInfoResponse";
 
 export function EmergencyPage() {
-  const [info, setInfo] = useState<EmergencyInfo | null>(null);
+  const [info, setInfo] = useState<EmergencyInfoResponse | null>(null);
   const [active, setActive] = useState(false);
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export function EmergencyPage() {
             <Card>
               <h3 className="font-semibold">Emergency Contact Numbers</h3>
               <div className="mt-3 space-y-2">
-                {info.emergencyNumbers.map((n) => (
+                {info.emergencyNumbers.map((n: EmergencyContact) => (
                   <div key={n.number} className="flex items-center justify-between rounded-lg border border-border p-3">
                     <span className="flex items-center gap-2">
                       <PhoneCall className="h-4 w-4 text-brand-700" />

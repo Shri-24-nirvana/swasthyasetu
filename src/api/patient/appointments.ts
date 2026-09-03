@@ -1,5 +1,6 @@
 import { appointments as seedAppointments } from "@/lib/mock/appointments";
-import type { Appointment } from "@/dto/Appointment";
+import type { Appointment } from "@/dto/appointment/Appointment";
+import type { BookAppointmentRequest } from "@/dto/appointment/BookAppointmentRequest";
 import { AppointmentStatus } from "@/dto/constants/AppointmentStatus";
 import { delay } from "../utils/mock-delay";
 
@@ -11,7 +12,7 @@ export async function getAppointments(patientId: string): Promise<Appointment[]>
 }
 
 export async function bookAppointment(
-  input: Omit<Appointment, "id" | "status">
+  input: BookAppointmentRequest
 ): Promise<Appointment> {
   await delay();
   const appointment: Appointment = {

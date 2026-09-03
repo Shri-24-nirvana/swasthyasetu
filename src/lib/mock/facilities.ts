@@ -1,4 +1,4 @@
-import type { Facility } from "@/dto/Facility";
+import type { Facility } from "@/dto/facility/Facility";
 import { FacilityType } from "@/dto/constants/FacilityType";
 
 export const facilities: Facility[] = [

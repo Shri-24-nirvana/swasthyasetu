@@ -1,4 +1,5 @@
-import type { Medicine, MedicineAvailability } from "@/dto/Medicine";
+import type { Medicine } from "@/dto/medicine/Medicine";
+import type { MedicineResponse } from "@/dto/medicine/MedicineResponse";
 
 const base: Array<Omit<Medicine, "facilityId">> = [
   {
@@ -68,7 +69,7 @@ export const medicines: Medicine[] = base.map((m) => ({
   facilityId: "phc-1",
 }));
 
-export const medicineAvailability: MedicineAvailability[] = [
+export const medicineAvailability: MedicineResponse[] = [
   {
     id: "med-1",
     name: "Paracetamol 500mg",

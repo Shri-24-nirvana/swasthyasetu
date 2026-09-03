@@ -1,5 +1,5 @@
 import { medicines } from "@/lib/mock/medicines";
-import type { Medicine } from "@/dto/Medicine";
+import type { Medicine } from "@/dto/medicine/Medicine";
 import { delay } from "../utils/mock-delay";
 
 export async function getMedicineStock(facilityId?: string): Promise<Medicine[]> {

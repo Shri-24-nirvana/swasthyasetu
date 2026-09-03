@@ -4,7 +4,7 @@ import { PageHeader, LoadingBlob } from "@/components/shared/PageHeader";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { getPatientQueue } from "@/api/admin/queue";
-import type { QueueEntry } from "@/lib/mock/dashboard";
+import type { QueueEntry } from "@/dto/admin/QueueEntry";
 
 const acuityTone: Record<QueueEntry["acuity"], "GREEN" | "YELLOW" | "RED"> = {
   GREEN: "GREEN",

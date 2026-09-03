@@ -1,4 +1,4 @@
-import type { Referral } from "@/dto/Referral";
+import type { Referral } from "@/dto/referral/Referral";
 import { ReferralStatus } from "@/dto/constants/ReferralStatus";
 
 export const referrals: Referral[] = [

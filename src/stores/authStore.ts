@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { AuthSession, User } from "@/dto/User";
+import type { AuthSessionResponse } from "@/dto/auth/AuthSessionResponse";
+import type { User } from "@/dto/auth/User";
 import { login as apiLogin, register as apiRegister } from "@/api/auth/login";
 import { UserRole } from "@/dto/constants/UserRole";
 
@@ -18,11 +19,11 @@ export const useAuthStore = create<AuthState>()(
       user: null,
       token: null,
       async login(identifier, role) {
-        const session: AuthSession = await apiLogin(identifier, role);
+        const session: AuthSessionResponse = await apiLogin(identifier, role);
         set({ user: session.user, token: session.token });
       },
       async register(name, role) {
-        const session: AuthSession = await apiRegister(name, role);
+        const session: AuthSessionResponse = await apiRegister(name, role);
         set({ user: session.user, token: session.token });
       },
       logout() {

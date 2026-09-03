@@ -11,7 +11,7 @@ import {
 import { PageHeader, LoadingBlob } from "@/components/shared/PageHeader";
 import { Card } from "@/components/ui/Card";
 import { getFacilityWorkload } from "@/api/admin/workload";
-import type { FacilityWorkload } from "@/api/admin/workload";
+import type { FacilityWorkload } from "@/dto/admin/FacilityWorkload";
 
 export function WorkloadPage() {
   const [data, setData] = useState<FacilityWorkload[]>([]);

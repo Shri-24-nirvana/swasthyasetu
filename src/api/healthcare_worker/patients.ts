@@ -1,5 +1,6 @@
 import { patients } from "@/lib/mock/patients";
-import type { Patient } from "@/dto/Patient";
+import type { Patient } from "@/dto/patient/Patient";
+import type { RegisterPatientRequest } from "@/dto/patient/RegisterPatientRequest";
 import { RiskLevel } from "@/dto/constants/RiskLevel";
 import { delay } from "../utils/mock-delay";
 
@@ -18,7 +19,7 @@ export async function searchPatients(query?: string): Promise<Patient[]> {
 }
 
 export async function registerPatient(
-  input: Omit<Patient, "swasthyaId" | "registeredAt" | "riskLevel">
+  input: RegisterPatientRequest
 ): Promise<Patient> {
   await delay();
   const patient: Patient = {
