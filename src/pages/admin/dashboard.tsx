@@ -9,7 +9,7 @@ import {
 import { PageHeader, LoadingBlob } from "@/components/shared/PageHeader";
 import { Card, CardTitle } from "@/components/ui/Card";
 import { getDashboardStats } from "@/api/admin/analytics";
-import type { DashboardStats } from "@/dto/DashboardStats";
+import type { DashboardStats } from "@/dto/admin/DashboardStats";
 
 export function AdminDashboard() {
   const [stats, setStats] = useState<DashboardStats | null>(null);

@@ -1,4 +1,4 @@
-import type { Appointment } from "@/dto/Appointment";
+import type { Appointment } from "@/dto/appointment/Appointment";
 import { AppointmentStatus } from "@/dto/constants/AppointmentStatus";
 
 export const appointments: Appointment[] = [

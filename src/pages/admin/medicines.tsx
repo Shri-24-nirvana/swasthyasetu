@@ -4,7 +4,7 @@ import { PageHeader, LoadingBlob } from "@/components/shared/PageHeader";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { getMedicineStock, restockMedicine } from "@/api/admin/medicines";
-import type { Medicine } from "@/dto/Medicine";
+import type { Medicine } from "@/dto/medicine/Medicine";
 
 const stockClass: Record<Medicine["availability"], string> = {
   IN_STOCK: "bg-green-100 text-green-700",

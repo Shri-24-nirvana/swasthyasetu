@@ -9,8 +9,8 @@ import { Modal } from "@/components/ui/Modal";
 import { LongitudinalRecord } from "@/components/shared/LongitudinalRecord";
 import { searchPatients, registerPatient } from "@/api/healthcare_worker/patients";
 import { getLongitudinalRecord } from "@/api/healthcare_worker/records";
-import type { Patient } from "@/dto/Patient";
-import type { HealthRecord } from "@/dto/HealthRecord";
+import type { Patient } from "@/dto/patient/Patient";
+import type { HealthRecordResponse } from "@/dto/health-record/HealthRecordResponse";
 
 export function WorkerPatientsPage() {
   const [patients, setPatients] = useState<Patient[]>([]);
@@ -18,7 +18,7 @@ export function WorkerPatientsPage() {
   const [query, setQuery] = useState("");
   const [registerOpen, setRegisterOpen] = useState(false);
   const [viewing, setViewing] = useState<Patient | null>(null);
-  const [record, setRecord] = useState<HealthRecord | null>(null);
+  const [record, setRecord] = useState<HealthRecordResponse | null>(null);
   const [loadRecord, setLoadRecord] = useState(false);
 
   const [name, setName] = useState("");

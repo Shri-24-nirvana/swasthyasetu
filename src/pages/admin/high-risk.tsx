@@ -4,7 +4,7 @@ import { PageHeader, LoadingBlob } from "@/components/shared/PageHeader";
 import { Card } from "@/components/ui/Card";
 import { RiskBadge } from "@/components/ui/Badge";
 import { getHighRiskCases } from "@/api/admin/high-risk-cases";
-import type { Patient } from "@/dto/Patient";
+import type { Patient } from "@/dto/patient/Patient";
 
 export function AdminHighRiskPage() {
   const [patients, setPatients] = useState<Patient[]>([]);

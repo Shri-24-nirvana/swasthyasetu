@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input";
 import { searchMedicineAvailability } from "@/api/patient/medicines";
-import type { MedicineAvailability } from "@/dto/Medicine";
+import type { MedicineResponse } from "@/dto/medicine/MedicineResponse";
 
 const stockTone: Record<string, "GREEN" | "YELLOW" | "RED"> = {
   IN_STOCK: "GREEN",
@@ -14,7 +14,7 @@ const stockTone: Record<string, "GREEN" | "YELLOW" | "RED"> = {
 };
 
 export function MedicineAvailabilityPage() {
-  const [items, setItems] = useState<MedicineAvailability[]>([]);
+  const [items, setItems] = useState<MedicineResponse[]>([]);
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
 

@@ -4,10 +4,10 @@ import { PageHeader, LoadingBlob } from "@/components/shared/PageHeader";
 import { Button } from "@/components/ui/Button";
 import { LongitudinalRecord } from "@/components/shared/LongitudinalRecord";
 import { getHealthRecord } from "@/api/patient/records";
-import type { HealthRecord } from "@/dto/HealthRecord";
+import type { HealthRecordResponse } from "@/dto/health-record/HealthRecordResponse";
 
 export function HealthRecordsPage() {
-  const [record, setRecord] = useState<HealthRecord | null>(null);
+  const [record, setRecord] = useState<HealthRecordResponse | null>(null);
 
   useEffect(() => {
     getHealthRecord().then(setRecord);

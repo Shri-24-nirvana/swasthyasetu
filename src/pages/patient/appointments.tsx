@@ -8,7 +8,7 @@ import { Input, Select } from "@/components/ui/Input";
 import { Modal } from "@/components/ui/Modal";
 import { getAppointments, bookAppointment } from "@/api/patient/appointments";
 import { facilities } from "@/lib/mock/facilities";
-import type { Appointment } from "@/dto/Appointment";
+import type { Appointment } from "@/dto/appointment/Appointment";
 import { AppointmentStatus } from "@/dto/constants/AppointmentStatus";
 
 const PATIENT_ID = "SWA-9284-1829";

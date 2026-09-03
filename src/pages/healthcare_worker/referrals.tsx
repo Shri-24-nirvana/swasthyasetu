@@ -7,7 +7,7 @@ import { Input, Select, TextArea } from "@/components/ui/Input";
 import { Modal } from "@/components/ui/Modal";
 import { getReferrals, createReferral, advanceReferralStatus } from "@/api/healthcare_worker/referrals";
 import { facilityById } from "@/lib/mock/facilities";
-import type { Referral } from "@/dto/Referral";
+import type { Referral } from "@/dto/referral/Referral";
 import { ReferralStatus } from "@/dto/constants/ReferralStatus";
 
 export function WorkerReferralsPage() {

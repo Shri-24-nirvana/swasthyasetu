@@ -19,9 +19,9 @@ import { LoadingBlob } from "@/components/shared/PageHeader";
 import { getAppointments } from "@/api/patient/appointments";
 import { getReferralStatus } from "@/api/patient/referral-status";
 import { getHealthRecord } from "@/api/patient/records";
-import type { Appointment } from "@/dto/Appointment";
-import type { Referral } from "@/dto/Referral";
-import type { HealthRecord } from "@/dto/HealthRecord";
+import type { Appointment } from "@/dto/appointment/Appointment";
+import type { Referral } from "@/dto/referral/Referral";
+import type { HealthRecordResponse } from "@/dto/health-record/HealthRecordResponse";
 
 const PATIENT_ID = "SWA-9284-1829";
 
@@ -35,7 +35,7 @@ const quickActions: Array<{ to: string; label: string; icon: LucideIcon; color: 
 export function PatientDashboard() {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [referrals, setReferrals] = useState<Referral[]>([]);
-  const [record, setRecord] = useState<HealthRecord | null>(null);
+  const [record, setRecord] = useState<HealthRecordResponse | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

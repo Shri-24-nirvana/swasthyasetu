@@ -17,13 +17,13 @@ import { Button } from "@/components/ui/Button";
 import { searchPatients } from "@/api/healthcare_worker/patients";
 import { getHighRiskPatients } from "@/api/healthcare_worker/high-risk";
 import { getTriageQueue } from "@/api/healthcare_worker/triage";
-import type { Patient } from "@/dto/Patient";
-import type { TriageEntry } from "@/dto/Triage";
+import type { Patient } from "@/dto/patient/Patient";
+import type { Triage } from "@/dto/triage/Triage";
 
 export function WorkerDashboard() {
   const [patients, setPatients] = useState<Patient[]>([]);
   const [highRisk, setHighRisk] = useState<Patient[]>([]);
-  const [triage, setTriage] = useState<TriageEntry[]>([]);
+  const [triage, setTriage] = useState<Triage[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

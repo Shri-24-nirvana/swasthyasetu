@@ -8,9 +8,9 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts";
-import type { HealthRecord } from "@/dto/HealthRecord";
+import type { HealthRecordResponse } from "@/dto/health-record/HealthRecordResponse";
 
-export function VitalsTrendChart({ record }: { record: HealthRecord }) {
+export function VitalsTrendChart({ record }: { record: HealthRecordResponse }) {
   const data = record.vitalsTrend.map((v) => ({
     date: v.date.slice(5),
     "BP Sys": v.bpSys,

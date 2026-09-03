@@ -1,5 +1,5 @@
 import { RiskLevel } from "@/dto/constants/RiskLevel";
-import type { Vitals } from "@/dto/Consultation";
+import type { Vitals } from "@/dto/consultation/Vitals";
 
 export interface RiskEvaluation {
   riskLevel: RiskLevel;

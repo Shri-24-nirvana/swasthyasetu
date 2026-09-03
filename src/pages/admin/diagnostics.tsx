@@ -3,7 +3,7 @@ import { FlaskConical } from "lucide-react";
 import { PageHeader, LoadingBlob } from "@/components/shared/PageHeader";
 import { Card } from "@/components/ui/Card";
 import { getDiagnosticsTracking } from "@/api/admin/diagnostics";
-import type { DiagnosticReport } from "@/dto/DiagnosticReport";
+import type { DiagnosticReport } from "@/dto/diagnostics/DiagnosticReport";
 
 export function AdminDiagnosticsPage() {
   const [reports, setReports] = useState<DiagnosticReport[]>([]);

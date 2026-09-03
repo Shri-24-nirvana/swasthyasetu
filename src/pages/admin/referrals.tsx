@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/Badge";
 import { getReferralMetrics, getAllReferrals } from "@/api/admin/referral-metrics";
 import { facilityById } from "@/lib/mock/facilities";
 import { ReferralStatus } from "@/dto/constants/ReferralStatus";
-import type { Referral } from "@/dto/Referral";
+import type { Referral } from "@/dto/referral/Referral";
 
 const statusTone: Record<ReferralStatus, "INFO" | "GREEN" | "YELLOW" | "RED"> = {
   CREATED: "INFO",

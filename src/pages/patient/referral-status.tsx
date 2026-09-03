@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { getReferralStatus } from "@/api/patient/referral-status";
 import { REFERRAL_FLOW } from "@/dto/constants/ReferralStatus";
-import type { Referral } from "@/dto/Referral";
+import type { Referral } from "@/dto/referral/Referral";
 import type { ReferralStatus as RS } from "@/dto/constants/ReferralStatus";
 
 const statusTone: Record<RS, "INFO" | "GREEN" | "YELLOW" | "RED"> = {

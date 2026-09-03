@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { getDiagnosticReports } from "@/api/patient/diagnostics";
-import type { DiagnosticReport } from "@/dto/DiagnosticReport";
+import type { DiagnosticReport } from "@/dto/diagnostics/DiagnosticReport";
 
 export function DiagnosticsPage() {
   const [reports, setReports] = useState<DiagnosticReport[]>([]);

@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Input, Select } from "@/components/ui/Input";
 import { findNearbyFacilities } from "@/api/patient/facilities";
-import type { Facility } from "@/dto/Facility";
+import type { Facility } from "@/dto/facility/Facility";
 import { FacilityType } from "@/dto/constants/FacilityType";
 
 const typeLabels: Record<FacilityType, string> = {

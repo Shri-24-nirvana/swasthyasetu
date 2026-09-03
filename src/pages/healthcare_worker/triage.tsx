@@ -8,7 +8,7 @@ import { Input, TextArea } from "@/components/ui/Input";
 import { Modal } from "@/components/ui/Modal";
 import { getTriageQueue, createTriage } from "@/api/healthcare_worker/triage";
 import { evaluateVitalsRisk, triageAcuity, type Acuity } from "@/lib/risk-evaluation";
-import type { TriageEntry } from "@/dto/Triage";
+import type { Triage } from "@/dto/triage/Triage";
 
 const acuityTone: Record<Acuity, "RED" | "YELLOW" | "GREEN"> = {
   RED: "RED",
@@ -17,7 +17,7 @@ const acuityTone: Record<Acuity, "RED" | "YELLOW" | "GREEN"> = {
 };
 
 export function TriagePage() {
-  const [queue, setQueue] = useState<TriageEntry[]>([]);
+  const [queue, setQueue] = useState<Triage[]>([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
 

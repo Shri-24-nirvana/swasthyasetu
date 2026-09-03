@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/Card";
 import { RiskBadge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { getHighRiskPatients } from "@/api/healthcare_worker/high-risk";
-import type { Patient } from "@/dto/Patient";
+import type { Patient } from "@/dto/patient/Patient";
 import { RiskLevel } from "@/dto/constants/RiskLevel";
 
 export function HighRiskPage() {

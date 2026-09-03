@@ -9,10 +9,10 @@ import { LongitudinalRecord, RecordSummary } from "@/components/shared/Longitudi
 import { getLongitudinalRecord } from "@/api/healthcare_worker/records";
 import { evaluateVitalsRisk } from "@/lib/risk-evaluation";
 import { useLanguage } from "@/components/utils/LanguageContext";
-import type { HealthRecord } from "@/dto/HealthRecord";
+import type { HealthRecordResponse } from "@/dto/health-record/HealthRecordResponse";
 
 export function WorkerConsultationPage() {
-  const [record, setRecord] = useState<HealthRecord | null>(null);
+  const [record, setRecord] = useState<HealthRecordResponse | null>(null);
   const [recording, setRecording] = useState(false);
   const [completed, setCompleted] = useState(false);
   const { t } = useLanguage();

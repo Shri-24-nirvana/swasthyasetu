@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { HealthRecord } from "@/dto/HealthRecord";
+import type { HealthRecordResponse } from "@/dto/health-record/HealthRecordResponse";
 import { RiskBadge, Badge } from "@/components/ui/Badge";
 import { Card, CardTitle } from "@/components/ui/Card";
 import { QRCode } from "@/components/shared/QRCode";
@@ -17,7 +17,7 @@ const tabs = [
 
 type Tab = (typeof tabs)[number];
 
-export function LongitudinalRecord({ record }: { record: HealthRecord }) {
+export function LongitudinalRecord({ record }: { record: HealthRecordResponse }) {
   const [tab, setTab] = useState<Tab>("Overview");
   const { patient } = record;
 
@@ -79,7 +79,7 @@ export function LongitudinalRecord({ record }: { record: HealthRecord }) {
   );
 }
 
-function OverviewView({ record }: { record: HealthRecord }) {
+function OverviewView({ record }: { record: HealthRecordResponse }) {
   return (
     <div className="grid gap-4 sm:grid-cols-2">
       <div>
@@ -142,7 +142,7 @@ function OverviewView({ record }: { record: HealthRecord }) {
   );
 }
 
-function ConditionsView({ record }: { record: HealthRecord }) {
+function ConditionsView({ record }: { record: HealthRecordResponse }) {
   return (
     <div className="space-y-3">
       {record.conditions.map((c) => (
@@ -162,7 +162,7 @@ function ConditionsView({ record }: { record: HealthRecord }) {
   );
 }
 
-function MedicationsView({ record }: { record: HealthRecord }) {
+function MedicationsView({ record }: { record: HealthRecordResponse }) {
   return (
     <div className="space-y-4">
       <div>
@@ -203,7 +203,7 @@ function MedicationsView({ record }: { record: HealthRecord }) {
   );
 }
 
-function VisitsView({ record }: { record: HealthRecord }) {
+function VisitsView({ record }: { record: HealthRecordResponse }) {
   return (
     <div className="relative space-y-4 before:absolute before:left-[5px] before:top-1 before:h-full before:w-px before:bg-border">
       {record.consultations
@@ -232,7 +232,7 @@ function VisitsView({ record }: { record: HealthRecord }) {
   );
 }
 
-function DiagnosticsView({ record }: { record: HealthRecord }) {
+function DiagnosticsView({ record }: { record: HealthRecordResponse }) {
   return (
     <div className="space-y-3">
       {record.diagnostics
@@ -283,7 +283,7 @@ function DiagnosticsView({ record }: { record: HealthRecord }) {
   );
 }
 
-function TrendsView({ record }: { record: HealthRecord }) {
+function TrendsView({ record }: { record: HealthRecordResponse }) {
   return (
     <div>
       <CardTitle className="mb-2 text-sm uppercase tracking-wide text-muted">
@@ -294,7 +294,7 @@ function TrendsView({ record }: { record: HealthRecord }) {
   );
 }
 
-export function RecordSummary({ record }: { record: HealthRecord }) {
+export function RecordSummary({ record }: { record: HealthRecordResponse }) {
   const activeConditions = record.conditions.filter((c) => c.status === "ACTIVE").length;
   const currentMeds = record.medications.filter((m) => m.status === "CURRENT").length;
   return (
