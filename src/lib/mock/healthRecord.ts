@@ -1,0 +1,138 @@
+import type { HealthRecord } from "@/dto/HealthRecord";
+import type { Consultation } from "@/dto/Consultation";
+import { RiskLevel } from "@/dto/constants/RiskLevel";
+import { patientById } from "./patients";
+import { referralsByPatient } from "./referrals";
+
+const consultations: Consultation[] = [
+  {
+    id: "c-1",
+    patientId: "SWA-9284-1829",
+    facilityId: "phc-1",
+    doctorName: "Dr. Anita Rao",
+    date: "2026-01-15",
+    vitals: { bloodPressureSys: 150, bloodPressureDia: 96, heartRate: 88, temperature: 36.8, glucose: 168, spo2: 96 },
+    symptoms: ["Fatigue", "Dizziness"],
+    chiefComplaint: "Recurring fatigue and giddiness",
+    diagnosis: "Hypertension Stage 2, Type 2 Diabetes mellitus",
+    medications: [
+      { name: "Amlodipine 5mg", dosage: "1 tablet", frequency: "Once daily", duration: "30 days" },
+      { name: "Metformin 500mg", dosage: "1 tablet", frequency: "Twice daily", duration: "30 days" },
+    ],
+    riskLevel: RiskLevel.MODERATE,
+    notes: "Advised diet control and regular BP monitoring.",
+  },
+  {
+    id: "c-2",
+    patientId: "SWA-9284-1829",
+    facilityId: "chc-1",
+    doctorName: "Dr. Rajesh Kumar",
+    date: "2026-04-28",
+    vitals: { bloodPressureSys: 162, bloodPressureDia: 102, heartRate: 96, temperature: 37.2, glucose: 210, spo2: 94 },
+    symptoms: ["Chest Discomfort", "Headache"],
+    chiefComplaint: "Chest tightness with headache",
+    diagnosis: "Uncontrolled hypertension, elevated blood glucose",
+    medications: [
+      { name: "Amlodipine 10mg", dosage: "1 tablet", frequency: "Once daily", duration: "30 days" },
+      { name: "Metformin 500mg", dosage: "1 tablet", frequency: "Twice daily", duration: "30 days" },
+    ],
+    riskLevel: RiskLevel.HIGH,
+    notes: "Referred to cardiology for further evaluation.",
+  },
+  {
+    id: "c-3",
+    patientId: "SWA-9284-1829",
+    facilityId: "dh-1",
+    doctorName: "Dr. S. Iyer",
+    date: "2026-06-10",
+    vitals: { bloodPressureSys: 158, bloodPressureDia: 98, heartRate: 92, temperature: 36.9, glucose: 185, spo2: 95 },
+    symptoms: ["Fatigue"],
+    chiefComplaint: "Follow-up for hypertension",
+    diagnosis: "Hypertension, diabetes follow-up",
+    medications: [
+      { name: "Amlodipine 10mg", dosage: "1 tablet", frequency: "Once daily", duration: "60 days" },
+      { name: "Metformin 1000mg", dosage: "1 tablet", frequency: "Twice daily", duration: "60 days" },
+      { name: "Atorvastatin 20mg", dosage: "1 tablet", frequency: "Night", duration: "60 days" },
+    ],
+    riskLevel: RiskLevel.MODERATE,
+  },
+  {
+    id: "c-4",
+    patientId: "SWA-9284-1829",
+    facilityId: "phc-1",
+    doctorName: "Dr. Anita Rao",
+    date: "2026-08-05",
+    vitals: { bloodPressureSys: 152, bloodPressureDia: 95, heartRate: 90, temperature: 36.7, glucose: 175, spo2: 96 },
+    symptoms: ["Fatigue", "Dizziness", "Headache"],
+    chiefComplaint: "Recent fatigue and headache",
+    diagnosis: "Hypertension, diabetes follow-up",
+    medications: [
+      { name: "Amlodipine 10mg", dosage: "1 tablet", frequency: "Once daily", duration: "45 days" },
+      { name: "Metformin 1000mg", dosage: "1 tablet", frequency: "Twice daily", duration: "45 days" },
+    ],
+    riskLevel: RiskLevel.HIGH,
+    notes: "Monitoring closely; advised emergency review if symptoms worsen.",
+  },
+];
+
+export const healthRecord: HealthRecord = {
+  patient: patientById("SWA-9284-1829")!,
+  conditions: [
+    { condition: "Hypertension (Stage 2)", since: "2025-09-01", status: "ACTIVE" },
+    { condition: "Type 2 Diabetes mellitus", since: "2025-11-12", status: "ACTIVE" },
+    { condition: "Iron deficiency anemia", since: "2024-06-20", status: "RESOLVED", notes: "Resolved with supplementation" },
+  ],
+  medications: [
+    { name: "Amlodipine 10mg", dosage: "1 tablet", frequency: "Once daily", status: "CURRENT" },
+    { name: "Metformin 1000mg", dosage: "1 tablet", frequency: "Twice daily", status: "CURRENT" },
+    { name: "Atorvastatin 20mg", dosage: "1 tablet", frequency: "Night", status: "CURRENT" },
+    { name: "Iron + Folic Acid", dosage: "1 tablet", frequency: "Once daily", status: "PAST" },
+  ],
+  consultations,
+  diagnostics: [
+    {
+      id: "d-1",
+      patientId: "SWA-9284-1829",
+      facilityId: "chc-1",
+      facilityName: "Kosi Community Health Centre",
+      type: "Lab",
+      name: "HbA1c",
+      orderedBy: "Dr. Rajesh Kumar",
+      date: "2026-04-28",
+      status: "REVIEWED",
+      summary: "HbA1c 8.4% — above target",
+      keyValues: [{ label: "HbA1c", value: "8.4 %", flag: "ABNORMAL" }],
+    },
+    {
+      id: "d-2",
+      patientId: "SWA-9284-1829",
+      facilityId: "dh-1",
+      facilityName: "District Hospital, Kosi",
+      type: "Imaging",
+      name: "ECG",
+      orderedBy: "Dr. S. Iyer",
+      date: "2026-06-10",
+      status: "REVIEWED",
+      summary: "Normal sinus rhythm, minor ST changes noted",
+      keyValues: [{ label: "Rhythm", value: "Normal sinus", flag: "NORMAL" }],
+    },
+    {
+      id: "d-3",
+      patientId: "SWA-9284-1829",
+      facilityId: "phc-1",
+      facilityName: "Rampur Primary Health Centre",
+      type: "Lab",
+      name: "Fasting Blood Sugar",
+      orderedBy: "Dr. Anita Rao",
+      date: "2026-08-05",
+      status: "PENDING",
+    },
+  ],
+  referrals: referralsByPatient("SWA-9284-1829"),
+  vitalsTrend: [
+    { date: "2026-01-15", bpSys: 150, bpDia: 96, heartRate: 88, glucose: 168, riskLevel: "MODERATE" },
+    { date: "2026-04-28", bpSys: 162, bpDia: 102, heartRate: 96, glucose: 210, riskLevel: "HIGH" },
+    { date: "2026-06-10", bpSys: 158, bpDia: 98, heartRate: 92, glucose: 185, riskLevel: "MODERATE" },
+    { date: "2026-08-05", bpSys: 152, bpDia: 95, heartRate: 90, glucose: 175, riskLevel: "HIGH" },
+  ],
+};

@@ -1,0 +1,34 @@
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
+import type { AuthSession, User } from "@/dto/User";
+import { login as apiLogin, register as apiRegister } from "@/api/auth/login";
+import { UserRole } from "@/dto/constants/UserRole";
+
+interface AuthState {
+  user: User | null;
+  token: string | null;
+  login: (identifier: string, role: UserRole) => Promise<void>;
+  register: (name: string, role: UserRole) => Promise<void>;
+  logout: () => void;
+}
+
+export const useAuthStore = create<AuthState>()(
+  persist(
+    (set) => ({
+      user: null,
+      token: null,
+      async login(identifier, role) {
+        const session: AuthSession = await apiLogin(identifier, role);
+        set({ user: session.user, token: session.token });
+      },
+      async register(name, role) {
+        const session: AuthSession = await apiRegister(name, role);
+        set({ user: session.user, token: session.token });
+      },
+      logout() {
+        set({ user: null, token: null });
+      },
+    }),
+    { name: "swasthya-auth" }
+  )
+);

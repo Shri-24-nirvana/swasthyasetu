@@ -1,0 +1,7 @@
+export enum FacilityType {
+  SUB_CENTRE = "SUB_CENTRE",
+  PHC = "PHC",
+  CHC = "CHC",
+  DISTRICT_HOSPITAL = "DISTRICT_HOSPITAL",
+  PRIVATE = "PRIVATE",
+}
