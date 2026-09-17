@@ -105,20 +105,20 @@ export function PatientDashboard() {
 
   return (
     <div className="space-y-6">
-      {/* Patient Header Banner with ID - Clean, Rich & Beautiful in both Light and Dark themes */}
-      <div className="flex flex-col gap-4 rounded-3xl border border-border bg-gradient-to-r from-brand-700 via-brand-800 to-teal-900 p-6 text-white shadow-xl sm:flex-row sm:items-center sm:justify-between">
+      {/* Patient Header Banner with ID - Simple, clean, single-color card */}
+      <div className="flex flex-col gap-4 rounded-3xl border border-border bg-surface p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-4">
-          <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-brand-800 shadow-md text-xl font-bold">
+          <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-700 text-white shadow-sm text-xl font-bold">
             {currentPatient.name.charAt(0)}
           </span>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-xl font-bold text-white">{t("namaste")}, {currentPatient.name} 🙏</h1>
+              <h1 className="text-xl font-bold text-fg">{t("namaste")}, {currentPatient.name} 🙏</h1>
               <RiskBadge level={currentPatient.riskLevel} />
             </div>
-            <p className="mt-1 text-xs text-brand-100 flex flex-wrap items-center gap-1.5">
+            <p className="mt-1 text-xs text-muted flex flex-wrap items-center gap-1.5">
               <span>{t("permanent_id_label")}:</span>
-              <span className="font-mono font-bold text-amber-300 bg-black/25 px-2 py-0.5 rounded-md border border-white/15">
+              <span className="font-mono font-bold text-brand-700 dark:text-brand-400 bg-brand-500/10 px-2 py-0.5 rounded-md border border-brand-500/20">
                 {currentPatient.swasthyaId}
               </span>
               <span>· {currentPatient.village}, {currentPatient.district}</span>
@@ -128,13 +128,13 @@ export function PatientDashboard() {
 
         <div className="flex items-center gap-2">
           <Link to="/patient/health-card">
-            <Button variant="outline" size="sm" className="bg-white/15 hover:bg-white/25 text-white border-white/25 shadow-sm cursor-pointer">
-              <CreditCard className="h-4 w-4 text-white" /> {t("health_card")}
+            <Button variant="outline" size="sm" className="cursor-pointer">
+              <CreditCard className="h-4 w-4 text-brand-700 dark:text-brand-400" /> {t("health_card")}
             </Button>
           </Link>
           <Link to="/patient/my-qr">
-            <Button size="sm" className="bg-brand-500 hover:bg-brand-400 text-slate-950 font-bold shadow-lg cursor-pointer border border-brand-300">
-              <QrIcon className="h-4 w-4 text-slate-950" /> {t("my_qr")}
+            <Button size="sm" className="cursor-pointer">
+              <QrIcon className="h-4 w-4" /> {t("my_qr")}
             </Button>
           </Link>
         </div>
@@ -142,7 +142,7 @@ export function PatientDashboard() {
 
       {/* ACTIVE VISIT & LIVE QUEUE TRACKER */}
       {activeVisit && (
-        <Card className="border-2 border-brand-500/80 bg-surface shadow-lg p-5 space-y-4">
+        <Card className="border border-border bg-surface shadow-sm p-5 space-y-4">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-b border-border pb-3">
             <div className="flex items-center gap-3">
               <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-700 text-white shadow-sm">
@@ -151,7 +151,7 @@ export function PatientDashboard() {
               <div>
                 <div className="flex items-center gap-2">
                   <h3 className="font-bold text-base text-fg">{t("current_hospital_visit")}</h3>
-                  <span className="font-mono text-xs font-bold text-brand-700 bg-brand-500/15 border border-brand-500/30 px-2 py-0.5 rounded">
+                  <span className="font-mono text-xs font-bold text-brand-700 dark:text-brand-400 bg-brand-500/10 border border-brand-500/20 px-2 py-0.5 rounded">
                     {activeVisit.visitNumber}
                   </span>
                 </div>
@@ -162,7 +162,7 @@ export function PatientDashboard() {
             </div>
 
             <div className="flex items-center gap-2">
-              <span className="rounded-full bg-emerald-500/15 border border-emerald-500/30 px-3 py-1 text-xs font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
+              <span className="rounded-full bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 text-xs font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
                 <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
                 {t("stage")}: {t(`status_${activeVisit.status.toLowerCase()}`, activeVisit.status.replace(/_/g, " "))}
               </span>
@@ -179,7 +179,7 @@ export function PatientDashboard() {
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 rounded-2xl bg-surface border border-border p-4 shadow-sm text-center">
               <div className="border-r border-border last:border-0">
                 <span className="text-[11px] text-muted font-semibold uppercase">{t("your_opd_token")}</span>
-                <p className="text-2xl font-black text-brand-600 dark:text-brand-400 mt-0.5">{queueInfo.token}</p>
+                <p className="text-2xl font-black text-brand-700 dark:text-brand-400 mt-0.5">{queueInfo.token}</p>
                 <p className="text-[10px] text-muted">{activeVisit.department}</p>
               </div>
               <div className="border-r border-border last:border-0">
@@ -212,9 +212,9 @@ export function PatientDashboard() {
                     key={step.key}
                     className={`rounded-xl border p-2.5 transition ${
                       isCurrent
-                        ? "border-brand-500 bg-brand-700 text-white font-bold shadow-md ring-2 ring-brand-400/30"
+                        ? "border-brand-700 bg-brand-700 text-white font-bold shadow-sm"
                         : isDone
-                        ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-medium"
+                        ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-medium"
                         : "border-border bg-surface text-muted"
                     }`}
                   >
@@ -233,7 +233,7 @@ export function PatientDashboard() {
       {/* KPI Cards */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <Card className="flex items-center gap-4">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-500/15 text-brand-600 dark:text-brand-400">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-500/10 text-brand-700 dark:text-brand-400 border border-brand-500/20">
             <CalendarClock className="h-6 w-6" />
           </span>
           <div>
@@ -242,7 +242,7 @@ export function PatientDashboard() {
           </div>
         </Card>
         <Card className="flex items-center gap-4">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-500/15 text-blue-600 dark:text-blue-400">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-500/20">
             <FlaskConical className="h-6 w-6" />
           </span>
           <div>
@@ -251,7 +251,7 @@ export function PatientDashboard() {
           </div>
         </Card>
         <Card className="flex items-center gap-4">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-pink-500/15 text-pink-600 dark:text-pink-400">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-pink-500/10 text-pink-700 dark:text-pink-400 border border-pink-500/20">
             <Pill className="h-6 w-6" />
           </span>
           <div>
@@ -260,7 +260,7 @@ export function PatientDashboard() {
           </div>
         </Card>
         <Card className="flex items-center gap-4">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/15 text-emerald-600 dark:text-emerald-400">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">
             <Receipt className="h-6 w-6" />
           </span>
           <div>
@@ -276,7 +276,7 @@ export function PatientDashboard() {
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {quickActions.map((a) => (
             <Link key={a.to} to={a.to}>
-              <Card className="flex items-center gap-3 p-3.5 transition hover:shadow-md hover:border-brand-300">
+              <Card className="flex items-center gap-3 p-3.5 transition hover:shadow-md hover:border-brand-500/50">
                 <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-white ${a.color}`}>
                   <a.icon className="h-5 w-5" />
                 </span>
@@ -312,8 +312,8 @@ export function PatientDashboard() {
                     <span
                       className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${
                         rx.status === "DISPENSED"
-                          ? "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700/50"
-                          : "bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-300 dark:border-amber-700/50"
+                          ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20"
+                          : "bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20"
                       }`}
                     >
                       {t(`status_${rx.status.toLowerCase()}`, rx.status)}
@@ -322,7 +322,7 @@ export function PatientDashboard() {
                   <p className="text-xs text-muted">{t("diagnosis")}: {rx.diagnosis}</p>
                   <div className="space-y-1 pt-1">
                     {rx.items.map((item) => (
-                      <div key={item.id} className="flex justify-between text-xs bg-muted/15 px-2 py-1 rounded border border-border/40">
+                      <div key={item.id} className="flex justify-between text-xs bg-muted/10 px-2 py-1 rounded border border-border/40">
                         <span className="font-medium text-fg">• {item.medicineName}</span>
                         <span className="text-muted">{item.dosage} ({item.quantity} {t("units")})</span>
                       </div>
@@ -353,10 +353,10 @@ export function PatientDashboard() {
                     <span
                       className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${
                         testItem.status === "COMPLETED"
-                          ? "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700/50"
+                          ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20"
                           : testItem.status === "PROCESSING"
-                          ? "bg-blue-500/15 text-blue-700 dark:text-blue-300 border border-blue-300 dark:border-blue-700/50"
-                          : "bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-300 dark:border-amber-700/50"
+                          ? "bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20"
+                          : "bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20"
                       }`}
                     >
                       {t(`status_${testItem.status.toLowerCase()}`, testItem.status.replace(/_/g, " "))}
@@ -364,7 +364,7 @@ export function PatientDashboard() {
                   </div>
                   <p className="text-xs text-muted">{testItem.doctorName} · {testItem.facilityName}</p>
                   {testItem.summary && (
-                    <p className="text-xs font-medium text-emerald-700 dark:text-emerald-300 bg-emerald-500/10 p-2 rounded-lg border border-emerald-500/20 mt-1">
+                    <p className="text-xs font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 p-2 rounded-lg border border-emerald-500/20 mt-1">
                       {t("result")}: {testItem.summary}
                     </p>
                   )}

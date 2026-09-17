@@ -76,7 +76,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         root.setAttribute("data-theme-color", "green");
       }
 
-      // Get active color palette
+      // Get active single-color cohesive palette
       const activeColors = getPaletteColors(shouldBeDark, colorTheme);
 
       // Inject CSS variables to :root for instant global synchronization

@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --brand: #0f766e;
+    --brand: #0d9488;
     --brand-50: #f0fdfa;
     --brand-100: #ccfbf1;
     --brand-200: #99f6e4;
@@ -30,39 +30,39 @@
     --warning: #f59e0b;
     --danger: #ef4444;
 
-    --card-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.03);
-    --card-hover-shadow: 0 10px 25px -3px rgba(15, 23, 42, 0.08), 0 4px 10px -2px rgba(15, 23, 42, 0.04);
+    --card-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+    --card-hover-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
   }
 
   .dark {
-    --brand: #2dd4bf;
-    --brand-50: #0c1c24;
-    --brand-100: #102a35;
-    --brand-200: #173f4e;
-    --brand-300: #1e5568;
+    --brand: #14b8a6;
+    --brand-50: #111827;
+    --brand-100: #1f2937;
+    --brand-200: #374151;
+    --brand-300: #4b5563;
     --brand-400: #2dd4bf;
-    --brand-500: #2dd4bf;
-    --brand-600: #2dd4bf;
-    --brand-700: #14b8a6;
-    --brand-800: #0d9488;
-    --brand-900: #0f766e;
+    --brand-500: #14b8a6;
+    --brand-600: #14b8a6;
+    --brand-700: #2dd4bf;
+    --brand-800: #5eead4;
+    --brand-900: #99f6e4;
 
-    --bg: #070c12;
-    --surface: #0e1722;
-    --surface-hover: #152230;
-    --surface-active: #1c2c3e;
-    --fg: #f8fafc;
-    --fg-secondary: #cbd5e1;
-    --muted: #94a3b8;
-    --border: #1a2a3a;
-    --border-hover: #29425a;
+    --bg: #0B0F17;
+    --surface: #111827;
+    --surface-hover: #1F2937;
+    --surface-active: #283548;
+    --fg: #F9FAFB;
+    --fg-secondary: #E5E7EB;
+    --muted: #9CA3AF;
+    --border: #1F2937;
+    --border-hover: #374151;
 
     --success: #34d399;
     --warning: #fbbf24;
     --danger: #f87171;
 
-    --card-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.04);
-    --card-hover-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(45, 212, 191, 0.25);
+    --card-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+    --card-hover-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
   }
 }
 
@@ -102,8 +102,8 @@
 
 * {
   border-color: var(--border);
-  transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-              border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background-color 0.15s ease,
+              border-color 0.15s ease;
 }
 
 body {
@@ -149,49 +149,47 @@ input::placeholder, textarea::placeholder {
 }
 
 .dark input, .dark select, .dark textarea {
-  background-color: #0e1722 !important;
-  color: #f8fafc !important;
-  border-color: #1e2f3e !important;
+  background-color: #111827 !important;
+  color: #F9FAFB !important;
+  border-color: #1F2937 !important;
 }
 
 .dark select option {
-  background-color: #0e1722;
-  color: #f8fafc;
+  background-color: #111827;
+  color: #F9FAFB;
 }
 
 /* Tables in Dark Mode */
 .dark thead {
-  background-color: rgba(14, 23, 34, 0.95) !important;
-  color: #94a3b8 !important;
+  background-color: #1F2937 !important;
+  color: #9CA3AF !important;
 }
 
 .dark thead tr {
-  border-bottom: 1px solid #1e2f3e !important;
+  border-bottom: 1px solid #1F2937 !important;
 }
 
 .dark tbody tr {
-  border-bottom: 1px solid #152230 !important;
+  border-bottom: 1px solid #1F2937 !important;
 }
 
 .dark tbody tr:hover {
-  background-color: rgba(22, 36, 50, 0.6) !important;
+  background-color: #1F2937 !important;
 }
 
 .dark tbody td {
-  color: #e2e8f0;
+  color: #E5E7EB;
 }
 
 /* Modal Dialog in Dark Mode */
 .dark .modal-content,
 .dark .fixed > .relative.z-10 {
-  background-color: #0e1722 !important;
-  border: 1px solid #1e2f3e !important;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85);
+  background-color: #111827 !important;
+  border: 1px solid #1F2937 !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
 }
 
-/* ==========================================================
-   Aesthetic Soft Pastels in Dark Mode (No Blinding Light Patches)
-   ========================================================== */
+/* Soft Subdued Accents in Dark Mode */
 .dark .bg-brand-50,
 .dark .bg-brand-50\/30,
 .dark .bg-brand-50\/40,
@@ -199,19 +197,19 @@ input::placeholder, textarea::placeholder {
 .dark .bg-brand-50\/60,
 .dark .bg-brand-50\/70,
 .dark .bg-teal-50 {
-  background-color: rgba(12, 28, 36, 0.75) !important;
-  border-color: rgba(45, 212, 191, 0.25) !important;
+  background-color: rgba(20, 184, 166, 0.08) !important;
+  border-color: rgba(20, 184, 166, 0.2) !important;
 }
 
 .dark .bg-emerald-50,
 .dark .bg-emerald-50\/50,
 .dark .bg-emerald-50\/60 {
-  background-color: rgba(6, 36, 26, 0.65) !important;
-  border-color: rgba(52, 211, 153, 0.35) !important;
+  background-color: rgba(52, 211, 153, 0.08) !important;
+  border-color: rgba(52, 211, 153, 0.2) !important;
 }
 
 .dark .bg-emerald-100 {
-  background-color: rgba(6, 48, 34, 0.8) !important;
+  background-color: rgba(52, 211, 153, 0.15) !important;
 }
 
 .dark .bg-blue-50,
@@ -219,97 +217,97 @@ input::placeholder, textarea::placeholder {
 .dark .bg-blue-50\/50,
 .dark .bg-blue-50\/70,
 .dark .bg-sky-50 {
-  background-color: rgba(10, 30, 52, 0.65) !important;
-  border-color: rgba(56, 189, 248, 0.35) !important;
+  background-color: rgba(56, 189, 248, 0.08) !important;
+  border-color: rgba(56, 189, 248, 0.2) !important;
 }
 
 .dark .bg-blue-100,
 .dark .bg-blue-100\/70 {
-  background-color: rgba(14, 42, 72, 0.8) !important;
+  background-color: rgba(56, 189, 248, 0.15) !important;
 }
 
 .dark .bg-amber-50,
 .dark .bg-amber-50\/50,
 .dark .bg-amber-50\/60,
 .dark .bg-orange-50 {
-  background-color: rgba(38, 22, 6, 0.65) !important;
-  border-color: rgba(251, 191, 36, 0.35) !important;
+  background-color: rgba(251, 191, 36, 0.08) !important;
+  border-color: rgba(251, 191, 36, 0.2) !important;
 }
 
 .dark .bg-amber-100 {
-  background-color: rgba(52, 30, 8, 0.8) !important;
+  background-color: rgba(251, 191, 36, 0.15) !important;
 }
 
 .dark .bg-purple-50,
 .dark .bg-purple-50\/50 {
-  background-color: rgba(30, 14, 48, 0.65) !important;
-  border-color: rgba(192, 132, 252, 0.35) !important;
+  background-color: rgba(192, 132, 252, 0.08) !important;
+  border-color: rgba(192, 132, 252, 0.2) !important;
 }
 
 .dark .bg-purple-100 {
-  background-color: rgba(44, 20, 72, 0.8) !important;
+  background-color: rgba(192, 132, 252, 0.15) !important;
 }
 
 .dark .bg-pink-50,
 .dark .bg-pink-50\/50,
 .dark .bg-rose-50 {
-  background-color: rgba(38, 12, 22, 0.65) !important;
-  border-color: rgba(244, 114, 182, 0.35) !important;
+  background-color: rgba(244, 114, 182, 0.08) !important;
+  border-color: rgba(244, 114, 182, 0.2) !important;
 }
 
 .dark .bg-red-50,
 .dark .bg-red-50\/50 {
-  background-color: rgba(44, 12, 12, 0.65) !important;
-  border-color: rgba(248, 113, 113, 0.35) !important;
+  background-color: rgba(248, 113, 113, 0.08) !important;
+  border-color: rgba(248, 113, 113, 0.2) !important;
 }
 
 .dark .bg-gray-100,
 .dark .bg-slate-100 {
-  background-color: #162230 !important;
-  border-color: #243648 !important;
+  background-color: #1F2937 !important;
+  border-color: #374151 !important;
 }
 
-/* High-Contrast Luminous Text in Dark Mode */
+/* Luminous text in Dark Mode */
 .dark .text-brand-900,
 .dark .text-brand-800,
 .dark .text-brand-700 {
-  color: #2dd4bf !important;
+  color: #2DD4BF !important;
 }
 
 .dark .text-emerald-900,
 .dark .text-emerald-800,
 .dark .text-emerald-700 {
-  color: #34d399 !important;
+  color: #34D399 !important;
 }
 
 .dark .text-blue-900,
 .dark .text-blue-800,
 .dark .text-blue-700 {
-  color: #38bdf8 !important;
+  color: #38BDF8 !important;
 }
 
 .dark .text-amber-900,
 .dark .text-amber-800,
 .dark .text-amber-700 {
-  color: #fbbf24 !important;
+  color: #FBBF24 !important;
 }
 
 .dark .text-purple-900,
 .dark .text-purple-800,
 .dark .text-purple-700 {
-  color: #c084fc !important;
+  color: #C084FC !important;
 }
 
 .dark .text-pink-900,
 .dark .text-pink-800,
 .dark .text-pink-700 {
-  color: #f472b6 !important;
+  color: #F472B6 !important;
 }
 
 .dark .text-red-900,
 .dark .text-red-800,
 .dark .text-red-700 {
-  color: #f87171 !important;
+  color: #F87171 !important;
 }
 
 /* Scrollbar aesthetic */

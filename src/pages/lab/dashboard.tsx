@@ -125,14 +125,14 @@ export function LabDashboard() {
 
   return (
     <div className="space-y-6">
-      {/* Header Banner */}
-      <div className="flex flex-col gap-4 rounded-3xl border border-border bg-gradient-to-r from-purple-800 via-indigo-900 to-brand-800 p-6 text-white shadow-md sm:flex-row sm:items-center sm:justify-between">
+      {/* Header Banner - Clean Single-Color Card */}
+      <div className="flex flex-col gap-4 rounded-3xl border border-border bg-surface p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <span className="rounded-full bg-white/20 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider backdrop-blur-sm">
+          <span className="rounded-full bg-purple-500/10 text-purple-700 dark:text-purple-300 border border-purple-500/20 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider">
             {t("lab_diagnostics")}
           </span>
-          <h1 className="mt-1 text-2xl font-black">{t("lab_diagnostics")}</h1>
-          <p className="text-xs text-purple-100 mt-0.5">
+          <h1 className="mt-1.5 text-2xl font-black text-fg">{t("lab_diagnostics")}</h1>
+          <p className="text-xs text-muted mt-0.5">
             QR-Based Patient Specimen Tracking · Results Entry · Auto-Publish to Doctor &amp; Patient
           </p>
         </div>
@@ -141,9 +141,9 @@ export function LabDashboard() {
           <Button
             onClick={() => setScannerOpen(true)}
             size="lg"
-            className="bg-white text-purple-900 hover:bg-purple-50 shadow-xl font-bold flex items-center gap-2 cursor-pointer"
+            className="font-bold flex items-center gap-2 cursor-pointer"
           >
-            <QrIcon className="h-5 w-5 text-purple-700" /> {t("scan_patient_qr")}
+            <QrIcon className="h-5 w-5" /> {t("scan_patient_qr")}
           </Button>
         </div>
       </div>
@@ -151,7 +151,7 @@ export function LabDashboard() {
       {/* KPI Stats */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <Card className="flex items-center gap-4">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-50 text-purple-700">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-500/10 text-purple-700 dark:text-purple-300 border border-purple-500/20">
             <FlaskConical className="h-6 w-6" />
           </span>
           <div>
@@ -160,7 +160,7 @@ export function LabDashboard() {
           </div>
         </Card>
         <Card className="flex items-center gap-4">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-50 text-amber-700">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/20">
             <Clock className="h-6 w-6" />
           </span>
           <div>
@@ -169,7 +169,7 @@ export function LabDashboard() {
           </div>
         </Card>
         <Card className="flex items-center gap-4">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-700">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-500/10 text-blue-700 dark:text-blue-300 border border-blue-500/20">
             <Upload className="h-6 w-6" />
           </span>
           <div>
@@ -178,7 +178,7 @@ export function LabDashboard() {
           </div>
         </Card>
         <Card className="flex items-center gap-4">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-700">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">
             <CheckCircle2 className="h-6 w-6" />
           </span>
           <div>
@@ -217,7 +217,7 @@ export function LabDashboard() {
         <Card className="overflow-hidden p-0">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="border-b border-border bg-purple-50/50 text-muted uppercase font-semibold text-[10px]">
+              <thead className="border-b border-border bg-surfaceSecondary text-muted uppercase font-semibold text-[10px]">
                 <tr>
                   <th className="p-3">{t("token")}</th>
                   <th className="p-3">{t("diagnostic_tests")}</th>
@@ -236,9 +236,9 @@ export function LabDashboard() {
                   </tr>
                 ) : (
                   filteredOrders.map((testItem) => (
-                    <tr key={testItem.id} className="hover:bg-purple-50/20 transition">
+                    <tr key={testItem.id} className="hover:bg-surface-hover transition">
                       <td className="p-3">
-                        <span className="font-mono font-bold text-xs text-purple-800 bg-purple-100/70 px-2 py-0.5 rounded border border-purple-200">
+                        <span className="font-mono font-bold text-xs text-purple-700 dark:text-purple-300 bg-purple-500/10 px-2 py-0.5 rounded border border-purple-500/20">
                           {testItem.tokenNumber || testItem.id}
                         </span>
                       </td>
@@ -255,12 +255,12 @@ export function LabDashboard() {
                         <span
                           className={`rounded-full px-2.5 py-0.5 text-[10px] font-bold border ${
                             testItem.status === "COMPLETED"
-                              ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                              ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20"
                               : testItem.status === "PROCESSING"
-                              ? "bg-blue-50 text-blue-700 border-blue-200"
+                              ? "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20"
                               : testItem.status === "SAMPLE_COLLECTED"
-                              ? "bg-indigo-50 text-indigo-700 border-indigo-200"
-                              : "bg-amber-50 text-amber-700 border-amber-200"
+                              ? "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-500/20"
+                              : "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20"
                           }`}
                         >
                           {t(`status_${testItem.status.toLowerCase()}`, testItem.status.replace(/_/g, " "))}
@@ -278,12 +278,12 @@ export function LabDashboard() {
                           </Button>
                         )}
                         {testItem.status === "PROCESSING" && (
-                          <Button size="sm" className="bg-purple-700 text-white hover:bg-purple-600 cursor-pointer" onClick={() => handleOpenResultModal(testItem)}>
+                          <Button size="sm" className="bg-purple-700 hover:bg-purple-600 text-white cursor-pointer" onClick={() => handleOpenResultModal(testItem)}>
                             {t("enter_result_publish")}
                           </Button>
                         )}
                         {testItem.status === "COMPLETED" && (
-                          <span className="text-emerald-700 font-bold text-xs flex items-center justify-end gap-1">
+                          <span className="text-emerald-600 dark:text-emerald-400 font-bold text-xs flex items-center justify-end gap-1">
                             <CheckCircle2 className="h-3.5 w-3.5" /> {t("status_completed")}
                           </span>
                         )}
@@ -355,7 +355,7 @@ export function LabDashboard() {
               />
             </div>
 
-            <Button type="submit" className="w-full bg-purple-700 text-white hover:bg-purple-600 cursor-pointer">
+            <Button type="submit" className="w-full bg-purple-700 hover:bg-purple-600 text-white cursor-pointer">
               <FileCheck className="h-4 w-4" /> {t("save")}
             </Button>
           </form>

@@ -108,36 +108,37 @@ export function HospitalDashboard() {
 
   return (
     <div className="space-y-6">
-      {/* Header Banner */}
-      <div className="flex flex-col gap-4 rounded-3xl border border-border bg-gradient-to-r from-brand-700 via-brand-800 to-indigo-900 p-6 text-white shadow-md sm:flex-row sm:items-center sm:justify-between">
+      {/* Header Banner - Clean Single-Color Card */}
+      <div className="flex flex-col gap-4 rounded-3xl border border-border bg-surface p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between">
         <div>
           <div className="flex items-center gap-2">
-            <span className="rounded-full bg-white/20 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider backdrop-blur-sm flex items-center gap-1.5">
+            <span className="rounded-full bg-brand-500/10 text-brand-700 dark:text-brand-400 border border-brand-500/20 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider flex items-center gap-1.5">
               <Building2 className="h-3.5 w-3.5" /> {t("hospital_reception")}
             </span>
           </div>
-          <h1 className="mt-1.5 text-2xl font-black">{facility.name}</h1>
-          <p className="text-xs text-brand-100 mt-0.5">
+          <h1 className="mt-1.5 text-2xl font-black text-fg">{facility.name}</h1>
+          <p className="text-xs text-muted mt-0.5">
             Reception Desk · OPD Token Management · Real-Time Patient Check-In
           </p>
         </div>
 
-        {/* Action Buttons with High Visibility in both Light and Dark modes */}
+        {/* Action Buttons */}
         <div className="flex flex-wrap items-center gap-3">
           <Button
             onClick={() => setScannerOpen(true)}
             size="lg"
-            className="bg-white text-slate-900 hover:bg-slate-100 shadow-xl font-bold flex items-center gap-2 border border-white/50 cursor-pointer"
+            variant="outline"
+            className="font-bold flex items-center gap-2 cursor-pointer shadow-sm"
           >
-            <QrIcon className="h-5 w-5 text-brand-700" /> {t("scan_patient_qr")}
+            <QrIcon className="h-5 w-5 text-brand-700 dark:text-brand-400" /> {t("scan_patient_qr")}
           </Button>
 
           <Button
             onClick={() => setWalkinOpen(true)}
             size="lg"
-            className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black shadow-xl flex items-center gap-2 border border-emerald-300 dark:border-emerald-400/50 cursor-pointer transition-transform active:scale-95"
+            className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold shadow-sm flex items-center gap-2 cursor-pointer transition-transform active:scale-95"
           >
-            <UserCheck className="h-5 w-5 text-slate-950" /> {t("walk_in_check_in")}
+            <UserCheck className="h-5 w-5" /> {t("walk_in_check_in")}
           </Button>
         </div>
       </div>
@@ -145,7 +146,7 @@ export function HospitalDashboard() {
       {/* KPI Stats */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <Card className="flex items-center gap-4">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-50 text-brand-700">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-500/10 text-brand-700 dark:text-brand-400 border border-brand-500/20">
             <Users className="h-6 w-6" />
           </span>
           <div>
@@ -154,7 +155,7 @@ export function HospitalDashboard() {
           </div>
         </Card>
         <Card className="flex items-center gap-4">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-50 text-amber-700">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20">
             <CalendarClock className="h-6 w-6" />
           </span>
           <div>
@@ -163,7 +164,7 @@ export function HospitalDashboard() {
           </div>
         </Card>
         <Card className="flex items-center gap-4">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-700">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-500/20">
             <Clock className="h-6 w-6" />
           </span>
           <div>
@@ -172,7 +173,7 @@ export function HospitalDashboard() {
           </div>
         </Card>
         <Card className="flex items-center gap-4">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-700">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">
             <CheckCircle2 className="h-6 w-6" />
           </span>
           <div>
@@ -202,7 +203,7 @@ export function HospitalDashboard() {
         <Card className="overflow-hidden p-0">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="border-b border-border bg-brand-50/70 text-muted uppercase font-semibold text-[10px]">
+              <thead className="border-b border-border bg-surfaceSecondary text-muted uppercase font-semibold text-[10px]">
                 <tr>
                   <th className="p-3">{t("token")}</th>
                   <th className="p-3">{t("patient")}</th>
@@ -221,10 +222,10 @@ export function HospitalDashboard() {
                   </tr>
                 ) : (
                   filteredVisits.map((v) => (
-                    <tr key={v.id} className="hover:bg-brand-50/30 transition">
+                    <tr key={v.id} className="hover:bg-surface-hover transition">
                       <td className="p-3">
                         {v.tokenNumber ? (
-                          <span className="font-mono font-bold text-sm text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">
+                          <span className="font-mono font-bold text-sm text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-500/20">
                             {v.tokenNumber}
                           </span>
                         ) : (
@@ -244,12 +245,12 @@ export function HospitalDashboard() {
                         <span
                           className={`rounded-full px-2.5 py-0.5 text-[10px] font-bold border ${
                             v.status === "COMPLETED"
-                              ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                              ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20"
                               : v.status === "CHECKED_IN"
-                              ? "bg-blue-50 text-blue-700 border-blue-200"
+                              ? "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20"
                               : v.status === "IN_CONSULTATION"
-                              ? "bg-amber-50 text-amber-700 border-amber-200"
-                              : "bg-gray-100 text-gray-700 border-gray-200"
+                              ? "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20"
+                              : "bg-gray-500/10 text-gray-600 dark:text-gray-400 border-gray-500/20"
                           }`}
                         >
                           {t(`status_${v.status.toLowerCase()}`, v.status.replace(/_/g, " "))}
@@ -295,7 +296,7 @@ export function HospitalDashboard() {
       {/* High Visibility Walk-in Modal */}
       <Modal open={walkinOpen} onClose={() => setWalkinOpen(false)} title={t("walk_in_check_in")}>
         <form onSubmit={handleWalkinSubmit} className="space-y-4">
-          <div className="rounded-2xl border border-brand-200 bg-brand-50/50 p-3 flex items-start gap-2.5 text-xs text-brand-900">
+          <div className="rounded-2xl border border-border bg-surfaceSecondary p-3 flex items-start gap-2.5 text-xs text-fg">
             <AlertCircle className="h-4 w-4 shrink-0 text-brand-600 mt-0.5" />
             <span>
               {t("walkin_desc")}
@@ -361,12 +362,12 @@ export function HospitalDashboard() {
           className="max-w-md text-center"
         >
           <div className="space-y-4">
-            <div className="rounded-2xl border-2 border-emerald-600 bg-emerald-50/60 p-5 space-y-2">
-              <span className="text-xs uppercase font-bold text-emerald-800">{t("your_opd_token")}</span>
-              <p className="text-4xl font-black text-emerald-800 tracking-wider font-mono">
+            <div className="rounded-2xl border border-border bg-surfaceSecondary p-5 space-y-2">
+              <span className="text-xs uppercase font-bold text-muted">{t("your_opd_token")}</span>
+              <p className="text-4xl font-black text-brand-700 dark:text-brand-400 tracking-wider font-mono">
                 {issuedToken || selectedVisit.tokenNumber || "A-024"}
               </p>
-              <p className="text-xs font-semibold text-emerald-900">
+              <p className="text-xs font-semibold text-fg">
                 {t("department")}: {selectedVisit.department}
               </p>
               <p className="text-[11px] text-muted">
@@ -381,7 +382,7 @@ export function HospitalDashboard() {
               </div>
               <div className="flex justify-between">
                 <span className="text-muted">{t("permanent_id_label")}:</span>
-                <span className="font-mono font-bold text-brand-700">{selectedVisit.patientId}</span>
+                <span className="font-mono font-bold text-brand-700 dark:text-brand-400">{selectedVisit.patientId}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-muted">{t("visit_number")}:</span>
@@ -389,7 +390,7 @@ export function HospitalDashboard() {
               </div>
               <div className="flex justify-between">
                 <span className="text-muted">{t("stage")}:</span>
-                <span className="font-bold text-emerald-700">{t(`status_${selectedVisit.status.toLowerCase()}`, selectedVisit.status.replace(/_/g, " "))}</span>
+                <span className="font-bold text-emerald-600 dark:text-emerald-400">{t(`status_${selectedVisit.status.toLowerCase()}`, selectedVisit.status.replace(/_/g, " "))}</span>
               </div>
             </div>
 

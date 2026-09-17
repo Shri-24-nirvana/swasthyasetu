@@ -29,7 +29,7 @@ export interface ThemeColors {
   shadowHover: string;
   overlay: string;
 
-  // SwasthyaSetu Medical & Rural Healthcare Tokens
+  // SwasthyaSetu Medical Tokens
   opdTokenBg: string;
   opdTokenBorder: string;
   opdTokenText: string;
@@ -45,13 +45,13 @@ export interface ThemeColors {
 }
 
 // ============================================================================
-// 1. AYUSHMAN TEAL / EMERALD PALETTE (Primary Health Network Theme)
+// 1. AYUSHMAN TEAL (Clean Single-Tone Palette)
 // ============================================================================
 export const lightVibrantColors: ThemeColors = {
   background: "#F8FAFC",
   surface: "#FFFFFF",
-  surfaceSecondary: "#F0FDFA",
-  surfaceHover: "#F1F5F9",
+  surfaceSecondary: "#F1F5F9",
+  surfaceHover: "#F8FAFC",
   
   text: "#0F172A",
   textSecondary: "#475569",
@@ -59,146 +59,53 @@ export const lightVibrantColors: ThemeColors = {
   
   primary: "#0D9488", // Teal Primary
   primaryHover: "#0F766E",
-  primaryLight: "rgba(13, 148, 136, 0.12)",
-  primaryGlow: "rgba(13, 148, 136, 0.25)",
+  primaryLight: "rgba(13, 148, 136, 0.1)",
+  primaryGlow: "rgba(13, 148, 136, 0.2)",
   
-  secondary: "#2563EB", // Royal Blue
-  success: "#059669",  // Emerald
-  warning: "#D97706",  // Amber
-  error: "#DC2626",    // Red
-  info: "#0284C7",     // Sky Blue
+  secondary: "#2563EB",
+  success: "#059669",
+  warning: "#D97706",
+  error: "#DC2626",
+  info: "#0284C7",
   
-  hover: "#F8FAFC",
+  hover: "#F1F5F9",
   focus: "rgba(13, 148, 136, 0.25)",
   border: "#E2E8F0",
   borderLight: "#F1F5F9",
   borderHover: "#CBD5E1",
   
-  shadow: "0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.03)",
-  shadowHover: "0 10px 25px -3px rgba(15, 23, 42, 0.08), 0 4px 10px -2px rgba(15, 23, 42, 0.04)",
-  overlay: "rgba(15, 23, 42, 0.6)",
+  shadow: "0 1px 3px 0 rgba(0, 0, 0, 0.06), 0 1px 2px 0 rgba(0, 0, 0, 0.04)",
+  shadowHover: "0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04)",
+  overlay: "rgba(15, 23, 42, 0.5)",
 
-  opdTokenBg: "#ECFDF5",
-  opdTokenBorder: "#A7F3D0",
-  opdTokenText: "#065F46",
-  riskLowBg: "#DCFCE7",
+  opdTokenBg: "#F0FDFA",
+  opdTokenBorder: "#CCFBF1",
+  opdTokenText: "#0F766E",
+  riskLowBg: "#F0FDF4",
   riskLowText: "#166534",
-  riskModerateBg: "#FEF3C7",
+  riskModerateBg: "#FFFBEB",
   riskModerateText: "#92400E",
-  riskHighBg: "#FEE2E2",
+  riskHighBg: "#FEF2F2",
   riskHighText: "#991B1B",
-  vitalsCardBg: "#F0FDFA",
-  vitalsCardBorder: "rgba(13, 148, 136, 0.2)",
-  cardGlow: "rgba(13, 148, 136, 0.08)",
+  vitalsCardBg: "#FFFFFF",
+  vitalsCardBorder: "#E2E8F0",
+  cardGlow: "none",
 };
 
 export const darkVibrantColors: ThemeColors = {
-  background: "#070C12",
-  surface: "#0E1724",
-  surfaceSecondary: "#131F30",
-  surfaceHover: "#162538",
+  background: "#0B0F17", // Single cohesive deep dark background
+  surface: "#111827",    // Simple, clean single-color surface
+  surfaceSecondary: "#1F2937",
+  surfaceHover: "#1E293B",
   
-  text: "#F8FAFC",
-  textSecondary: "#CBD5E1",
-  textTertiary: "#94A3B8",
+  text: "#F9FAFB",
+  textSecondary: "#9CA3AF",
+  textTertiary: "#6B7280",
   
-  primary: "#2DD4BF", // Luminous Bright Teal
-  primaryHover: "#14B8A6",
-  primaryLight: "rgba(45, 212, 191, 0.18)",
-  primaryGlow: "rgba(45, 212, 191, 0.35)",
-  
-  secondary: "#38BDF8", // Electric Sky Blue
-  success: "#34D399", // Bright Emerald
-  warning: "#FBBF24", // Bright Amber
-  error: "#F87171",   // Bright Coral
-  info: "#60A5FA",    // Bright Blue
-  
-  hover: "#18283C",
-  focus: "rgba(45, 212, 191, 0.35)",
-  border: "#1C2D42",
-  borderLight: "rgba(255, 255, 255, 0.08)",
-  borderHover: "#2A4360",
-  
-  shadow: "0 4px 24px -2px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.04)",
-  shadowHover: "0 12px 32px -4px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(45, 212, 191, 0.3)",
-  overlay: "rgba(0, 0, 0, 0.8)",
-
-  opdTokenBg: "rgba(6, 44, 32, 0.75)",
-  opdTokenBorder: "rgba(52, 211, 153, 0.4)",
-  opdTokenText: "#6EE7B7",
-  riskLowBg: "rgba(6, 44, 32, 0.7)",
-  riskLowText: "#6EE7B7",
-  riskModerateBg: "rgba(45, 26, 3, 0.7)",
-  riskModerateText: "#FDE68A",
-  riskHighBg: "rgba(50, 14, 14, 0.7)",
-  riskHighText: "#FCA5A5",
-  vitalsCardBg: "rgba(12, 28, 36, 0.75)",
-  vitalsCardBorder: "rgba(45, 212, 191, 0.25)",
-  cardGlow: "rgba(45, 212, 191, 0.15)",
-};
-
-// ============================================================================
-// 2. SAFFRON / WARM PALETTE (Ayushman Warm Theme)
-// ============================================================================
-export const lightOrangeColors: ThemeColors = {
-  background: "#FAF8F5",
-  surface: "#FFFFFF",
-  surfaceSecondary: "#FFF7ED",
-  surfaceHover: "#FFF1E6",
-  
-  text: "#0F172A",
-  textSecondary: "#475569",
-  textTertiary: "#94A3B8",
-  
-  primary: "#EA580C", // Saffron Primary
-  primaryHover: "#C2410C",
-  primaryLight: "rgba(234, 88, 12, 0.12)",
-  primaryGlow: "rgba(234, 88, 12, 0.25)",
-  
-  secondary: "#0284C7",
-  success: "#059669",
-  warning: "#D97706",
-  error: "#DC2626",
-  info: "#2563EB",
-  
-  hover: "#FFF7ED",
-  focus: "rgba(234, 88, 12, 0.25)",
-  border: "#E2E8F0",
-  borderLight: "#FFEDD5",
-  borderHover: "#FDBA74",
-  
-  shadow: "0 4px 20px -2px rgba(15, 23, 42, 0.05)",
-  shadowHover: "0 10px 25px -3px rgba(234, 88, 12, 0.1)",
-  overlay: "rgba(15, 23, 42, 0.6)",
-
-  opdTokenBg: "#FFF7ED",
-  opdTokenBorder: "#FDBA74",
-  opdTokenText: "#9A3412",
-  riskLowBg: "#DCFCE7",
-  riskLowText: "#166534",
-  riskModerateBg: "#FEF3C7",
-  riskModerateText: "#92400E",
-  riskHighBg: "#FEE2E2",
-  riskHighText: "#991B1B",
-  vitalsCardBg: "#FFF7ED",
-  vitalsCardBorder: "rgba(234, 88, 12, 0.25)",
-  cardGlow: "rgba(234, 88, 12, 0.08)",
-};
-
-export const darkOrangeColors: ThemeColors = {
-  background: "#080B10",
-  surface: "#101622",
-  surfaceSecondary: "#1C1612",
-  surfaceHover: "#241D17",
-  
-  text: "#F8FAFC",
-  textSecondary: "#CBD5E1",
-  textTertiary: "#94A3B8",
-  
-  primary: "#FB923C", // Bright Saffron
-  primaryHover: "#F97316",
-  primaryLight: "rgba(251, 146, 60, 0.18)",
-  primaryGlow: "rgba(251, 146, 60, 0.35)",
+  primary: "#14B8A6", // Refined Teal Accent
+  primaryHover: "#2DD4BF",
+  primaryLight: "rgba(20, 184, 166, 0.12)",
+  primaryGlow: "rgba(20, 184, 166, 0.2)",
   
   secondary: "#38BDF8",
   success: "#34D399",
@@ -206,28 +113,121 @@ export const darkOrangeColors: ThemeColors = {
   error: "#F87171",
   info: "#60A5FA",
   
-  hover: "#2A1D15",
-  focus: "rgba(251, 146, 60, 0.35)",
-  border: "#262C38",
-  borderLight: "rgba(255, 255, 255, 0.08)",
-  borderHover: "#3E362C",
+  hover: "#1F2937",
+  focus: "rgba(20, 184, 166, 0.25)",
+  border: "#1F2937",
+  borderLight: "#1F2937",
+  borderHover: "#374151",
   
-  shadow: "0 4px 24px -2px rgba(0, 0, 0, 0.6)",
-  shadowHover: "0 12px 32px -4px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(251, 146, 60, 0.3)",
-  overlay: "rgba(0, 0, 0, 0.8)",
+  shadow: "0 1px 3px 0 rgba(0, 0, 0, 0.3)",
+  shadowHover: "0 4px 6px -1px rgba(0, 0, 0, 0.4)",
+  overlay: "rgba(0, 0, 0, 0.75)",
 
-  opdTokenBg: "rgba(45, 20, 5, 0.75)",
-  opdTokenBorder: "rgba(251, 146, 60, 0.4)",
-  opdTokenText: "#FDBA74",
-  riskLowBg: "rgba(6, 44, 32, 0.7)",
-  riskLowText: "#6EE7B7",
-  riskModerateBg: "rgba(45, 26, 3, 0.7)",
-  riskModerateText: "#FDE68A",
-  riskHighBg: "rgba(50, 14, 14, 0.7)",
-  riskHighText: "#FCA5A5",
-  vitalsCardBg: "rgba(28, 22, 18, 0.75)",
-  vitalsCardBorder: "rgba(251, 146, 60, 0.25)",
-  cardGlow: "rgba(251, 146, 60, 0.15)",
+  opdTokenBg: "rgba(20, 184, 166, 0.1)",
+  opdTokenBorder: "rgba(20, 184, 166, 0.25)",
+  opdTokenText: "#2DD4BF",
+  riskLowBg: "rgba(52, 211, 153, 0.1)",
+  riskLowText: "#34D399",
+  riskModerateBg: "rgba(251, 191, 36, 0.1)",
+  riskModerateText: "#FBBF24",
+  riskHighBg: "rgba(248, 113, 113, 0.1)",
+  riskHighText: "#F87171",
+  vitalsCardBg: "#111827",
+  vitalsCardBorder: "#1F2937",
+  cardGlow: "none",
+};
+
+// ============================================================================
+// 2. AYUSHMAN SAFFRON (Clean Warm Single-Tone Palette)
+// ============================================================================
+export const lightOrangeColors: ThemeColors = {
+  background: "#FAFAF9",
+  surface: "#FFFFFF",
+  surfaceSecondary: "#F5F5F4",
+  surfaceHover: "#FAFAF9",
+  
+  text: "#1C1917",
+  textSecondary: "#57534E",
+  textTertiary: "#A8A29E",
+  
+  primary: "#EA580C", // Saffron Primary
+  primaryHover: "#C2410C",
+  primaryLight: "rgba(234, 88, 12, 0.1)",
+  primaryGlow: "rgba(234, 88, 12, 0.2)",
+  
+  secondary: "#0284C7",
+  success: "#059669",
+  warning: "#D97706",
+  error: "#DC2626",
+  info: "#2563EB",
+  
+  hover: "#F5F5F4",
+  focus: "rgba(234, 88, 12, 0.25)",
+  border: "#E7E5E4",
+  borderLight: "#F5F5F4",
+  borderHover: "#D6D3D1",
+  
+  shadow: "0 1px 3px 0 rgba(0, 0, 0, 0.06)",
+  shadowHover: "0 4px 6px -1px rgba(0, 0, 0, 0.08)",
+  overlay: "rgba(28, 25, 23, 0.5)",
+
+  opdTokenBg: "#FFF7ED",
+  opdTokenBorder: "#FFEDD5",
+  opdTokenText: "#C2410C",
+  riskLowBg: "#F0FDF4",
+  riskLowText: "#166534",
+  riskModerateBg: "#FFFBEB",
+  riskModerateText: "#92400E",
+  riskHighBg: "#FEF2F2",
+  riskHighText: "#991B1B",
+  vitalsCardBg: "#FFFFFF",
+  vitalsCardBorder: "#E7E5E4",
+  cardGlow: "none",
+};
+
+export const darkOrangeColors: ThemeColors = {
+  background: "#0C0A09",
+  surface: "#1C1917",
+  surfaceSecondary: "#292524",
+  surfaceHover: "#322D29",
+  
+  text: "#FAFAF9",
+  textSecondary: "#A8A29E",
+  textTertiary: "#78716C",
+  
+  primary: "#F97316", // Saffron Accent
+  primaryHover: "#FB923C",
+  primaryLight: "rgba(249, 115, 22, 0.12)",
+  primaryGlow: "rgba(249, 115, 22, 0.2)",
+  
+  secondary: "#38BDF8",
+  success: "#34D399",
+  warning: "#FBBF24",
+  error: "#F87171",
+  info: "#60A5FA",
+  
+  hover: "#292524",
+  focus: "rgba(249, 115, 22, 0.25)",
+  border: "#292524",
+  borderLight: "#292524",
+  borderHover: "#44403C",
+  
+  shadow: "0 1px 3px 0 rgba(0, 0, 0, 0.3)",
+  shadowHover: "0 4px 6px -1px rgba(0, 0, 0, 0.4)",
+  overlay: "rgba(0, 0, 0, 0.75)",
+
+  opdTokenBg: "rgba(249, 115, 22, 0.1)",
+  opdTokenBorder: "rgba(249, 115, 22, 0.25)",
+  opdTokenText: "#FB923C",
+  riskLowBg: "rgba(52, 211, 153, 0.1)",
+  riskLowText: "#34D399",
+  riskModerateBg: "rgba(251, 191, 36, 0.1)",
+  riskModerateText: "#FBBF24",
+  riskHighBg: "rgba(248, 113, 113, 0.1)",
+  riskHighText: "#F87171",
+  vitalsCardBg: "#1C1917",
+  vitalsCardBorder: "#292524",
+  cardGlow: "none",
 };
 
 // Helper to get active palette based on isDark and colorTheme
@@ -246,13 +246,21 @@ export const createThemedStyles = (colors: ThemeColors, isDark: boolean) => ({
     boxSizing: "border-box" as const,
   },
 
+  bannerHeader: {
+    background: colors.surface,
+    color: colors.text,
+    border: `1px solid ${colors.border}`,
+    borderRadius: "24px",
+    padding: "24px",
+  },
+
   card: {
     background: colors.surface,
     borderRadius: "16px",
-    padding: "24px",
+    padding: "20px",
     border: `1px solid ${colors.border}`,
     boxShadow: colors.shadow,
-    transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
+    transition: "all 0.2s ease",
   },
 
   cardHover: {
@@ -266,9 +274,9 @@ export const createThemedStyles = (colors: ThemeColors, isDark: boolean) => ({
     background: colors.opdTokenBg,
     color: colors.opdTokenText,
     border: `1px solid ${colors.opdTokenBorder}`,
-    borderRadius: "12px",
+    borderRadius: "10px",
     padding: "6px 14px",
-    fontWeight: 800,
+    fontWeight: 700,
     fontFamily: "monospace",
     display: "inline-flex",
     alignItems: "center",
@@ -283,28 +291,26 @@ export const createThemedStyles = (colors: ThemeColors, isDark: boolean) => ({
   },
 
   buttonPrimary: {
-    background: isDark
-      ? `linear-gradient(135deg, ${colors.primary} 0%, ${colors.primaryHover} 100%)`
-      : colors.primary,
-    color: isDark ? "#090E17" : "#FFFFFF",
+    background: colors.primary,
+    color: isDark ? "#0B0F17" : "#FFFFFF",
     borderRadius: "12px",
     padding: "10px 20px",
     fontWeight: 700,
     border: "none",
     cursor: "pointer",
-    boxShadow: isDark ? `0 0 15px ${colors.primaryGlow}` : "0 2px 8px rgba(0,0,0,0.1)",
-    transition: "all 0.2s ease",
+    boxShadow: "none",
+    transition: "all 0.15s ease",
   },
 
   buttonSecondary: {
     background: colors.surfaceSecondary,
-    color: colors.primary,
+    color: colors.text,
     border: `1px solid ${colors.border}`,
     borderRadius: "12px",
     padding: "10px 20px",
     fontWeight: 600,
     cursor: "pointer",
-    transition: "all 0.2s ease",
+    transition: "all 0.15s ease",
   },
 
   tableHeader: {
@@ -331,23 +337,3 @@ export const createThemedStyles = (colors: ThemeColors, isDark: boolean) => ({
     outline: "none",
   },
 });
-
-export const globalStyles = `
-@keyframes pulse-subtle {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.85; transform: scale(1.02); }
-}
-
-* {
-  transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-              border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  box-sizing: border-box;
-}
-
-.gradient-text {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-`;

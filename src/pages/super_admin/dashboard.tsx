@@ -21,20 +21,20 @@ export function SuperAdminDashboard() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col gap-4 rounded-3xl border border-border bg-gradient-to-r from-orange-700 via-brand-800 to-indigo-950 p-6 text-white shadow-md sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-4 rounded-3xl border border-border bg-surface p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <span className="rounded-full bg-white/20 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider backdrop-blur-sm">
+          <span className="rounded-full bg-orange-500/10 text-orange-700 dark:text-orange-400 border border-orange-500/20 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider">
             National Health Mission &amp; ABDM Core
           </span>
-          <h1 className="mt-1 text-2xl font-black">SwasthyaSetu Central Command &amp; Governance</h1>
-          <p className="text-xs text-orange-100 mt-0.5">
+          <h1 className="mt-1.5 text-2xl font-black text-fg">SwasthyaSetu Central Command &amp; Governance</h1>
+          <p className="text-xs text-muted mt-0.5">
             Inter-Facility Health Exchange · State-Level Population Analytics · Security &amp; Compliance Audit
           </p>
         </div>
 
         <Link to="/admin/audit-logs">
-          <Button className="bg-white text-orange-950 hover:bg-orange-50 font-bold shadow-xl">
-            <ShieldCheck className="h-4 w-4 text-orange-700" /> National Audit Ledger ({auditLogs.length})
+          <Button className="font-bold cursor-pointer">
+            <ShieldCheck className="h-4 w-4" /> National Audit Ledger ({auditLogs.length})
           </Button>
         </Link>
       </div>

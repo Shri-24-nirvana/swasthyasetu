@@ -43,13 +43,13 @@ export function SecurityDashboard() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col gap-4 rounded-3xl border border-border bg-gradient-to-r from-slate-800 via-slate-900 to-brand-900 p-6 text-white shadow-md sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-4 rounded-3xl border border-border bg-surface p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <span className="rounded-full bg-white/20 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider backdrop-blur-sm">
+          <span className="rounded-full bg-slate-500/10 text-slate-700 dark:text-slate-300 border border-slate-500/20 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider">
             Facility Access &amp; Gate Checkpoint
           </span>
-          <h1 className="mt-1 text-2xl font-black">Security &amp; Gate Marshall Desk</h1>
-          <p className="text-xs text-slate-200 mt-0.5">
+          <h1 className="mt-1.5 text-2xl font-black text-fg">Security &amp; Gate Marshall Desk</h1>
+          <p className="text-xs text-muted mt-0.5">
             Entry QR Verification · Visitor Log · Hospital Marshalling
           </p>
         </div>
@@ -57,9 +57,9 @@ export function SecurityDashboard() {
         <Button
           onClick={() => setScannerOpen(true)}
           size="lg"
-          className="bg-white text-slate-900 hover:bg-slate-100 shadow-xl font-bold flex items-center gap-2"
+          className="font-bold flex items-center gap-2 cursor-pointer"
         >
-          <QrIcon className="h-5 w-5 text-slate-800" /> SCAN VISITOR / PATIENT QR
+          <QrIcon className="h-5 w-5" /> Scan Visitor QR
         </Button>
       </div>
 

@@ -59,14 +59,14 @@ export function DoctorDashboard() {
 
   return (
     <div className="space-y-6">
-      {/* Doctor Header Banner */}
-      <div className="flex flex-col gap-4 rounded-3xl border border-border bg-gradient-to-r from-blue-700 via-indigo-800 to-brand-800 p-6 text-white shadow-md sm:flex-row sm:items-center sm:justify-between">
+      {/* Doctor Header Banner - Clean Single-Color Card */}
+      <div className="flex flex-col gap-4 rounded-3xl border border-border bg-surface p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <span className="rounded-full bg-white/20 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider backdrop-blur-sm">
+          <span className="rounded-full bg-brand-500/10 text-brand-700 dark:text-brand-400 border border-brand-500/20 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider">
             {t("doctor_consultation")}
           </span>
-          <h1 className="mt-1 text-2xl font-black">{doctorName}</h1>
-          <p className="text-xs text-blue-100 mt-0.5">
+          <h1 className="mt-1.5 text-2xl font-black text-fg">{doctorName}</h1>
+          <p className="text-xs text-muted mt-0.5">
             Active OPD Queue · Clinical Consultation Suite · E-Prescription &amp; Diagnostic Orders
           </p>
         </div>
@@ -75,14 +75,14 @@ export function DoctorDashboard() {
           <Button
             onClick={() => setScannerOpen(true)}
             size="lg"
-            className="bg-white text-blue-900 hover:bg-blue-50 shadow-xl font-bold flex items-center gap-2 cursor-pointer"
+            className="font-bold flex items-center gap-2 cursor-pointer"
           >
-            <QrIcon className="h-5 w-5 text-blue-700" /> {t("scan_patient_qr")}
+            <QrIcon className="h-5 w-5" /> {t("scan_patient_qr")}
           </Button>
           {waitingQueue.length > 0 && (
             <Link to={`/doctor/consultation?visitId=${waitingQueue[0].id}`}>
-              <Button variant="secondary" className="border-white/30 text-white hover:bg-white/10 cursor-pointer">
-                <Stethoscope className="h-4 w-4" /> {t("next_patient")} ({waitingQueue[0].tokenNumber})
+              <Button variant="outline" className="cursor-pointer">
+                <Stethoscope className="h-4 w-4 text-brand-700 dark:text-brand-400" /> {t("next_patient")} ({waitingQueue[0].tokenNumber})
               </Button>
             </Link>
           )}
@@ -92,7 +92,7 @@ export function DoctorDashboard() {
       {/* Stats Cards */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <Card className="flex items-center gap-4">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-700">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-500/20">
             <Users className="h-6 w-6" />
           </span>
           <div>
@@ -101,7 +101,7 @@ export function DoctorDashboard() {
           </div>
         </Card>
         <Card className="flex items-center gap-4">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-700">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">
             <CheckCircle2 className="h-6 w-6" />
           </span>
           <div>
@@ -110,7 +110,7 @@ export function DoctorDashboard() {
           </div>
         </Card>
         <Card className="flex items-center gap-4">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-50 text-purple-700">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-500/10 text-purple-700 dark:text-purple-400 border border-purple-500/20">
             <FlaskConical className="h-6 w-6" />
           </span>
           <div>
@@ -119,7 +119,7 @@ export function DoctorDashboard() {
           </div>
         </Card>
         <Card className="flex items-center gap-4">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-pink-50 text-pink-700">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-pink-500/10 text-pink-700 dark:text-pink-400 border border-pink-500/20">
             <Pill className="h-6 w-6" />
           </span>
           <div>
@@ -148,7 +148,7 @@ export function DoctorDashboard() {
         <Card className="overflow-hidden p-0">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="border-b border-border bg-blue-50/50 text-muted uppercase font-semibold text-[10px]">
+              <thead className="border-b border-border bg-surfaceSecondary text-muted uppercase font-semibold text-[10px]">
                 <tr>
                   <th className="p-3">{t("opd_token")}</th>
                   <th className="p-3">{t("patient")}</th>
@@ -167,9 +167,9 @@ export function DoctorDashboard() {
                   </tr>
                 ) : (
                   waitingQueue.map((v) => (
-                    <tr key={v.id} className="hover:bg-blue-50/20 transition">
+                    <tr key={v.id} className="hover:bg-surface-hover transition">
                       <td className="p-3">
-                        <span className="font-mono font-black text-sm text-blue-800 bg-blue-100/70 px-2.5 py-1 rounded-lg border border-blue-200">
+                        <span className="font-mono font-bold text-sm text-brand-700 dark:text-brand-400 bg-brand-500/10 px-2.5 py-1 rounded-lg border border-brand-500/20">
                           {v.tokenNumber || "A-024"}
                         </span>
                       </td>
@@ -177,16 +177,16 @@ export function DoctorDashboard() {
                         <p className="font-bold text-sm text-fg">{v.patientName}</p>
                         <p className="text-[11px] text-muted">{v.patientAge || 45}y · {v.patientGender || "Female"}</p>
                       </td>
-                      <td className="p-3 font-mono font-medium text-brand-700">{v.patientId}</td>
+                      <td className="p-3 font-mono font-medium text-brand-700 dark:text-brand-400">{v.patientId}</td>
                       <td className="p-3 text-fg max-w-xs truncate">{v.reason || "General consultation"}</td>
                       <td className="p-3">
-                        <span className="rounded-full bg-amber-50 text-amber-800 border border-amber-200 px-2 py-0.5 text-[10px] font-bold">
+                        <span className="rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 px-2 py-0.5 text-[10px] font-bold">
                           {t(`status_${v.status.toLowerCase()}`, v.status.replace(/_/g, " "))}
                         </span>
                       </td>
                       <td className="p-3 text-right">
                         <Link to={`/doctor/consultation?visitId=${v.id}`}>
-                          <Button size="sm" className="bg-blue-700 hover:bg-blue-600 text-white cursor-pointer">
+                          <Button size="sm" className="bg-brand-700 hover:bg-brand-600 text-white cursor-pointer">
                             <Stethoscope className="h-3.5 w-3.5" /> {t("start_consultation")}
                           </Button>
                         </Link>
