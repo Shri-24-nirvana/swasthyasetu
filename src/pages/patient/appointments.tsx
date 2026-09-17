@@ -20,6 +20,7 @@ import { Modal } from "@/components/ui/Modal";
 import { QRCode } from "@/components/shared/QRCode";
 import { useAuthStore } from "@/stores/authStore";
 import { useHospitalDB } from "@/lib/database/db";
+import { useLanguage } from "@/components/utils/LanguageContext";
 
 const departmentDoctors: Record<string, string[]> = {
   "General Medicine": ["Dr. Anita Rao", "Dr. S. Iyer", "Dr. Rajesh Kumar"],
@@ -36,6 +37,7 @@ export function AppointmentsPage() {
   const visits = useHospitalDB((s) => s.visits);
   const facilities = useHospitalDB((s) => s.facilities);
   const createVisit = useHospitalDB((s) => s.createVisit);
+  const { t } = useLanguage();
 
   const currentPatient = useMemo(() => {
     if (!user) return patients[0];
@@ -98,13 +100,13 @@ export function AppointmentsPage() {
   return (
     <div>
       <PageHeader
-        title="Appointments &amp; Visit QRs"
+        title={t("appointments")}
         subtitle="Book consultations and receive live real-time token updates"
         backTo="/patient"
-        backLabel="Back to Patient Dashboard"
+        backLabel={t("dashboard")}
         actions={
-          <Button onClick={() => setBookingOpen(true)}>
-            <CalendarPlus className="h-4 w-4" /> Book New Appointment
+          <Button onClick={() => setBookingOpen(true)} className="cursor-pointer">
+            <CalendarPlus className="h-4 w-4" /> {t("book_new_appointment")}
           </Button>
         }
       />
@@ -128,7 +130,7 @@ export function AppointmentsPage() {
                       : "bg-amber-50 text-amber-700 border-amber-200"
                   }`}
                 >
-                  {v.status.replace(/_/g, " ")}
+                  {t(`status_${v.status.toLowerCase()}`, v.status.replace(/_/g, " "))}
                 </span>
               </div>
 
@@ -146,7 +148,7 @@ export function AppointmentsPage() {
                   <span>{new Date(v.createdAt).toLocaleDateString()}</span>
                   {v.tokenNumber && (
                     <span className="ml-auto font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">
-                      Token: {v.tokenNumber}
+                      {t("token")}: {v.tokenNumber}
                     </span>
                   )}
                 </p>
@@ -159,9 +161,9 @@ export function AppointmentsPage() {
                 variant="outline"
                 size="sm"
                 onClick={() => setConfirmedVisitId(v.id)}
-                className="w-full flex items-center justify-center gap-1.5"
+                className="w-full flex items-center justify-center gap-1.5 cursor-pointer"
               >
-                <QrIcon className="h-3.5 w-3.5 text-brand-700" /> View Visit QR &amp; Pass
+                <QrIcon className="h-3.5 w-3.5 text-brand-700" /> {t("view_qr_pass")}
               </Button>
             </div>
           </Card>
@@ -169,10 +171,10 @@ export function AppointmentsPage() {
       </div>
 
       {/* Book Appointment Modal */}
-      <Modal open={bookingOpen} onClose={() => setBookingOpen(false)} title="Book Hospital Consultation">
+      <Modal open={bookingOpen} onClose={() => setBookingOpen(false)} title={t("book_new_appointment")}>
         <form onSubmit={handleBook} className="space-y-3.5">
           <div>
-            <label className="mb-1 block text-xs font-semibold text-fg">Select Healthcare Facility</label>
+            <label className="mb-1 block text-xs font-semibold text-fg">{t("select_facility")}</label>
             <Select value={facilityId} onChange={(e) => handleFacilityChange(e.target.value)}>
               {facilities.map((f) => (
                 <option key={f.id} value={f.id}>
@@ -184,7 +186,7 @@ export function AppointmentsPage() {
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="mb-1 block text-xs font-semibold text-fg">Department</label>
+              <label className="mb-1 block text-xs font-semibold text-fg">{t("department")}</label>
               <Select value={department} onChange={(e) => handleDepartmentChange(e.target.value)}>
                 {Object.keys(departmentDoctors).map((dept) => (
                   <option key={dept} value={dept}>
@@ -194,7 +196,7 @@ export function AppointmentsPage() {
               </Select>
             </div>
             <div>
-              <label className="mb-1 block text-xs font-semibold text-fg">Assigned Doctor</label>
+              <label className="mb-1 block text-xs font-semibold text-fg">{t("duty_doctor")}</label>
               <Select value={doctorName} onChange={(e) => setDoctorName(e.target.value)}>
                 {(departmentDoctors[department] || ["Duty Medical Officer"]).map((doc) => (
                   <option key={doc} value={doc}>
@@ -207,7 +209,7 @@ export function AppointmentsPage() {
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="mb-1 block text-xs font-semibold text-fg">Preferred Date</label>
+              <label className="mb-1 block text-xs font-semibold text-fg">{t("preferred_date")}</label>
               <Input
                 type="date"
                 value={appointmentDate}
@@ -216,7 +218,7 @@ export function AppointmentsPage() {
               />
             </div>
             <div>
-              <label className="mb-1 block text-xs font-semibold text-fg">Preferred Time</label>
+              <label className="mb-1 block text-xs font-semibold text-fg">{t("preferred_time")}</label>
               <Input
                 type="time"
                 value={time}
@@ -227,7 +229,7 @@ export function AppointmentsPage() {
           </div>
 
           <div>
-            <label className="mb-1 block text-xs font-semibold text-fg">Reason for Consultation / Symptoms</label>
+            <label className="mb-1 block text-xs font-semibold text-fg">{t("reason_symptoms")}</label>
             <Input
               placeholder="e.g. Fever and body ache since 2 days"
               value={reason}
@@ -236,12 +238,8 @@ export function AppointmentsPage() {
             />
           </div>
 
-          <div className="rounded-xl bg-brand-50 p-3 text-xs text-brand-800 border border-brand-200">
-            ✓ Booking generates a <strong>Secure Hospital Visit QR Code</strong> broadcasted in real time to Doctor &amp; Hospital Reception.
-          </div>
-
-          <Button type="submit" className="w-full mt-2">
-            Confirm Appointment &amp; Generate Visit QR
+          <Button type="submit" className="w-full mt-2 cursor-pointer">
+            {t("confirm")} &amp; {t("my_qr")}
           </Button>
         </form>
       </Modal>
@@ -251,32 +249,32 @@ export function AppointmentsPage() {
         <Modal
           open={!!activeConfirmedVisit}
           onClose={() => setConfirmedVisitId(null)}
-          title="Hospital Visit QR &amp; Appointment Pass"
+          title={t("view_qr_pass")}
           className="max-w-md text-center"
         >
           <div className="space-y-4">
             <div className="flex items-center justify-center gap-1.5 text-emerald-700 font-bold text-sm">
               <CheckCircle2 className="h-5 w-5" />
-              <span>Appointment Active &amp; QR Live</span>
+              <span>{t("active_visit")}</span>
             </div>
 
             {/* Realtime token status alert badge */}
             {activeConfirmedVisit.tokenNumber ? (
               <div className="rounded-2xl border-2 border-emerald-500 bg-emerald-50 p-3 text-center animate-in zoom-in-95">
                 <span className="text-[10px] font-bold text-emerald-800 uppercase tracking-wide">
-                  ⚡ Real-Time Check-In Confirmed
+                  ⚡ {t("status_checked_in")}
                 </span>
                 <p className="text-3xl font-black text-emerald-900 font-mono">
-                  Token: {activeConfirmedVisit.tokenNumber}
+                  {t("token")}: {activeConfirmedVisit.tokenNumber}
                 </p>
                 <p className="text-xs text-emerald-700 mt-0.5 font-medium">
-                  Please proceed to {activeConfirmedVisit.department} ({activeConfirmedVisit.doctorName})
+                  {activeConfirmedVisit.department} ({activeConfirmedVisit.doctorName})
                 </p>
               </div>
             ) : (
               <div className="flex items-center justify-center gap-1.5 rounded-xl bg-amber-50 border border-amber-200 p-2 text-xs text-amber-800 font-medium">
                 <Zap className="h-3.5 w-3.5 text-amber-600 animate-pulse" />
-                <span>Awaiting Reception Check-In Scan (Token will update live)</span>
+                <span>{t("not_checked_in")}</span>
               </div>
             )}
 
@@ -290,39 +288,39 @@ export function AppointmentsPage() {
 
             <div className="rounded-xl bg-brand-50/70 border border-brand-200 p-3 text-left space-y-1 text-xs">
               <div className="flex justify-between">
-                <span className="text-muted">Doctor:</span>
+                <span className="text-muted">{t("doctor")}:</span>
                 <span className="font-bold text-fg">{activeConfirmedVisit.doctorName}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted">Hospital:</span>
+                <span className="text-muted">{t("facility")}:</span>
                 <span className="font-semibold text-fg">{activeConfirmedVisit.facilityName}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted">Department:</span>
+                <span className="text-muted">{t("department")}:</span>
                 <span className="font-semibold text-fg">{activeConfirmedVisit.department}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted">Patient ID:</span>
+                <span className="text-muted">{t("swasthya_id")}:</span>
                 <span className="font-mono font-bold text-brand-700">{activeConfirmedVisit.patientId}</span>
               </div>
               <div className="flex justify-between border-t border-brand-200 pt-1">
-                <span className="text-muted">Status:</span>
-                <span className="font-bold text-brand-800">{activeConfirmedVisit.status.replace(/_/g, " ")}</span>
+                <span className="text-muted">{t("stage")}:</span>
+                <span className="font-bold text-brand-800">{t(`status_${activeConfirmedVisit.status.toLowerCase()}`, activeConfirmedVisit.status.replace(/_/g, " "))}</span>
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-2">
-              <Button variant="outline" size="sm" onClick={() => window.print()}>
-                <Printer className="h-3.5 w-3.5" /> Print QR
+              <Button variant="outline" size="sm" onClick={() => window.print()} className="cursor-pointer">
+                <Printer className="h-3.5 w-3.5" /> {t("print_qr")}
               </Button>
-              <Button variant="secondary" size="sm" onClick={() => alert("QR code image downloaded!")}>
-                <Download className="h-3.5 w-3.5" /> Download QR
+              <Button variant="secondary" size="sm" onClick={() => alert("QR code image downloaded!")} className="cursor-pointer">
+                <Download className="h-3.5 w-3.5" /> {t("download_qr")}
               </Button>
             </div>
 
             <Link to="/patient/my-qr" onClick={() => setConfirmedVisitId(null)}>
-              <Button className="w-full mt-1">
-                Open Fullscreen "My QR" Page <ArrowRight className="h-4 w-4" />
+              <Button className="w-full mt-1 cursor-pointer">
+                {t("my_qr")} <ArrowRight className="h-4 w-4" />
               </Button>
             </Link>
           </div>

@@ -17,14 +17,15 @@ import { RiskBadge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { useAuthStore } from "@/stores/authStore";
 import { useHospitalDB } from "@/lib/database/db";
+import { useLanguage } from "@/components/utils/LanguageContext";
 
-const visitLifecycleSteps = [
-  { key: "BOOKED", label: "Appointment Booked" },
-  { key: "CHECKED_IN", label: "Checked In (Token Issued)" },
-  { key: "IN_CONSULTATION", label: "Doctor Consultation" },
-  { key: "TESTS_PENDING", label: "Diagnostic Tests" },
-  { key: "PHARMACY_PENDING", label: "Medicine Pharmacy" },
-  { key: "COMPLETED", label: "Visit Completed" },
+const visitLifecycleStepKeys = [
+  { key: "BOOKED", labelKey: "step_booked" },
+  { key: "CHECKED_IN", labelKey: "step_checked_in" },
+  { key: "IN_CONSULTATION", labelKey: "step_in_consultation" },
+  { key: "TESTS_PENDING", labelKey: "step_tests_pending" },
+  { key: "PHARMACY_PENDING", labelKey: "step_pharmacy_pending" },
+  { key: "COMPLETED", labelKey: "step_completed" },
 ];
 
 export function PatientDashboard() {
@@ -34,6 +35,7 @@ export function PatientDashboard() {
   const testOrders = useHospitalDB((s) => s.testOrders);
   const prescriptions = useHospitalDB((s) => s.prescriptions);
   const bills = useHospitalDB((s) => s.bills);
+  const { t } = useLanguage();
 
   const currentPatient = useMemo(() => {
     if (!user) return patients[0];
@@ -92,13 +94,13 @@ export function PatientDashboard() {
   }, [activeVisit]);
 
   const quickActions = [
-    { to: "/patient/my-qr", label: "My Visit QR", icon: QrIcon, color: "bg-brand-700", desc: "Show at hospital" },
-    { to: "/patient/health-card", label: "Digital Health Card", icon: CreditCard, color: "bg-teal-700", desc: "Permanent ID Card" },
-    { to: "/patient/appointments", label: "Book Appointment", icon: CalendarClock, color: "bg-purple-600", desc: "Schedule consultation" },
-    { to: "/patient/bills", label: "My Bills & Receipts", icon: Receipt, color: "bg-emerald-600", desc: "Dispensed medicine bills" },
-    { to: "/patient/diagnostics", label: "My Lab Reports", icon: FlaskConical, color: "bg-blue-600", desc: "Test results" },
-    { to: "/patient/teleconsultation", label: "Teleconsultation", icon: Video, color: "bg-sky-600", desc: "Video doctor call" },
-    { to: "/patient/emergency", label: "Emergency", icon: Siren, color: "bg-red-600", desc: "Urgent care & helpline" },
+    { to: "/patient/my-qr", labelKey: "my_qr", icon: QrIcon, color: "bg-brand-700", descKey: "show_at_hospital" },
+    { to: "/patient/health-card", labelKey: "health_card", icon: CreditCard, color: "bg-teal-700", descKey: "permanent_id_card" },
+    { to: "/patient/appointments", labelKey: "appointments", icon: CalendarClock, color: "bg-purple-600", descKey: "schedule_consultation" },
+    { to: "/patient/bills", labelKey: "bills", icon: Receipt, color: "bg-emerald-600", descKey: "dispensed_bills" },
+    { to: "/patient/diagnostics", labelKey: "diagnostics", icon: FlaskConical, color: "bg-blue-600", descKey: "test_results" },
+    { to: "/patient/teleconsultation", labelKey: "teleconsultation", icon: Video, color: "bg-sky-600", descKey: "video_doctor_call" },
+    { to: "/patient/emergency", labelKey: "emergency", icon: Siren, color: "bg-red-600", descKey: "urgent_care" },
   ];
 
   return (
@@ -111,11 +113,11 @@ export function PatientDashboard() {
           </span>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-xl font-bold text-fg">Namaste, {currentPatient.name} 🙏</h1>
+              <h1 className="text-xl font-bold text-fg">{t("namaste")}, {currentPatient.name} 🙏</h1>
               <RiskBadge level={currentPatient.riskLevel} />
             </div>
             <p className="mt-0.5 text-xs text-muted">
-              Permanent Swasthya Patient ID:{" "}
+              {t("permanent_id_label")}:{" "}
               <span className="font-mono font-bold text-brand-700">{currentPatient.swasthyaId}</span> ·{" "}
               <span>{currentPatient.village}, {currentPatient.district}</span>
             </p>
@@ -124,13 +126,13 @@ export function PatientDashboard() {
 
         <div className="flex items-center gap-2">
           <Link to="/patient/health-card">
-            <Button variant="outline" size="sm" className="bg-surface shadow-sm">
-              <CreditCard className="h-4 w-4 text-brand-700" /> Digital Health Card
+            <Button variant="outline" size="sm" className="bg-surface shadow-sm cursor-pointer">
+              <CreditCard className="h-4 w-4 text-brand-700" /> {t("health_card")}
             </Button>
           </Link>
           <Link to="/patient/my-qr">
-            <Button size="sm">
-              <QrIcon className="h-4 w-4" /> My Visit QR
+            <Button size="sm" className="cursor-pointer">
+              <QrIcon className="h-4 w-4" /> {t("my_qr")}
             </Button>
           </Link>
         </div>
@@ -146,7 +148,7 @@ export function PatientDashboard() {
               </span>
               <div>
                 <div className="flex items-center gap-2">
-                  <h3 className="font-bold text-base text-fg">Current Hospital Visit</h3>
+                  <h3 className="font-bold text-base text-fg">{t("current_hospital_visit")}</h3>
                   <span className="font-mono text-xs font-bold text-brand-800 bg-brand-100 px-2 py-0.5 rounded">
                     {activeVisit.visitNumber}
                   </span>
@@ -160,11 +162,11 @@ export function PatientDashboard() {
             <div className="flex items-center gap-2">
               <span className="rounded-full bg-emerald-100 border border-emerald-300 px-3 py-1 text-xs font-bold text-emerald-800 flex items-center gap-1.5">
                 <span className="h-2 w-2 rounded-full bg-emerald-600 animate-pulse" />
-                Stage: {activeVisit.status.replace(/_/g, " ")}
+                {t("stage")}: {t(`status_${activeVisit.status.toLowerCase()}`, activeVisit.status.replace(/_/g, " "))}
               </span>
               <Link to="/patient/my-qr">
-                <Button size="sm" variant="secondary">
-                  <QrIcon className="h-3.5 w-3.5" /> Show QR
+                <Button size="sm" variant="secondary" className="cursor-pointer">
+                  <QrIcon className="h-3.5 w-3.5" /> {t("show_qr")}
                 </Button>
               </Link>
             </div>
@@ -174,33 +176,33 @@ export function PatientDashboard() {
           {queueInfo && (
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 rounded-2xl bg-surface border border-brand-200 p-4 shadow-sm text-center">
               <div className="border-r border-border last:border-0">
-                <span className="text-[11px] text-muted font-semibold uppercase">Your OPD Token</span>
+                <span className="text-[11px] text-muted font-semibold uppercase">{t("your_opd_token")}</span>
                 <p className="text-2xl font-black text-brand-700 mt-0.5">{queueInfo.token}</p>
                 <p className="text-[10px] text-muted">{activeVisit.department}</p>
               </div>
               <div className="border-r border-border last:border-0">
-                <span className="text-[11px] text-muted font-semibold uppercase">Currently Serving</span>
+                <span className="text-[11px] text-muted font-semibold uppercase">{t("currently_serving")}</span>
                 <p className="text-2xl font-black text-emerald-700 mt-0.5">{queueInfo.currentlyServing}</p>
-                <p className="text-[10px] text-emerald-600">In Doctor Room</p>
+                <p className="text-[10px] text-emerald-600">{t("in_doctor_room")}</p>
               </div>
               <div className="border-r border-border last:border-0">
-                <span className="text-[11px] text-muted font-semibold uppercase">Patients Ahead</span>
+                <span className="text-[11px] text-muted font-semibold uppercase">{t("patients_ahead")}</span>
                 <p className="text-2xl font-black text-amber-700 mt-0.5">{queueInfo.ahead}</p>
-                <p className="text-[10px] text-muted">In Queue</p>
+                <p className="text-[10px] text-muted">{t("in_queue")}</p>
               </div>
               <div>
-                <span className="text-[11px] text-muted font-semibold uppercase">Estimated Wait</span>
+                <span className="text-[11px] text-muted font-semibold uppercase">{t("estimated_wait")}</span>
                 <p className="text-2xl font-black text-fg mt-0.5">~{queueInfo.estMinutes}m</p>
-                <p className="text-[10px] text-muted">Real-time sync</p>
+                <p className="text-[10px] text-muted">{t("realtime_sync")}</p>
               </div>
             </div>
           )}
 
           {/* Patient Hospital Journey Progress Bar */}
           <div className="space-y-1.5 pt-1">
-            <span className="text-xs font-bold text-fg">Your Hospital Journey Workflow:</span>
+            <span className="text-xs font-bold text-fg">{t("hospital_journey_workflow")}</span>
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-6 text-center text-xs">
-              {visitLifecycleSteps.map((step, idx) => {
+              {visitLifecycleStepKeys.map((step, idx) => {
                 const isDone = idx < activeStepIndex;
                 const isCurrent = idx === activeStepIndex;
                 return (
@@ -215,9 +217,9 @@ export function PatientDashboard() {
                     }`}
                   >
                     <div className="text-[10px] uppercase tracking-wider mb-1">
-                      Step {idx + 1} {isDone ? "✓" : isCurrent ? "●" : ""}
+                      {t("step")} {idx + 1} {isDone ? "✓" : isCurrent ? "●" : ""}
                     </div>
-                    <div className="text-xs leading-tight">{step.label}</div>
+                    <div className="text-xs leading-tight">{t(step.labelKey)}</div>
                   </div>
                 );
               })}
@@ -234,7 +236,7 @@ export function PatientDashboard() {
           </span>
           <div>
             <p className="text-2xl font-bold text-fg">{patientVisits.length}</p>
-            <p className="text-xs text-muted">Hospital Visits</p>
+            <p className="text-xs text-muted">{t("hospital_visits")}</p>
           </div>
         </Card>
         <Card className="flex items-center gap-4">
@@ -243,7 +245,7 @@ export function PatientDashboard() {
           </span>
           <div>
             <p className="text-2xl font-bold text-fg">{patientTests.length}</p>
-            <p className="text-xs text-muted">Diagnostic Tests</p>
+            <p className="text-xs text-muted">{t("diagnostic_tests")}</p>
           </div>
         </Card>
         <Card className="flex items-center gap-4">
@@ -252,7 +254,7 @@ export function PatientDashboard() {
           </span>
           <div>
             <p className="text-2xl font-bold text-fg">{patientPrescriptions.length}</p>
-            <p className="text-xs text-muted">Prescriptions</p>
+            <p className="text-xs text-muted">{t("prescriptions")}</p>
           </div>
         </Card>
         <Card className="flex items-center gap-4">
@@ -261,14 +263,14 @@ export function PatientDashboard() {
           </span>
           <div>
             <p className="text-2xl font-bold text-fg">{patientBills.length}</p>
-            <p className="text-xs text-muted">Medicine Bills</p>
+            <p className="text-xs text-muted">{t("medicine_bills")}</p>
           </div>
         </Card>
       </div>
 
       {/* Quick Actions Grid */}
       <div>
-        <h2 className="mb-3 text-base font-bold text-fg">Quick Actions</h2>
+        <h2 className="mb-3 text-base font-bold text-fg">{t("quick_actions")}</h2>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {quickActions.map((a) => (
             <Link key={a.to} to={a.to}>
@@ -277,8 +279,8 @@ export function PatientDashboard() {
                   <a.icon className="h-5 w-5" />
                 </span>
                 <div className="min-w-0 flex-1">
-                  <p className="text-xs font-bold text-fg truncate">{a.label}</p>
-                  <p className="text-[11px] text-muted truncate">{a.desc}</p>
+                  <p className="text-xs font-bold text-fg truncate">{t(a.labelKey)}</p>
+                  <p className="text-[11px] text-muted truncate">{t(a.descKey, "")}</p>
                 </div>
                 <ArrowRight className="h-4 w-4 text-muted shrink-0" />
               </Card>
@@ -292,14 +294,14 @@ export function PatientDashboard() {
         {/* Prescriptions */}
         <Card>
           <div className="flex items-center justify-between border-b border-border pb-3">
-            <CardTitle>Recent Prescriptions</CardTitle>
+            <CardTitle>{t("recent_prescriptions")}</CardTitle>
             <Link to="/patient/medicine-availability" className="text-xs text-brand-700 font-semibold hover:underline">
-              Medicine Counter →
+              {t("medicine_counter")} →
             </Link>
           </div>
           <div className="mt-3 space-y-2.5">
             {patientPrescriptions.length === 0 ? (
-              <p className="text-xs text-muted py-4 text-center">No prescriptions yet.</p>
+              <p className="text-xs text-muted py-4 text-center">{t("no_prescriptions_yet")}</p>
             ) : (
               patientPrescriptions.map((rx) => (
                 <div key={rx.id} className="rounded-xl border border-border p-3 space-y-1.5">
@@ -312,15 +314,15 @@ export function PatientDashboard() {
                           : "bg-amber-100 text-amber-800"
                       }`}
                     >
-                      {rx.status}
+                      {t(`status_${rx.status.toLowerCase()}`, rx.status)}
                     </span>
                   </div>
-                  <p className="text-xs text-muted">Diagnosis: {rx.diagnosis}</p>
+                  <p className="text-xs text-muted">{t("diagnosis")}: {rx.diagnosis}</p>
                   <div className="space-y-1 pt-1">
                     {rx.items.map((item) => (
                       <div key={item.id} className="flex justify-between text-xs bg-brand-50/50 px-2 py-1 rounded">
                         <span className="font-medium text-fg">• {item.medicineName}</span>
-                        <span className="text-muted">{item.dosage} ({item.quantity} units)</span>
+                        <span className="text-muted">{item.dosage} ({item.quantity} {t("units")})</span>
                       </div>
                     ))}
                   </div>
@@ -333,35 +335,35 @@ export function PatientDashboard() {
         {/* Diagnostic Lab Tests */}
         <Card>
           <div className="flex items-center justify-between border-b border-border pb-3">
-            <CardTitle>Diagnostic Lab Orders</CardTitle>
+            <CardTitle>{t("diagnostic_lab_orders")}</CardTitle>
             <Link to="/patient/diagnostics" className="text-xs text-brand-700 font-semibold hover:underline">
-              View All Reports →
+              {t("view_all_reports")} →
             </Link>
           </div>
           <div className="mt-3 space-y-2.5">
             {patientTests.length === 0 ? (
-              <p className="text-xs text-muted py-4 text-center">No diagnostic test orders.</p>
+              <p className="text-xs text-muted py-4 text-center">{t("no_tests_yet")}</p>
             ) : (
-              patientTests.map((t) => (
-                <div key={t.id} className="rounded-xl border border-border p-3 space-y-1">
+              patientTests.map((testItem) => (
+                <div key={testItem.id} className="rounded-xl border border-border p-3 space-y-1">
                   <div className="flex items-center justify-between">
-                    <span className="font-bold text-xs text-fg">{t.testName}</span>
+                    <span className="font-bold text-xs text-fg">{testItem.testName}</span>
                     <span
                       className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${
-                        t.status === "COMPLETED"
+                        testItem.status === "COMPLETED"
                           ? "bg-emerald-100 text-emerald-800"
-                          : t.status === "PROCESSING"
+                          : testItem.status === "PROCESSING"
                           ? "bg-blue-100 text-blue-800"
                           : "bg-amber-100 text-amber-800"
                       }`}
                     >
-                      {t.status.replace(/_/g, " ")}
+                      {t(`status_${testItem.status.toLowerCase()}`, testItem.status.replace(/_/g, " "))}
                     </span>
                   </div>
-                  <p className="text-xs text-muted">Ordered by {t.doctorName} · {t.facilityName}</p>
-                  {t.summary && (
+                  <p className="text-xs text-muted">{testItem.doctorName} · {testItem.facilityName}</p>
+                  {testItem.summary && (
                     <p className="text-xs font-medium text-emerald-700 bg-emerald-50 p-1.5 rounded mt-1">
-                      Result: {t.summary}
+                      {t("result")}: {testItem.summary}
                     </p>
                   )}
                 </div>

@@ -11,18 +11,18 @@ export function LanguageSwitch({ className }: { className?: string }) {
         className
       )}
     >
-      {[Language.ENGLISH, Language.HINDI].map((lang) => (
+      {[Language.ENGLISH, Language.HINDI, Language.MARATHI].map((lang) => (
         <button
           key={lang}
           onClick={() => setLanguage(lang)}
           className={cn(
             "rounded-full px-3 py-1 text-xs font-medium transition-colors",
             language === lang
-              ? "bg-brand-700 text-white"
+              ? "bg-brand-700 text-white shadow-sm"
               : "text-muted hover:text-fg"
           )}
         >
-          {lang === Language.ENGLISH ? "EN" : "हिं"}
+          {lang === Language.ENGLISH ? "EN" : lang === Language.HINDI ? "हिं" : "मरा"}
         </button>
       ))}
     </div>

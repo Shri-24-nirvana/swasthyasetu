@@ -18,6 +18,7 @@ import { UserRole } from "@/dto/constants/UserRole";
 import type { Prescription } from "@/dto/prescription/Prescription";
 import type { HospitalVisit } from "@/dto/visit/HospitalVisit";
 import type { Patient } from "@/dto/patient/Patient";
+import { useLanguage } from "@/components/utils/LanguageContext";
 
 export function PharmacyDashboard() {
   const user = useAuthStore((s) => s.user);
@@ -25,6 +26,7 @@ export function PharmacyDashboard() {
   const medicinesDB = useHospitalDB((s) => s.medicines);
   const patients = useHospitalDB((s) => s.patients);
   const dispensePrescriptionMedicines = useHospitalDB((s) => s.dispensePrescriptionMedicines);
+  const { t } = useLanguage();
 
   const [scannerOpen, setScannerOpen] = useState(false);
   const [selectedRx, setSelectedRx] = useState<Prescription | null>(null);
@@ -123,9 +125,9 @@ export function PharmacyDashboard() {
       <div className="flex flex-col gap-4 rounded-3xl border border-border bg-gradient-to-r from-amber-700 via-amber-800 to-brand-800 p-6 text-white shadow-md sm:flex-row sm:items-center sm:justify-between">
         <div>
           <span className="rounded-full bg-white/20 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider backdrop-blur-sm">
-            Hospital Pharmacy &amp; Drug Distribution
+            {t("pharmacy_dispense")}
           </span>
-          <h1 className="mt-1 text-2xl font-black">Medicine Barcode Scanning &amp; Dispensing</h1>
+          <h1 className="mt-1 text-2xl font-black">{t("medicine_availability")}</h1>
           <p className="text-xs text-amber-100 mt-0.5">
             Strip Barcode Verification · Batch &amp; Expiry Safety Checks · Atomic Stock Deduction · Digital Billing
           </p>
@@ -135,9 +137,9 @@ export function PharmacyDashboard() {
           <Button
             onClick={() => setScannerOpen(true)}
             size="lg"
-            className="bg-white text-amber-900 hover:bg-amber-50 shadow-xl font-bold flex items-center gap-2"
+            className="bg-white text-amber-900 hover:bg-amber-50 shadow-xl font-bold flex items-center gap-2 cursor-pointer"
           >
-            <QrIcon className="h-5 w-5 text-amber-700" /> SCAN PATIENT QR
+            <QrIcon className="h-5 w-5 text-amber-700" /> {t("scan_patient_qr")}
           </Button>
         </div>
       </div>
@@ -147,14 +149,14 @@ export function PharmacyDashboard() {
         {/* Left Col: Prescriptions Waiting Queue */}
         <div className="space-y-4 lg:col-span-1">
           <div className="flex items-center justify-between">
-            <h2 className="font-bold text-base text-fg">Prescriptions Queue ({pendingPrescriptions.length})</h2>
-            <span className="text-xs text-muted">Awaiting Dispensing</span>
+            <h2 className="font-bold text-base text-fg">{t("prescriptions")} ({pendingPrescriptions.length})</h2>
+            <span className="text-xs text-muted">{t("status_pharmacy_pending")}</span>
           </div>
 
           <div className="space-y-2.5">
             {pendingPrescriptions.length === 0 ? (
               <Card className="p-6 text-center text-xs text-muted">
-                No pending prescriptions. All medicines dispensed.
+                {t("no_prescriptions_yet")}
               </Card>
             ) : (
               pendingPrescriptions.map((rx) => {
@@ -164,7 +166,7 @@ export function PharmacyDashboard() {
                     key={rx.id}
                     type="button"
                     onClick={() => handleOpenPrescription(rx)}
-                    className={`w-full rounded-2xl border p-3.5 text-left transition ${
+                    className={`w-full rounded-2xl border p-3.5 text-left transition cursor-pointer ${
                       isSelected
                         ? "border-amber-600 bg-amber-50/70 ring-2 ring-amber-500/20 shadow-md"
                         : "border-border bg-surface hover:border-amber-300 hover:bg-brand-50/30"
@@ -173,7 +175,7 @@ export function PharmacyDashboard() {
                     <div className="flex items-center justify-between">
                       <span className="font-mono font-bold text-xs text-amber-800">{rx.id}</span>
                       <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-900">
-                        {rx.items.length} Medicines
+                        {rx.items.length} {t("prescriptions")}
                       </span>
                     </div>
                     <p className="mt-1 font-bold text-sm text-fg">{rx.patientName}</p>
@@ -200,7 +202,7 @@ export function PharmacyDashboard() {
                     </span>
                   </div>
                   <p className="text-xs text-muted">
-                    Prescription ID: <strong>{selectedRx.id}</strong> · Prescribed by: <strong>{selectedRx.doctorName}</strong>
+                    Prescription ID: <strong>{selectedRx.id}</strong> · {t("doctor")}: <strong>{selectedRx.doctorName}</strong>
                   </p>
                 </div>
 
@@ -217,10 +219,10 @@ export function PharmacyDashboard() {
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-bold uppercase tracking-wider text-fg flex items-center gap-1.5">
                     <Barcode className="h-4 w-4 text-amber-700" />
-                    Medicine Strip Barcode Scanning ({selectedRx.items.length} Items)
+                    {t("medicine_availability")} ({selectedRx.items.length} Items)
                   </span>
                   <span className="text-xs text-muted">
-                    Scan each strip before dispensing
+                    {t("scan_barcode")}
                   </span>
                 </div>
 
@@ -255,7 +257,7 @@ export function PharmacyDashboard() {
                             </div>
 
                             <p className="text-xs text-muted pl-8">
-                              Prescribed Dosage: <strong>{item.dosage}</strong> ({item.frequency}) · Qty: <strong>{item.quantity} units</strong>
+                              {item.dosage} ({item.frequency}) · {t("qty")}: <strong>{item.quantity} {t("units")}</strong>
                             </p>
 
                             {/* Inventory & Batch Info */}
@@ -274,15 +276,15 @@ export function PharmacyDashboard() {
                             {isVerified ? (
                               <div className="flex items-center gap-1.5 rounded-xl bg-emerald-100 border border-emerald-300 px-3 py-1.5 text-xs font-bold text-emerald-800">
                                 <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-                                <span>Verified ✓</span>
+                                <span>{t("verified")}</span>
                               </div>
                             ) : (
                               <Button
                                 size="sm"
                                 onClick={() => handleScanMedicineBarcode(item.medicineId, matchedMed?.barcode)}
-                                className="bg-amber-700 hover:bg-amber-600 text-white font-bold flex items-center gap-1.5"
+                                className="bg-amber-700 hover:bg-amber-600 text-white font-bold flex items-center gap-1.5 cursor-pointer"
                               >
-                                <Barcode className="h-4 w-4" /> Scan Barcode
+                                <Barcode className="h-4 w-4" /> {t("scan_barcode")}
                               </Button>
                             )}
                           </div>
@@ -296,25 +298,25 @@ export function PharmacyDashboard() {
               {/* Complete Dispensation Action */}
               <div className="rounded-2xl border border-brand-200 bg-brand-50/50 p-4 space-y-3">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="text-muted">Verification Status:</span>
+                  <span className="text-muted">{t("stage")}:</span>
                   <span className={allVerified ? "font-bold text-emerald-700" : "font-bold text-amber-700"}>
-                    {allVerified ? "✓ All Prescribed Medicines Verified" : "⚠️ Please scan all medicine strips above"}
+                    {allVerified ? `✓ ${t("verified")}` : `⚠️ ${t("scan_barcode")}`}
                   </span>
                 </div>
 
                 <Button
                   onClick={handleExecuteDispense}
                   disabled={!allVerified}
-                  className="w-full bg-emerald-700 hover:bg-emerald-600 text-white font-bold text-sm py-2.5 shadow-lg"
+                  className="w-full bg-emerald-700 hover:bg-emerald-600 text-white font-bold text-sm py-2.5 shadow-lg cursor-pointer"
                 >
-                  <Receipt className="h-4 w-4" /> Authorize Dispense, Deduct Inventory &amp; Generate Bill
+                  <Receipt className="h-4 w-4" /> {t("authorize_dispense")}
                 </Button>
               </div>
             </Card>
           ) : (
             <Card className="p-12 text-center text-muted">
               <Pill className="mx-auto h-12 w-12 text-brand-300 mb-3" />
-              <CardTitle>Select a Prescription or Scan Patient QR</CardTitle>
+              <CardTitle>{t("medicine_availability")}</CardTitle>
               <p className="text-xs text-muted mt-1 max-w-sm mx-auto">
                 Scan the patient's visit QR code or select a pending prescription from the left queue to begin strip barcode verification.
               </p>
@@ -336,21 +338,21 @@ export function PharmacyDashboard() {
         <Modal
           open={!!dispenseSuccessModal}
           onClose={() => setDispenseSuccessModal(null)}
-          title="Medicine Dispensing &amp; Billing Complete"
+          title={t("bills")}
           className="max-w-md text-center"
         >
           <div className="space-y-4">
             <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700 shadow-sm">
               <CheckCircle2 className="h-10 w-10" />
             </div>
-            <h2 className="text-lg font-bold text-fg">Medicines Dispensed &amp; Stock Updated</h2>
+            <h2 className="text-lg font-bold text-fg">{t("status_medicines_dispensed")}</h2>
             <p className="text-xs text-muted">
               Inventory balances have been atomically updated and the official transaction has been logged.
             </p>
 
             <div className="rounded-xl border border-border bg-brand-50/50 p-3.5 text-left text-xs space-y-1.5">
               <div className="flex justify-between">
-                <span className="text-muted">Invoice Bill Number:</span>
+                <span className="text-muted">{t("invoice_no")}:</span>
                 <span className="font-mono font-bold text-brand-800">{dispenseSuccessModal.billId}</span>
               </div>
               <div className="flex justify-between">
@@ -358,17 +360,17 @@ export function PharmacyDashboard() {
                 <span className="font-mono text-muted">{dispenseSuccessModal.txnId}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted">Dispensing Pharmacist:</span>
+                <span className="text-muted">{t("dispensing_pharmacist")}:</span>
                 <span className="font-semibold text-fg">{pharmacistName}</span>
               </div>
             </div>
 
             <div className="flex gap-2">
-              <Button variant="outline" className="flex-1" onClick={() => window.print()}>
-                <Printer className="h-4 w-4" /> Print Hardcopy Bill
+              <Button variant="outline" className="flex-1 cursor-pointer" onClick={() => window.print()}>
+                <Printer className="h-4 w-4" /> {t("print_hardcopy_bill")}
               </Button>
-              <Button className="flex-1" onClick={() => setDispenseSuccessModal(null)}>
-                Done
+              <Button className="flex-1 cursor-pointer" onClick={() => setDispenseSuccessModal(null)}>
+                {t("done")}
               </Button>
             </div>
           </div>

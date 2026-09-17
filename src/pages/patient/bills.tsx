@@ -13,11 +13,13 @@ import { Modal } from "@/components/ui/Modal";
 import { useAuthStore } from "@/stores/authStore";
 import { useHospitalDB } from "@/lib/database/db";
 import type { Bill } from "@/dto/billing/Bill";
+import { useLanguage } from "@/components/utils/LanguageContext";
 
 export function PatientBillsPage() {
   const user = useAuthStore((s) => s.user);
   const patients = useHospitalDB((s) => s.patients);
   const bills = useHospitalDB((s) => s.bills);
+  const { t } = useLanguage();
 
   const currentPatient = useMemo(() => {
     if (!user) return patients[0];
@@ -40,17 +42,17 @@ export function PatientBillsPage() {
   return (
     <div>
       <PageHeader
-        title="My Bills &amp; Receipts"
+        title={t("bills")}
         subtitle="Digital invoices for dispensed medicines and hospital services"
         backTo="/patient"
-        backLabel="Back to Patient Dashboard"
+        backLabel={t("dashboard")}
       />
 
       <div className="space-y-4">
         {patientBills.length === 0 ? (
           <Card className="text-center p-8">
             <Receipt className="mx-auto h-12 w-12 text-muted mb-3" />
-            <CardTitle>No Bills Generated Yet</CardTitle>
+            <CardTitle>{t("no_prescriptions_yet")}</CardTitle>
             <p className="text-xs text-muted mt-1">
               When medicines are dispensed at the pharmacy counter, your digital invoice will appear here automatically.
             </p>
@@ -66,21 +68,21 @@ export function PatientBillsPage() {
                       <p className="text-xs text-muted">{b.date}</p>
                     </div>
                     <span className="rounded-full bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 text-[10px] border border-emerald-200">
-                      {b.status} · {b.paymentMode.replace(/_/g, " ")}
+                      {t(`status_${b.status.toLowerCase()}`, b.status)} · {b.paymentMode.replace(/_/g, " ")}
                     </span>
                   </div>
 
                   <div className="mt-3 space-y-1.5 text-xs">
                     <p className="text-muted">
-                      Hospital: <strong className="text-fg">{b.facilityName}</strong>
+                      {t("facility")}: <strong className="text-fg">{b.facilityName}</strong>
                     </p>
                     {b.pharmacistName && (
                       <p className="text-muted">
-                        Dispensed by: <strong className="text-fg">{b.pharmacistName}</strong>
+                        {t("dispensing_pharmacist")}: <strong className="text-fg">{b.pharmacistName}</strong>
                       </p>
                     )}
                     <div className="pt-2 border-t border-border/60">
-                      <p className="font-semibold text-fg mb-1">Items ({b.items.length}):</p>
+                      <p className="font-semibold text-fg mb-1">{t("item_description")} ({b.items.length}):</p>
                       <div className="space-y-1 bg-brand-50/40 p-2 rounded-lg">
                         {b.items.map((item) => (
                           <div key={item.id} className="flex justify-between text-[11px]">
@@ -95,14 +97,14 @@ export function PatientBillsPage() {
 
                 <div className="mt-4 pt-3 border-t border-border flex items-center justify-between">
                   <div>
-                    <span className="text-[10px] text-muted block">Total Payable</span>
+                    <span className="text-[10px] text-muted block">{t("net_payable")}</span>
                     <span className="font-black text-brand-700 text-base">₹{b.totalAmount.toFixed(2)}</span>
                     {b.discount > 0 && (
-                      <span className="text-[10px] text-emerald-700 block">(100% Govt Subsidized)</span>
+                      <span className="text-[10px] text-emerald-700 block">(100% {t("pmjay_subsidy")})</span>
                     )}
                   </div>
-                  <Button size="sm" variant="secondary" onClick={() => setSelectedBill(b)}>
-                    <FileText className="h-3.5 w-3.5" /> View / Print
+                  <Button size="sm" variant="secondary" onClick={() => setSelectedBill(b)} className="cursor-pointer">
+                    <FileText className="h-3.5 w-3.5" /> {t("view_pass")}
                   </Button>
                 </div>
               </Card>
@@ -116,7 +118,7 @@ export function PatientBillsPage() {
         <Modal
           open={!!selectedBill}
           onClose={() => setSelectedBill(null)}
-          title="SwasthyaSetu Official Digital Invoice"
+          title={`${t("app_name")} ${t("bills")}`}
           className="max-w-2xl"
         >
           <div className="space-y-5" id="printable-bill">
@@ -124,37 +126,37 @@ export function PatientBillsPage() {
             <div className="rounded-2xl border-2 border-brand-700 bg-brand-50/50 p-5 text-center space-y-1">
               <div className="flex items-center justify-center gap-2">
                 <ShieldCheck className="h-6 w-6 text-brand-700" />
-                <h2 className="text-xl font-black text-brand-900 tracking-wide uppercase">SWASTHYASETU</h2>
+                <h2 className="text-xl font-black text-brand-900 tracking-wide uppercase">{t("app_name")}</h2>
               </div>
               <p className="text-xs font-bold text-fg uppercase">{selectedBill.facilityName}</p>
               <p className="text-[11px] text-muted">{selectedBill.facilityAddress || "Primary Health Centre, Government of Uttar Pradesh"}</p>
-              <p className="text-[10px] font-mono text-brand-800">Govt. Registered Healthcare Facility · NHM Affiliated</p>
+              <p className="text-[10px] font-mono text-brand-800">{t("valid_across_india")}</p>
             </div>
 
             {/* Bill Meta Details */}
             <div className="grid grid-cols-2 gap-3 rounded-xl border border-border p-3.5 text-xs bg-surface">
               <div>
-                <span className="text-muted">Invoice No:</span>
+                <span className="text-muted">{t("invoice_no")}:</span>
                 <p className="font-mono font-bold text-fg">{selectedBill.billNumber}</p>
               </div>
               <div>
-                <span className="text-muted">Invoice Date:</span>
+                <span className="text-muted">{t("invoice_date")}:</span>
                 <p className="font-semibold text-fg">{selectedBill.date}</p>
               </div>
               <div>
-                <span className="text-muted">Patient Name:</span>
+                <span className="text-muted">{t("patient_name")}:</span>
                 <p className="font-bold text-sm text-fg">{selectedBill.patientName}</p>
               </div>
               <div>
-                <span className="text-muted">Patient ID:</span>
+                <span className="text-muted">{t("permanent_id_label")}:</span>
                 <p className="font-mono font-bold text-brand-700">{selectedBill.patientId}</p>
               </div>
               <div>
-                <span className="text-muted">Visit Number:</span>
+                <span className="text-muted">{t("visit_number")}:</span>
                 <p className="font-mono text-fg">{selectedBill.visitId}</p>
               </div>
               <div>
-                <span className="text-muted">Dispensing Pharmacist:</span>
+                <span className="text-muted">{t("dispensing_pharmacist")}:</span>
                 <p className="font-semibold text-fg">{selectedBill.pharmacistName || "Ravi Shastri"}</p>
               </div>
             </div>
@@ -164,11 +166,11 @@ export function PatientBillsPage() {
               <table className="w-full text-left text-xs">
                 <thead className="bg-brand-50 border-b border-border text-muted uppercase font-semibold text-[10px]">
                   <tr>
-                    <th className="p-2.5">Item Description</th>
+                    <th className="p-2.5">{t("item_description")}</th>
                     <th className="p-2.5">Batch</th>
-                    <th className="p-2.5 text-center">Qty</th>
-                    <th className="p-2.5 text-right">Unit Price</th>
-                    <th className="p-2.5 text-right">Total</th>
+                    <th className="p-2.5 text-center">{t("qty")}</th>
+                    <th className="p-2.5 text-right">{t("unit_price")}</th>
+                    <th className="p-2.5 text-right">{t("total")}</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border">
@@ -188,29 +190,29 @@ export function PatientBillsPage() {
             {/* Financial Summary */}
             <div className="rounded-xl bg-brand-50/50 border border-brand-200 p-4 space-y-1.5 text-xs text-right">
               <div className="flex justify-between">
-                <span className="text-muted">Gross Subtotal:</span>
+                <span className="text-muted">{t("gross_subtotal")}:</span>
                 <span className="font-mono font-semibold">₹{selectedBill.subtotal.toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-emerald-700">
-                <span>Government Scheme Subsidy / PM-JAY:</span>
+                <span>{t("pmjay_subsidy")}:</span>
                 <span className="font-mono font-bold">- ₹{selectedBill.discount.toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-base font-black text-fg border-t border-brand-200 pt-2">
-                <span>Net Total Payable:</span>
+                <span>{t("net_payable")}:</span>
                 <span className="font-mono text-brand-700">₹{selectedBill.totalAmount.toFixed(2)}</span>
               </div>
               <p className="text-[10px] text-muted text-left pt-1">
-                Payment Mode: <strong>{selectedBill.paymentMode.replace(/_/g, " ")}</strong> · Status: <strong>{selectedBill.status}</strong>
+                {t("payment_mode")}: <strong>{selectedBill.paymentMode.replace(/_/g, " ")}</strong> · {t("stage")}: <strong>{selectedBill.status}</strong>
               </p>
             </div>
 
             {/* Print & Download Actions */}
             <div className="flex gap-2">
-              <Button onClick={handlePrint} className="flex-1">
-                <Printer className="h-4 w-4" /> Print Hardcopy Bill
+              <Button onClick={handlePrint} className="flex-1 cursor-pointer">
+                <Printer className="h-4 w-4" /> {t("print_hardcopy_bill")}
               </Button>
-              <Button variant="secondary" onClick={() => alert("Digital receipt PDF downloaded!")} className="flex-1">
-                <Download className="h-4 w-4" /> Download PDF
+              <Button variant="secondary" onClick={() => alert("Digital receipt PDF downloaded!")} className="flex-1 cursor-pointer">
+                <Download className="h-4 w-4" /> {t("download_pdf")}
               </Button>
             </div>
           </div>

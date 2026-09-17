@@ -7,16 +7,16 @@ import { LanguageSwitch } from "@/components/shared/LanguageSwitch";
 import { RealtimeStatusBadge } from "@/components/shared/RealtimeNotificationBanner";
 import { UserRole } from "@/dto/constants/UserRole";
 
-const roleLabels: Record<UserRole, string> = {
-  [UserRole.PATIENT]: "Citizen / Patient",
-  [UserRole.DOCTOR]: "Doctor",
-  [UserRole.HOSPITAL_STAFF]: "Hospital Staff",
-  [UserRole.LAB]: "Pathology & Diagnostics",
-  [UserRole.PHARMACY]: "Pharmacy",
-  [UserRole.HEALTHCARE_WORKER]: "Healthcare Worker",
-  [UserRole.ADMIN]: "Hospital Administrator",
-  [UserRole.SECURITY]: "Security Guard",
-  [UserRole.SUPER_ADMIN]: "Super Administrator",
+const roleKeyMap: Record<UserRole, string> = {
+  [UserRole.PATIENT]: "role_patient",
+  [UserRole.DOCTOR]: "role_doctor",
+  [UserRole.HOSPITAL_STAFF]: "role_hospital_staff",
+  [UserRole.LAB]: "role_lab",
+  [UserRole.PHARMACY]: "role_pharmacy",
+  [UserRole.HEALTHCARE_WORKER]: "role_healthcare_worker",
+  [UserRole.ADMIN]: "role_admin",
+  [UserRole.SECURITY]: "role_security",
+  [UserRole.SUPER_ADMIN]: "role_super_admin",
 };
 
 export function Topbar({ onMenu, hasSidebar = true }: { onMenu: () => void; hasSidebar?: boolean }) {
@@ -26,13 +26,15 @@ export function Topbar({ onMenu, hasSidebar = true }: { onMenu: () => void; hasS
   const { t } = useLanguage();
 
   const isPatient = user?.role === UserRole.PATIENT;
+  const roleTranslationKey = user?.role ? roleKeyMap[user.role as UserRole] : "";
+  const roleDisplay = roleTranslationKey ? t(roleTranslationKey) : user?.role || "";
 
   return (
     <header className="sticky top-0 z-30 flex h-16 items-center gap-2 sm:gap-3 border-b border-border bg-surface px-4 md:px-6 shadow-sm transition-colors">
       {hasSidebar && (
         <button
           onClick={onMenu}
-          className="rounded-xl p-2 text-muted hover:bg-surface-hover hover:text-fg lg:hidden"
+          className="rounded-xl p-2 text-muted hover:bg-surface-hover hover:text-fg lg:hidden cursor-pointer"
         >
           <Menu className="h-5 w-5" />
         </button>
@@ -46,7 +48,7 @@ export function Topbar({ onMenu, hasSidebar = true }: { onMenu: () => void; hasS
           </span>
           <div className="hidden sm:block">
             <span className="font-black text-sm tracking-tight text-fg">{t("app_name")}</span>
-            <p className="text-[10px] text-muted -mt-0.5">Rural Health Network</p>
+            <p className="text-[10px] text-muted -mt-0.5">{t("sub_tagline")}</p>
           </div>
         </Link>
       )}
@@ -56,7 +58,7 @@ export function Topbar({ onMenu, hasSidebar = true }: { onMenu: () => void; hasS
           {t("welcome")}, {user?.name?.split(" ")[0]}
         </h1>
         <p className="text-xs text-muted truncate">
-          {user?.role ? roleLabels[user.role as UserRole] || user.role : ""} Portal
+          {roleDisplay} {t("portal")}
         </p>
       </div>
 
@@ -68,19 +70,19 @@ export function Topbar({ onMenu, hasSidebar = true }: { onMenu: () => void; hasS
           className="flex items-center gap-1.5 rounded-xl border border-brand-200 bg-brand-50 px-3 py-1.5 text-xs font-semibold text-brand-800 hover:bg-brand-100 transition shadow-xs"
         >
           <LayoutDashboard className="h-3.5 w-3.5 text-brand-700" />
-          <span className="hidden md:inline">Dashboard</span>
+          <span className="hidden md:inline">{t("dashboard")}</span>
         </Link>
       )}
 
       {/* Theme Color Palette Switcher (Ayushman Teal / Saffron Warm) */}
       <button
         onClick={toggleColorTheme}
-        className="flex items-center gap-1 rounded-xl border border-border bg-surface px-2.5 py-1 text-xs font-medium text-muted hover:bg-surface-hover hover:text-fg transition shadow-2xs"
-        title={`Current: ${isOrange ? "Warm Saffron" : "Ayushman Teal"}. Click to switch theme palette.`}
+        className="flex items-center gap-1 rounded-xl border border-border bg-surface px-2.5 py-1 text-xs font-medium text-muted hover:bg-surface-hover hover:text-fg transition shadow-2xs cursor-pointer"
+        title={isOrange ? t("saffron") : t("teal")}
       >
         <Palette className="h-3.5 w-3.5 text-brand-600" />
         <span className="hidden lg:inline text-[11px] font-semibold">
-          {isOrange ? "Saffron" : "Teal"}
+          {isOrange ? t("saffron") : t("teal")}
         </span>
       </button>
 
@@ -91,7 +93,7 @@ export function Topbar({ onMenu, hasSidebar = true }: { onMenu: () => void; hasS
         onClick={toggleTheme}
         className="rounded-xl border border-border p-2 text-muted hover:bg-surface-hover hover:text-fg transition shadow-2xs cursor-pointer"
         aria-label="Toggle theme"
-        title={isDark ? "Switch to Light Theme" : "Switch to Dark Theme"}
+        title={isDark ? t("switch_to_light") : t("switch_to_dark")}
       >
         {isDark ? <Sun className="h-4 w-4 text-amber-400" /> : <Moon className="h-4 w-4 text-slate-700" />}
       </button>

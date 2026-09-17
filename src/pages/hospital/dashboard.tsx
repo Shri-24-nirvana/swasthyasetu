@@ -19,6 +19,7 @@ import { useHospitalDB } from "@/lib/database/db";
 import { UserRole } from "@/dto/constants/UserRole";
 import type { HospitalVisit } from "@/dto/visit/HospitalVisit";
 import type { Patient } from "@/dto/patient/Patient";
+import { useLanguage } from "@/components/utils/LanguageContext";
 
 export function HospitalDashboard() {
   const user = useAuthStore((s) => s.user);
@@ -27,6 +28,7 @@ export function HospitalDashboard() {
   const facilities = useHospitalDB((s) => s.facilities);
   const checkInVisit = useHospitalDB((s) => s.checkInVisit);
   const createVisit = useHospitalDB((s) => s.createVisit);
+  const { t } = useLanguage();
 
   const [scannerOpen, setScannerOpen] = useState(false);
   const [selectedVisit, setSelectedVisit] = useState<HospitalVisit | null>(null);
@@ -111,7 +113,7 @@ export function HospitalDashboard() {
         <div>
           <div className="flex items-center gap-2">
             <span className="rounded-full bg-white/20 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider backdrop-blur-sm flex items-center gap-1.5">
-              <Building2 className="h-3.5 w-3.5" /> Hospital Operations &amp; Reception
+              <Building2 className="h-3.5 w-3.5" /> {t("hospital_reception")}
             </span>
           </div>
           <h1 className="mt-1.5 text-2xl font-black">{facility.name}</h1>
@@ -127,7 +129,7 @@ export function HospitalDashboard() {
             size="lg"
             className="bg-white text-slate-900 hover:bg-slate-100 shadow-xl font-bold flex items-center gap-2 border border-white/50 cursor-pointer"
           >
-            <QrIcon className="h-5 w-5 text-brand-700" /> SCAN PATIENT QR
+            <QrIcon className="h-5 w-5 text-brand-700" /> {t("scan_patient_qr")}
           </Button>
 
           <Button
@@ -135,7 +137,7 @@ export function HospitalDashboard() {
             size="lg"
             className="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black shadow-xl flex items-center gap-2 border border-emerald-300 dark:border-emerald-400/50 cursor-pointer transition-transform active:scale-95"
           >
-            <UserCheck className="h-5 w-5 text-slate-950" /> WALK-IN CHECK-IN
+            <UserCheck className="h-5 w-5 text-slate-950" /> {t("walk_in_check_in")}
           </Button>
         </div>
       </div>
@@ -148,7 +150,7 @@ export function HospitalDashboard() {
           </span>
           <div>
             <p className="text-2xl font-bold text-fg">{todayVisits.length}</p>
-            <p className="text-xs text-muted">Total Visits Today</p>
+            <p className="text-xs text-muted">{t("hospital_visits")}</p>
           </div>
         </Card>
         <Card className="flex items-center gap-4">
@@ -157,7 +159,7 @@ export function HospitalDashboard() {
           </span>
           <div>
             <p className="text-2xl font-bold text-fg">{bookedCount}</p>
-            <p className="text-xs text-muted">Awaiting Check-in</p>
+            <p className="text-xs text-muted">{t("status_booked")}</p>
           </div>
         </Card>
         <Card className="flex items-center gap-4">
@@ -166,7 +168,7 @@ export function HospitalDashboard() {
           </span>
           <div>
             <p className="text-2xl font-bold text-fg">{checkedInCount}</p>
-            <p className="text-xs text-muted">In OPD Queue / Rooms</p>
+            <p className="text-xs text-muted">{t("status_checked_in")} / {t("in_queue")}</p>
           </div>
         </Card>
         <Card className="flex items-center gap-4">
@@ -175,7 +177,7 @@ export function HospitalDashboard() {
           </span>
           <div>
             <p className="text-2xl font-bold text-fg">{completedCount}</p>
-            <p className="text-xs text-muted">Completed Visits</p>
+            <p className="text-xs text-muted">{t("status_completed")}</p>
           </div>
         </Card>
       </div>
@@ -184,13 +186,13 @@ export function HospitalDashboard() {
       <div className="space-y-4">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="text-lg font-bold text-fg">OPD Patient Queue &amp; Check-In</h2>
-            <p className="text-xs text-muted">Scan QR or enter Patient ID to check in and issue OPD token</p>
+            <h2 className="text-lg font-bold text-fg">{t("queue")} &amp; {t("walk_in_check_in")}</h2>
+            <p className="text-xs text-muted">{t("tamper_evident")}</p>
           </div>
 
           <div className="w-full sm:w-72">
             <Input
-              placeholder="Search by name, ID, or token…"
+              placeholder={t("search")}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -202,11 +204,11 @@ export function HospitalDashboard() {
             <table className="w-full text-left text-xs">
               <thead className="border-b border-border bg-brand-50/70 text-muted uppercase font-semibold text-[10px]">
                 <tr>
-                  <th className="p-3">Token</th>
-                  <th className="p-3">Patient</th>
-                  <th className="p-3">Department &amp; Doctor</th>
-                  <th className="p-3">Visit No</th>
-                  <th className="p-3">Status</th>
+                  <th className="p-3">{t("token")}</th>
+                  <th className="p-3">{t("patient")}</th>
+                  <th className="p-3">{t("department")} &amp; {t("doctor")}</th>
+                  <th className="p-3">{t("visit_number")}</th>
+                  <th className="p-3">{t("stage")}</th>
                   <th className="p-3 text-right">Actions</th>
                 </tr>
               </thead>
@@ -214,7 +216,7 @@ export function HospitalDashboard() {
                 {filteredVisits.length === 0 ? (
                   <tr>
                     <td colSpan={6} className="p-8 text-center text-muted">
-                      No matching patient visits found. Use the Scan QR or Walk-In button above to check in a patient.
+                      {t("no_tests_yet")}
                     </td>
                   </tr>
                 ) : (
@@ -226,7 +228,7 @@ export function HospitalDashboard() {
                             {v.tokenNumber}
                           </span>
                         ) : (
-                          <span className="text-muted font-mono text-xs">Not Checked In</span>
+                          <span className="text-muted font-mono text-xs">{t("not_checked_in")}</span>
                         )}
                       </td>
                       <td className="p-3">
@@ -250,7 +252,7 @@ export function HospitalDashboard() {
                               : "bg-gray-100 text-gray-700 border-gray-200"
                           }`}
                         >
-                          {v.status.replace(/_/g, " ")}
+                          {t(`status_${v.status.toLowerCase()}`, v.status.replace(/_/g, " "))}
                         </span>
                       </td>
                       <td className="p-3 text-right">
@@ -258,17 +260,18 @@ export function HospitalDashboard() {
                           <Button
                             size="sm"
                             onClick={() => handleCheckIn(v.id)}
-                            className="bg-emerald-600 text-white hover:bg-emerald-500 font-bold shadow-sm"
+                            className="bg-emerald-600 text-white hover:bg-emerald-500 font-bold shadow-sm cursor-pointer"
                           >
-                            <UserCheck className="h-3.5 w-3.5" /> Check In &amp; Token
+                            <UserCheck className="h-3.5 w-3.5" /> {t("check_in_and_token")}
                           </Button>
                         ) : (
                           <Button
                             size="sm"
                             variant="secondary"
                             onClick={() => setSelectedVisit(v)}
+                            className="cursor-pointer"
                           >
-                            View Pass
+                            {t("view_pass")}
                           </Button>
                         )}
                       </td>
@@ -290,17 +293,17 @@ export function HospitalDashboard() {
       />
 
       {/* High Visibility Walk-in Modal */}
-      <Modal open={walkinOpen} onClose={() => setWalkinOpen(false)} title="Walk-In Patient Arrival & OPD Check-In">
+      <Modal open={walkinOpen} onClose={() => setWalkinOpen(false)} title={t("walk_in_check_in")}>
         <form onSubmit={handleWalkinSubmit} className="space-y-4">
           <div className="rounded-2xl border border-brand-200 bg-brand-50/50 p-3 flex items-start gap-2.5 text-xs text-brand-900">
             <AlertCircle className="h-4 w-4 shrink-0 text-brand-600 mt-0.5" />
             <span>
-              For emergency or unannounced patients arriving at reception. Submitting generates an immediate OPD Token and places them in the Doctor's active waiting queue.
+              {t("walkin_desc")}
             </span>
           </div>
 
           <div>
-            <label className="mb-1.5 block text-xs font-bold text-fg">Select Registered Patient *</label>
+            <label className="mb-1.5 block text-xs font-bold text-fg">{t("select_registered_patient")} *</label>
             <Select value={walkinPatientId} onChange={(e) => setWalkinPatientId(e.target.value)} required>
               {patients.map((p) => (
                 <option key={p.swasthyaId} value={p.swasthyaId}>
@@ -312,7 +315,7 @@ export function HospitalDashboard() {
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="mb-1.5 block text-xs font-bold text-fg">Department</label>
+              <label className="mb-1.5 block text-xs font-bold text-fg">{t("department")}</label>
               <Select value={walkinDept} onChange={(e) => setWalkinDept(e.target.value)}>
                 <option>General Medicine</option>
                 <option>Pediatrics</option>
@@ -322,7 +325,7 @@ export function HospitalDashboard() {
               </Select>
             </div>
             <div>
-              <label className="mb-1.5 block text-xs font-bold text-fg">Duty Doctor</label>
+              <label className="mb-1.5 block text-xs font-bold text-fg">{t("duty_doctor")}</label>
               <Select value={walkinDoc} onChange={(e) => setWalkinDoc(e.target.value)}>
                 <option>Dr. Anita Rao</option>
                 <option>Dr. Rajesh Kumar</option>
@@ -334,7 +337,7 @@ export function HospitalDashboard() {
           </div>
 
           <div>
-            <label className="mb-1.5 block text-xs font-bold text-fg">Chief Complaint / Symptoms *</label>
+            <label className="mb-1.5 block text-xs font-bold text-fg">{t("reason_symptoms")} *</label>
             <Input
               placeholder="e.g. High fever, acute chest discomfort, injury"
               value={walkinReason}
@@ -344,7 +347,7 @@ export function HospitalDashboard() {
           </div>
 
           <Button type="submit" size="lg" className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold shadow-md cursor-pointer mt-2">
-            <UserCheck className="h-4 w-4" /> Issue OPD Token &amp; Check In Now
+            <UserCheck className="h-4 w-4" /> {t("check_in_and_token")}
           </Button>
         </form>
       </Modal>
@@ -354,51 +357,51 @@ export function HospitalDashboard() {
         <Modal
           open={!!selectedVisit}
           onClose={() => { setSelectedVisit(null); setIssuedToken(null); }}
-          title="Hospital OPD Token &amp; Check-in Pass"
+          title={t("view_qr_pass")}
           className="max-w-md text-center"
         >
           <div className="space-y-4">
             <div className="rounded-2xl border-2 border-emerald-600 bg-emerald-50/60 p-5 space-y-2">
-              <span className="text-xs uppercase font-bold text-emerald-800">OPD Queue Token</span>
+              <span className="text-xs uppercase font-bold text-emerald-800">{t("your_opd_token")}</span>
               <p className="text-4xl font-black text-emerald-800 tracking-wider font-mono">
                 {issuedToken || selectedVisit.tokenNumber || "A-024"}
               </p>
               <p className="text-xs font-semibold text-emerald-900">
-                Department: {selectedVisit.department}
+                {t("department")}: {selectedVisit.department}
               </p>
               <p className="text-[11px] text-muted">
-                Doctor: {selectedVisit.doctorName}
+                {t("doctor")}: {selectedVisit.doctorName}
               </p>
             </div>
 
             <div className="rounded-xl border border-border p-3 text-left text-xs space-y-1 bg-surface">
               <div className="flex justify-between">
-                <span className="text-muted">Patient:</span>
+                <span className="text-muted">{t("patient_name")}:</span>
                 <span className="font-bold text-fg">{selectedVisit.patientName}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted">Patient ID:</span>
+                <span className="text-muted">{t("permanent_id_label")}:</span>
                 <span className="font-mono font-bold text-brand-700">{selectedVisit.patientId}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted">Visit Number:</span>
+                <span className="text-muted">{t("visit_number")}:</span>
                 <span className="font-mono text-fg">{selectedVisit.visitNumber}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted">Check-In Status:</span>
-                <span className="font-bold text-emerald-700">{selectedVisit.status.replace(/_/g, " ")}</span>
+                <span className="text-muted">{t("stage")}:</span>
+                <span className="font-bold text-emerald-700">{t(`status_${selectedVisit.status.toLowerCase()}`, selectedVisit.status.replace(/_/g, " "))}</span>
               </div>
             </div>
 
             <div className="flex gap-2">
-              <Button variant="outline" className="flex-1" onClick={() => window.print()}>
-                Print Token Slip
+              <Button variant="outline" className="flex-1 cursor-pointer" onClick={() => window.print()}>
+                {t("print_token_slip")}
               </Button>
               <Button
-                className="flex-1"
+                className="flex-1 cursor-pointer"
                 onClick={() => { setSelectedVisit(null); setIssuedToken(null); }}
               >
-                Done
+                {t("done")}
               </Button>
             </div>
           </div>

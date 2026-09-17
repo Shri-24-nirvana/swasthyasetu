@@ -18,11 +18,13 @@ import { UserRole } from "@/dto/constants/UserRole";
 import type { TestOrder, TestOrderStatus, TestResultItem } from "@/dto/diagnostics/TestOrder";
 import type { HospitalVisit } from "@/dto/visit/HospitalVisit";
 import type { Patient } from "@/dto/patient/Patient";
+import { useLanguage } from "@/components/utils/LanguageContext";
 
 export function LabDashboard() {
   const user = useAuthStore((s) => s.user);
   const testOrders = useHospitalDB((s) => s.testOrders);
   const updateTestStatus = useHospitalDB((s) => s.updateTestStatus);
+  const { t } = useLanguage();
 
   const [scannerOpen, setScannerOpen] = useState(false);
   const [selectedTest, setSelectedTest] = useState<TestOrder | null>(null);
@@ -42,16 +44,16 @@ export function LabDashboard() {
   const filteredOrders = useMemo(() => {
     let list = testOrders;
     if (statusFilter !== "ALL") {
-      list = list.filter((t) => t.status === statusFilter);
+      list = list.filter((item) => item.status === statusFilter);
     }
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase().trim();
       list = list.filter(
-        (t) =>
-          t.testName.toLowerCase().includes(q) ||
-          t.patientName.toLowerCase().includes(q) ||
-          t.patientId.toLowerCase().includes(q) ||
-          (t.tokenNumber && t.tokenNumber.toLowerCase().includes(q))
+        (item) =>
+          item.testName.toLowerCase().includes(q) ||
+          item.patientName.toLowerCase().includes(q) ||
+          item.patientId.toLowerCase().includes(q) ||
+          (item.tokenNumber && item.tokenNumber.toLowerCase().includes(q))
       );
     }
     return list;
@@ -72,14 +74,14 @@ export function LabDashboard() {
     updateTestStatus(testId, "PROCESSING", { labTechnician: labTechName });
   };
 
-  const handleOpenResultModal = (test: TestOrder) => {
-    setSelectedTest(test);
-    if (test.testName.includes("CBC") || test.testName.includes("Hemoglobin")) {
+  const handleOpenResultModal = (testItem: TestOrder) => {
+    setSelectedTest(testItem);
+    if (testItem.testName.includes("CBC") || testItem.testName.includes("Hemoglobin")) {
       setParam1Label("Hemoglobin (Hb)");
       setParam1Value("12.4");
       setParam1Unit("g/dL");
       setSummaryText("Mild microcytic anemia. Platelets adequate.");
-    } else if (test.testName.includes("Sugar") || test.testName.includes("FBS")) {
+    } else if (testItem.testName.includes("Sugar") || testItem.testName.includes("FBS")) {
       setParam1Label("Fasting Glucose");
       setParam1Value("142");
       setParam1Unit("mg/dL");
@@ -117,9 +119,9 @@ export function LabDashboard() {
     setSelectedTest(null);
   };
 
-  const pendingCount = testOrders.filter((t) => t.status === "ORDERED").length;
-  const processingCount = testOrders.filter((t) => t.status === "SAMPLE_COLLECTED" || t.status === "PROCESSING").length;
-  const completedCount = testOrders.filter((t) => t.status === "COMPLETED").length;
+  const pendingCount = testOrders.filter((item) => item.status === "ORDERED").length;
+  const processingCount = testOrders.filter((item) => item.status === "SAMPLE_COLLECTED" || item.status === "PROCESSING").length;
+  const completedCount = testOrders.filter((item) => item.status === "COMPLETED").length;
 
   return (
     <div className="space-y-6">
@@ -127,9 +129,9 @@ export function LabDashboard() {
       <div className="flex flex-col gap-4 rounded-3xl border border-border bg-gradient-to-r from-purple-800 via-indigo-900 to-brand-800 p-6 text-white shadow-md sm:flex-row sm:items-center sm:justify-between">
         <div>
           <span className="rounded-full bg-white/20 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider backdrop-blur-sm">
-            Diagnostic Pathology &amp; Imaging Lab
+            {t("lab_diagnostics")}
           </span>
-          <h1 className="mt-1 text-2xl font-black">Pathology &amp; Diagnostic Queue</h1>
+          <h1 className="mt-1 text-2xl font-black">{t("lab_diagnostics")}</h1>
           <p className="text-xs text-purple-100 mt-0.5">
             QR-Based Patient Specimen Tracking · Results Entry · Auto-Publish to Doctor &amp; Patient
           </p>
@@ -139,9 +141,9 @@ export function LabDashboard() {
           <Button
             onClick={() => setScannerOpen(true)}
             size="lg"
-            className="bg-white text-purple-900 hover:bg-purple-50 shadow-xl font-bold flex items-center gap-2"
+            className="bg-white text-purple-900 hover:bg-purple-50 shadow-xl font-bold flex items-center gap-2 cursor-pointer"
           >
-            <QrIcon className="h-5 w-5 text-purple-700" /> SCAN PATIENT QR
+            <QrIcon className="h-5 w-5 text-purple-700" /> {t("scan_patient_qr")}
           </Button>
         </div>
       </div>
@@ -154,7 +156,7 @@ export function LabDashboard() {
           </span>
           <div>
             <p className="text-2xl font-bold text-fg">{testOrders.length}</p>
-            <p className="text-xs text-muted">Total Test Orders</p>
+            <p className="text-xs text-muted">{t("diagnostic_tests")}</p>
           </div>
         </Card>
         <Card className="flex items-center gap-4">
@@ -163,7 +165,7 @@ export function LabDashboard() {
           </span>
           <div>
             <p className="text-2xl font-bold text-fg">{pendingCount}</p>
-            <p className="text-xs text-muted">Sample Pending</p>
+            <p className="text-xs text-muted">{t("status_tests_pending")}</p>
           </div>
         </Card>
         <Card className="flex items-center gap-4">
@@ -172,7 +174,7 @@ export function LabDashboard() {
           </span>
           <div>
             <p className="text-2xl font-bold text-fg">{processingCount}</p>
-            <p className="text-xs text-muted">Processing in Lab</p>
+            <p className="text-xs text-muted">{t("status_processing")}</p>
           </div>
         </Card>
         <Card className="flex items-center gap-4">
@@ -181,7 +183,7 @@ export function LabDashboard() {
           </span>
           <div>
             <p className="text-2xl font-bold text-fg">{completedCount}</p>
-            <p className="text-xs text-muted">Reports Published</p>
+            <p className="text-xs text-muted">{t("status_completed")}</p>
           </div>
         </Card>
       </div>
@@ -195,17 +197,17 @@ export function LabDashboard() {
               onChange={(e) => setStatusFilter(e.target.value as typeof statusFilter)}
               className="w-44 text-xs"
             >
-              <option value="ALL">All Statuses</option>
-              <option value="ORDERED">Awaiting Sample (ORDERED)</option>
-              <option value="SAMPLE_COLLECTED">Sample Collected</option>
-              <option value="PROCESSING">Processing</option>
-              <option value="COMPLETED">Completed</option>
+              <option value="ALL">{t("all_roles")}</option>
+              <option value="ORDERED">{t("status_ordered")}</option>
+              <option value="SAMPLE_COLLECTED">{t("status_sample_collected")}</option>
+              <option value="PROCESSING">{t("status_processing")}</option>
+              <option value="COMPLETED">{t("status_completed")}</option>
             </Select>
           </div>
 
           <div className="w-full sm:w-72">
             <Input
-              placeholder="Search by patient, test, token…"
+              placeholder={t("search")}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -217,11 +219,11 @@ export function LabDashboard() {
             <table className="w-full text-left text-xs">
               <thead className="border-b border-border bg-purple-50/50 text-muted uppercase font-semibold text-[10px]">
                 <tr>
-                  <th className="p-3">Lab Token</th>
-                  <th className="p-3">Test Name &amp; Dept</th>
-                  <th className="p-3">Patient</th>
-                  <th className="p-3">Ordering Doctor</th>
-                  <th className="p-3">Status</th>
+                  <th className="p-3">{t("token")}</th>
+                  <th className="p-3">{t("diagnostic_tests")}</th>
+                  <th className="p-3">{t("patient")}</th>
+                  <th className="p-3">{t("doctor")}</th>
+                  <th className="p-3">{t("stage")}</th>
                   <th className="p-3 text-right">Actions</th>
                 </tr>
               </thead>
@@ -229,60 +231,60 @@ export function LabDashboard() {
                 {filteredOrders.length === 0 ? (
                   <tr>
                     <td colSpan={6} className="p-8 text-center text-muted">
-                      No test orders matching criteria.
+                      {t("no_tests_yet")}
                     </td>
                   </tr>
                 ) : (
-                  filteredOrders.map((t) => (
-                    <tr key={t.id} className="hover:bg-purple-50/20 transition">
+                  filteredOrders.map((testItem) => (
+                    <tr key={testItem.id} className="hover:bg-purple-50/20 transition">
                       <td className="p-3">
                         <span className="font-mono font-bold text-xs text-purple-800 bg-purple-100/70 px-2 py-0.5 rounded border border-purple-200">
-                          {t.tokenNumber || t.id}
+                          {testItem.tokenNumber || testItem.id}
                         </span>
                       </td>
                       <td className="p-3">
-                        <p className="font-bold text-sm text-fg">{t.testName}</p>
-                        <p className="text-[11px] text-muted">{t.department} · {t.category}</p>
+                        <p className="font-bold text-sm text-fg">{testItem.testName}</p>
+                        <p className="text-[11px] text-muted">{testItem.department} · {testItem.category}</p>
                       </td>
                       <td className="p-3">
-                        <p className="font-semibold text-fg">{t.patientName}</p>
-                        <p className="font-mono text-[11px] text-muted">{t.patientId}</p>
+                        <p className="font-semibold text-fg">{testItem.patientName}</p>
+                        <p className="font-mono text-[11px] text-muted">{testItem.patientId}</p>
                       </td>
-                      <td className="p-3 text-fg">{t.doctorName}</td>
+                      <td className="p-3 text-fg">{testItem.doctorName}</td>
                       <td className="p-3">
                         <span
                           className={`rounded-full px-2.5 py-0.5 text-[10px] font-bold border ${
-                            t.status === "COMPLETED"
+                            testItem.status === "COMPLETED"
                               ? "bg-emerald-50 text-emerald-700 border-emerald-200"
-                              : t.status === "PROCESSING"
+                              : testItem.status === "PROCESSING"
                               ? "bg-blue-50 text-blue-700 border-blue-200"
-                              : t.status === "SAMPLE_COLLECTED"
+                              : testItem.status === "SAMPLE_COLLECTED"
                               ? "bg-indigo-50 text-indigo-700 border-indigo-200"
                               : "bg-amber-50 text-amber-700 border-amber-200"
                           }`}
                         >
-                          {t.status.replace(/_/g, " ")}
+                          {t(`status_${testItem.status.toLowerCase()}`, testItem.status.replace(/_/g, " "))}
                         </span>
                       </td>
                       <td className="p-3 text-right">
-                        {t.status === "ORDERED" && (
-                          <Button size="sm" onClick={() => handleCollectSample(t.id)}>
-                            Collect Sample
+                        {testItem.status === "ORDERED" && (
+                          <Button size="sm" onClick={() => handleCollectSample(testItem.id)} className="cursor-pointer">
+                            {t("collect_sample")}
                           </Button>
                         )}
-                        {t.status === "SAMPLE_COLLECTED" && (
-                          <Button size="sm" variant="secondary" onClick={() => handleStartProcessing(t.id)}>
-                            Start Processing
+                        {testItem.status === "SAMPLE_COLLECTED" && (
+                          <Button size="sm" variant="secondary" onClick={() => handleStartProcessing(testItem.id)} className="cursor-pointer">
+                            {t("start_processing")}
                           </Button>
                         )}
-                        {t.status === "PROCESSING" && (
-                          <Button size="sm" className="bg-purple-700 text-white hover:bg-purple-600" onClick={() => handleOpenResultModal(t)}>
-                            Enter Result &amp; Publish
+                        {testItem.status === "PROCESSING" && (
+                          <Button size="sm" className="bg-purple-700 text-white hover:bg-purple-600 cursor-pointer" onClick={() => handleOpenResultModal(testItem)}>
+                            {t("enter_result_publish")}
                           </Button>
                         )}
-                        {t.status === "COMPLETED" && (
+                        {testItem.status === "COMPLETED" && (
                           <span className="text-emerald-700 font-bold text-xs flex items-center justify-end gap-1">
-                            <CheckCircle2 className="h-3.5 w-3.5" /> Published
+                            <CheckCircle2 className="h-3.5 w-3.5" /> {t("status_completed")}
                           </span>
                         )}
                       </td>
@@ -308,33 +310,33 @@ export function LabDashboard() {
         <Modal
           open={resultModalOpen}
           onClose={() => setResultModalOpen(false)}
-          title={`Upload Diagnostic Results — ${selectedTest.testName}`}
+          title={`${t("enter_result_publish")} — ${selectedTest.testName}`}
           className="max-w-lg"
         >
           <form onSubmit={handleSubmitResult} className="space-y-4">
             <div className="rounded-xl border border-border p-3 text-xs space-y-1 bg-surface">
-              <p>Patient: <strong>{selectedTest.patientName}</strong> ({selectedTest.patientId})</p>
-              <p>Doctor: <strong>{selectedTest.doctorName}</strong></p>
+              <p>{t("patient")}: <strong>{selectedTest.patientName}</strong> ({selectedTest.patientId})</p>
+              <p>{t("doctor")}: <strong>{selectedTest.doctorName}</strong></p>
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="mb-1 block text-xs font-semibold text-fg">Parameter Name</label>
+                <label className="mb-1 block text-xs font-semibold text-fg">{t("parameter_name")}</label>
                 <Input value={param1Label} onChange={(e) => setParam1Label(e.target.value)} required />
               </div>
               <div>
-                <label className="mb-1 block text-xs font-semibold text-fg">Observed Value</label>
+                <label className="mb-1 block text-xs font-semibold text-fg">{t("observed_value")}</label>
                 <Input value={param1Value} onChange={(e) => setParam1Value(e.target.value)} required />
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="mb-1 block text-xs font-semibold text-fg">Unit</label>
+                <label className="mb-1 block text-xs font-semibold text-fg">{t("unit")}</label>
                 <Input value={param1Unit} onChange={(e) => setParam1Unit(e.target.value)} placeholder="e.g. mg/dL" />
               </div>
               <div>
-                <label className="mb-1 block text-xs font-semibold text-fg">Clinical Flag</label>
+                <label className="mb-1 block text-xs font-semibold text-fg">{t("clinical_flag")}</label>
                 <Select value={param1Flag} onChange={(e) => setParam1Flag(e.target.value as any)}>
                   <option value="NORMAL">NORMAL</option>
                   <option value="ABNORMAL">ABNORMAL</option>
@@ -344,7 +346,7 @@ export function LabDashboard() {
             </div>
 
             <div>
-              <label className="mb-1 block text-xs font-semibold text-fg">Diagnostic Summary / Interpretation</label>
+              <label className="mb-1 block text-xs font-semibold text-fg">{t("diagnostic_summary")}</label>
               <TextArea
                 rows={2}
                 value={summaryText}
@@ -353,8 +355,8 @@ export function LabDashboard() {
               />
             </div>
 
-            <Button type="submit" className="w-full bg-purple-700 text-white hover:bg-purple-600">
-              <FileCheck className="h-4 w-4" /> Save &amp; Publish Report to Patient Record
+            <Button type="submit" className="w-full bg-purple-700 text-white hover:bg-purple-600 cursor-pointer">
+              <FileCheck className="h-4 w-4" /> {t("save")}
             </Button>
           </form>
         </Modal>

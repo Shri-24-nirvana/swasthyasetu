@@ -13,11 +13,13 @@ import { Button } from "@/components/ui/Button";
 import { QRCode } from "@/components/shared/QRCode";
 import { useAuthStore } from "@/stores/authStore";
 import { useHospitalDB } from "@/lib/database/db";
+import { useLanguage } from "@/components/utils/LanguageContext";
 
 export function MyQRPage() {
   const user = useAuthStore((s) => s.user);
   const patients = useHospitalDB((s) => s.patients);
   const visits = useHospitalDB((s) => s.visits);
+  const { t } = useLanguage();
 
   const currentPatient = useMemo(() => {
     if (!user) return patients[0];
@@ -45,17 +47,17 @@ export function MyQRPage() {
   return (
     <div>
       <PageHeader
-        title="My Hospital Visit QR"
+        title={t("my_qr")}
         subtitle="Your central digital token connecting Reception, Doctor, Lab, and Pharmacy"
         backTo="/patient"
-        backLabel="Back to Patient Dashboard"
+        backLabel={t("dashboard")}
         actions={
           <div className="flex gap-2">
-            <Button variant="outline" onClick={handlePrint}>
-              <Printer className="h-4 w-4" /> Print QR
+            <Button variant="outline" onClick={handlePrint} className="cursor-pointer">
+              <Printer className="h-4 w-4" /> {t("print_qr")}
             </Button>
-            <Button variant="secondary" onClick={handleDownload}>
-              <Download className="h-4 w-4" /> Download QR
+            <Button variant="secondary" onClick={handleDownload} className="cursor-pointer">
+              <Download className="h-4 w-4" /> {t("download_qr")}
             </Button>
           </div>
         }
@@ -72,13 +74,13 @@ export function MyQRPage() {
                     <QrIcon className="h-4 w-4" />
                   </span>
                   <div className="text-left">
-                    <h3 className="font-bold text-sm text-fg">SwasthyaSetu Hospital Visit QR</h3>
-                    <p className="text-[11px] text-muted">Scan at every department</p>
+                    <h3 className="font-bold text-sm text-fg">{t("app_name")} {t("my_qr")}</h3>
+                    <p className="text-[11px] text-muted">{t("tamper_evident")}</p>
                   </div>
                 </div>
                 <span className="rounded-full bg-emerald-100 border border-emerald-300 px-3 py-1 text-xs font-bold text-emerald-800 flex items-center gap-1">
                   <span className="h-2 w-2 rounded-full bg-emerald-600 animate-pulse" />
-                  Active Visit
+                  {t("active_visit")}
                 </span>
               </div>
 
@@ -94,28 +96,28 @@ export function MyQRPage() {
               <div className="rounded-2xl border border-brand-200 bg-brand-50/50 p-4 text-left space-y-2.5">
                 <div className="grid grid-cols-2 gap-3 text-xs">
                   <div>
-                    <span className="text-muted">Patient Name:</span>
+                    <span className="text-muted">{t("patient_name")}:</span>
                     <p className="font-bold text-sm text-fg">{activeVisit.patientName}</p>
                   </div>
                   <div>
-                    <span className="text-muted">Permanent Swasthya ID:</span>
+                    <span className="text-muted">{t("permanent_id_label")}:</span>
                     <p className="font-mono font-bold text-brand-700">{activeVisit.patientId}</p>
                   </div>
                   <div>
-                    <span className="text-muted">Hospital / Facility:</span>
+                    <span className="text-muted">{t("facility")}:</span>
                     <p className="font-semibold text-fg">{activeVisit.facilityName}</p>
                   </div>
                   <div>
-                    <span className="text-muted">Doctor &amp; Department:</span>
+                    <span className="text-muted">{t("doctor")} &amp; {t("department")}:</span>
                     <p className="font-semibold text-fg">{activeVisit.doctorName} ({activeVisit.department})</p>
                   </div>
                   <div>
-                    <span className="text-muted">Visit Status:</span>
-                    <p className="font-bold text-brand-800">{activeVisit.status.replace(/_/g, " ")}</p>
+                    <span className="text-muted">{t("stage")}:</span>
+                    <p className="font-bold text-brand-800">{t(`status_${activeVisit.status.toLowerCase()}`, activeVisit.status.replace(/_/g, " "))}</p>
                   </div>
                   {activeVisit.tokenNumber && (
                     <div>
-                      <span className="text-muted">Queue Token Number:</span>
+                      <span className="text-muted">{t("your_opd_token")}:</span>
                       <p className="font-bold text-emerald-700 text-sm">{activeVisit.tokenNumber}</p>
                     </div>
                   )}
@@ -126,12 +128,12 @@ export function MyQRPage() {
               <div className="mt-4 rounded-xl bg-amber-50 border border-amber-200 p-3 text-xs text-amber-900 text-left flex items-start gap-2.5">
                 <Info className="h-4 w-4 text-amber-700 shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-bold">Where to show this QR code:</p>
+                  <p className="font-bold">{t("qr_guidance_title")}</p>
                   <p className="text-[11px] mt-0.5 leading-relaxed">
-                    1. <strong>Reception Desk</strong> for instant check-in and token number. <br />
-                    2. <strong>Doctor Consultation Room</strong> to open your health records. <br />
-                    3. <strong>Diagnostic Pathology Lab</strong> for prescribed tests. <br />
-                    4. <strong>Pharmacy Counter</strong> for medicine verification and bill.
+                    {t("qr_guidance_1")} <br />
+                    {t("qr_guidance_2")} <br />
+                    {t("qr_guidance_3")} <br />
+                    {t("qr_guidance_4")}
                   </p>
                 </div>
               </div>
@@ -140,13 +142,13 @@ export function MyQRPage() {
         ) : (
           <Card className="text-center p-8">
             <QrIcon className="mx-auto h-12 w-12 text-muted mb-3" />
-            <CardTitle>No Active Hospital Visit</CardTitle>
+            <CardTitle>{t("no_tests_yet")}</CardTitle>
             <p className="text-xs text-muted mt-1 max-w-sm mx-auto">
               You currently do not have an active hospital appointment or visit token. Book an appointment to generate your visit QR.
             </p>
             <Link to="/patient/appointments" className="mt-4 inline-block">
-              <Button>
-                <CalendarClock className="h-4 w-4" /> Book Appointment &amp; Get QR
+              <Button className="cursor-pointer">
+                <CalendarClock className="h-4 w-4" /> {t("book_new_appointment")}
               </Button>
             </Link>
           </Card>

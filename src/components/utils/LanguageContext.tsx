@@ -5,12 +5,12 @@ import {
   type ReactNode,
 } from "react";
 import { Language } from "@/dto/constants/Language";
-import { translate, type TranslationKey } from "@/lib/i18n";
+import { translate } from "@/lib/i18n";
 
 interface LanguageContextValue {
   language: Language;
   setLanguage: (l: Language) => void;
-  t: (key: TranslationKey) => string;
+  t: (key: string, fallback?: string) => string;
 }
 
 const LanguageContext = createContext<LanguageContextValue | null>(null);
@@ -18,10 +18,12 @@ const LanguageContext = createContext<LanguageContextValue | null>(null);
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguage] = useState<Language>(() => {
     const saved = localStorage.getItem("swasthya-lang");
-    return saved === "hi" ? Language.HINDI : Language.ENGLISH;
+    if (saved === "hi") return Language.HINDI;
+    if (saved === "mr") return Language.MARATHI;
+    return Language.ENGLISH;
   });
 
-  const t = (key: TranslationKey) => translate(language, key);
+  const t = (key: string, fallback?: string) => translate(language, key, fallback);
 
   const value: LanguageContextValue = {
     language,

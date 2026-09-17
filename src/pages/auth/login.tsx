@@ -62,7 +62,7 @@ export function LoginPage() {
               hasSupabase ? "bg-emerald-500/20 text-emerald-200 border border-emerald-400/30" : "bg-white/15 text-brand-100"
             }`}>
               <Zap className="h-3 w-3" />
-              {hasSupabase ? "Supabase Realtime Cloud Connected" : "Local Realtime Synced"}
+              {hasSupabase ? t("realtime_connected") : t("local_synced")}
             </span>
             <LanguageSwitch />
           </div>
@@ -74,16 +74,16 @@ export function LoginPage() {
             <button
               type="button"
               onClick={() => setAuthMode("ID_DEMO")}
-              className={`flex-1 rounded-lg py-1.5 text-xs font-bold transition flex items-center justify-center gap-1.5 ${
+              className={`flex-1 rounded-lg py-1.5 text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer ${
                 authMode === "ID_DEMO" ? "bg-surface text-brand-800 shadow-sm" : "text-muted hover:text-fg"
               }`}
             >
-              <UserIcon className="h-3.5 w-3.5" /> Swasthya ID &amp; Quick Demo
+              <UserIcon className="h-3.5 w-3.5" /> {t("swasthya_id")} &amp; Demo
             </button>
             <button
               type="button"
               onClick={() => setAuthMode("EMAIL_PASSWORD")}
-              className={`flex-1 rounded-lg py-1.5 text-xs font-bold transition flex items-center justify-center gap-1.5 ${
+              className={`flex-1 rounded-lg py-1.5 text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer ${
                 authMode === "EMAIL_PASSWORD" ? "bg-surface text-brand-800 shadow-sm" : "text-muted hover:text-fg"
               }`}
             >
@@ -95,7 +95,7 @@ export function LoginPage() {
           <form onSubmit={handleStandardLogin} className="space-y-4">
             <div>
               <label className="mb-1 block text-xs font-semibold text-fg">
-                Select Your Role
+                {t("select_role")}
               </label>
               <Select
                 value={role}
@@ -104,22 +104,22 @@ export function LoginPage() {
                   setIdentifier("");
                 }}
               >
-                <option value={UserRole.PATIENT}>🧑‍🦰 Citizen / Patient</option>
-                <option value={UserRole.DOCTOR}>🩺 Doctor (Consultation &amp; Rx)</option>
-                <option value={UserRole.HOSPITAL_STAFF}>🏢 Hospital Staff / Reception</option>
-                <option value={UserRole.LAB}>🧪 Diagnostic / Pathology Lab</option>
-                <option value={UserRole.PHARMACY}>💊 Pharmacy / Medicine Dispensing</option>
-                <option value={UserRole.HEALTHCARE_WORKER}>👩‍⚕️ Healthcare Worker (ASHA/ANM)</option>
-                <option value={UserRole.ADMIN}>📊 Hospital Administration</option>
-                <option value={UserRole.SECURITY}>🛡️ Security Guard</option>
-                <option value={UserRole.SUPER_ADMIN}>⚡ Super Admin (State/National)</option>
+                <option value={UserRole.PATIENT}>{t("role_patient")}</option>
+                <option value={UserRole.DOCTOR}>{t("role_doctor")}</option>
+                <option value={UserRole.HOSPITAL_STAFF}>{t("role_hospital_staff")}</option>
+                <option value={UserRole.LAB}>{t("role_lab")}</option>
+                <option value={UserRole.PHARMACY}>{t("role_pharmacy")}</option>
+                <option value={UserRole.HEALTHCARE_WORKER}>{t("role_healthcare_worker")}</option>
+                <option value={UserRole.ADMIN}>{t("role_admin")}</option>
+                <option value={UserRole.SECURITY}>{t("role_security")}</option>
+                <option value={UserRole.SUPER_ADMIN}>{t("role_super_admin")}</option>
               </Select>
             </div>
 
             {authMode === "ID_DEMO" ? (
               <div>
                 <label className="mb-1 block text-xs font-semibold text-fg">
-                  Swasthya Patient ID, Username, or Mobile
+                  {t("swasthya_id")} / Username
                 </label>
                 <Input
                   placeholder={`e.g. ${currentRoleDemoAccounts[0]?.username || "patient01"} or SS-IND-00024581`}
@@ -154,8 +154,8 @@ export function LoginPage() {
 
             {error && <p className="text-xs text-red-600 font-medium">{error}</p>}
 
-            <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Signing in…" : `${t("login")} as ${role.replace(/_/g, " ")}`}
+            <Button type="submit" className="w-full cursor-pointer" disabled={loading}>
+              {loading ? "Signing in…" : `${t("login")}`}
             </Button>
           </form>
 
@@ -165,9 +165,9 @@ export function LoginPage() {
               <div className="flex items-center justify-between">
                 <span className="flex items-center gap-1 text-xs font-bold text-brand-800">
                   <Sparkles className="h-3.5 w-3.5 text-brand-600" />
-                  1-Click Instant Login ({currentRoleDemoAccounts.length})
+                  {t("demo_accounts")} ({currentRoleDemoAccounts.length})
                 </span>
-                <span className="text-[10px] text-muted">Click any to enter</span>
+                <span className="text-[10px] text-muted">{t("click_any_to_enter")}</span>
               </div>
               <div className="grid gap-1.5 sm:grid-cols-2">
                 {currentRoleDemoAccounts.map((acc) => (
@@ -175,7 +175,7 @@ export function LoginPage() {
                     key={acc.username}
                     type="button"
                     onClick={() => handleQuickDemoLogin(acc)}
-                    className="flex items-center justify-between rounded-lg border border-border bg-surface px-2.5 py-1.5 text-left text-xs transition hover:border-brand-600 hover:bg-brand-50"
+                    className="flex items-center justify-between rounded-lg border border-border bg-surface px-2.5 py-1.5 text-left text-xs transition hover:border-brand-600 hover:bg-brand-50 cursor-pointer"
                   >
                     <div className="min-w-0 pr-2">
                       <p className="font-semibold text-fg truncate">{acc.user.name.split("(")[0]}</p>
@@ -191,7 +191,7 @@ export function LoginPage() {
           <div className="flex items-center justify-between border-t border-border pt-4 text-xs">
             <span className="text-muted">New citizen or medical staff?</span>
             <Link to="/register" className="font-bold text-brand-700 hover:underline flex items-center gap-1">
-              Create SwasthyaSetu ID <ArrowRight className="h-3 w-3" />
+              {t("register")} <ArrowRight className="h-3 w-3" />
             </Link>
           </div>
         </div>
