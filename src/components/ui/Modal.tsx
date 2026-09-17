@@ -31,24 +31,24 @@ export function Modal({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div
-        className="absolute inset-0 bg-black/50 "
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
         onClick={onClose}
       />
       <div
         className={cn(
-          "relative z-10 w-full max-w-lg rounded-2xl bg-surface p-6 shadow-xl",
+          "relative z-10 w-full max-w-lg rounded-3xl border border-border bg-surface p-6 shadow-2xl transition-all animate-in fade-in-0 zoom-in-95",
           className
         )}
       >
-        <div className="mb-4 flex items-center justify-between">
-          <h3 className="text-lg font-semibold text-fg">{title}</h3>
+        <div className="mb-4 flex items-center justify-between border-b border-border pb-3">
+          <h3 className="text-base font-bold text-fg tracking-tight">{title}</h3>
           <button
             onClick={onClose}
-            className="rounded-md p-1 text-muted hover:bg-brand-50 hover:text-fg"
+            className="rounded-xl p-1.5 text-muted hover:bg-surface-hover hover:text-fg transition-colors"
           >
-            <X className="h-5 w-5" />
+            <X className="h-4 w-4" />
           </button>
         </div>
         {children}

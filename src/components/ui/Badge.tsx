@@ -3,13 +3,13 @@ import { cn } from "@/lib/utils";
 import { RiskLevel } from "@/dto/constants/RiskLevel";
 
 const tone: Record<string, string> = {
-  LOW: "bg-green-100 text-green-700",
-  GREEN: "bg-green-100 text-green-700",
-  MODERATE: "bg-amber-100 text-amber-800",
-  YELLOW: "bg-amber-100 text-amber-800",
-  HIGH: "bg-red-100 text-red-700",
-  RED: "bg-red-100 text-red-700",
-  INFO: "bg-brand-100 text-brand-700",
+  LOW: "bg-emerald-100 text-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-300 dark:border dark:border-emerald-800/60",
+  GREEN: "bg-emerald-100 text-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-300 dark:border dark:border-emerald-800/60",
+  MODERATE: "bg-amber-100 text-amber-800 dark:bg-amber-950/70 dark:text-amber-300 dark:border dark:border-amber-800/60",
+  YELLOW: "bg-amber-100 text-amber-800 dark:bg-amber-950/70 dark:text-amber-300 dark:border dark:border-amber-800/60",
+  HIGH: "bg-rose-100 text-rose-800 dark:bg-rose-950/70 dark:text-rose-300 dark:border dark:border-rose-800/60",
+  RED: "bg-rose-100 text-rose-800 dark:bg-rose-950/70 dark:text-rose-300 dark:border dark:border-rose-800/60",
+  INFO: "bg-brand-100 text-brand-800 dark:bg-brand-900/60 dark:text-brand-300 dark:border dark:border-brand-700/50",
 };
 
 export function RiskBadge({
@@ -30,8 +30,8 @@ export function RiskBadge({
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium",
-        tone[level],
+        "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold shadow-xs",
+        tone[level] || tone.INFO,
         className
       )}
     >
@@ -51,8 +51,8 @@ export function Badge({
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium",
-        tone[t],
+        "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold shadow-xs",
+        tone[t] || tone.INFO,
         className
       )}
       {...props}
