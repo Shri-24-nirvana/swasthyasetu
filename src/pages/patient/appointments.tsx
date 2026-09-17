@@ -10,6 +10,7 @@ import {
   Building2,
   Stethoscope,
   ArrowRight,
+  Zap,
 } from "lucide-react";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { Card } from "@/components/ui/Card";
@@ -19,7 +20,6 @@ import { Modal } from "@/components/ui/Modal";
 import { QRCode } from "@/components/shared/QRCode";
 import { useAuthStore } from "@/stores/authStore";
 import { useHospitalDB } from "@/lib/database/db";
-import type { HospitalVisit } from "@/dto/visit/HospitalVisit";
 
 const departmentDoctors: Record<string, string[]> = {
   "General Medicine": ["Dr. Anita Rao", "Dr. S. Iyer", "Dr. Rajesh Kumar"],
@@ -50,7 +50,12 @@ export function AppointmentsPage() {
   }, [visits, currentPatient]);
 
   const [bookingOpen, setBookingOpen] = useState(false);
-  const [confirmedVisit, setConfirmedVisit] = useState<HospitalVisit | null>(null);
+  const [confirmedVisitId, setConfirmedVisitId] = useState<string | null>(null);
+
+  const activeConfirmedVisit = useMemo(() => {
+    if (!confirmedVisitId) return null;
+    return visits.find((v) => v.id === confirmedVisitId) || null;
+  }, [visits, confirmedVisitId]);
 
   const [facilityId, setFacilityId] = useState(facilities[0]?.id || "phc-1");
   const [department, setDepartment] = useState("General Medicine");
@@ -87,14 +92,14 @@ export function AppointmentsPage() {
     });
 
     setBookingOpen(false);
-    setConfirmedVisit(newVisit);
+    setConfirmedVisitId(newVisit.id);
   };
 
   return (
     <div>
       <PageHeader
         title="Appointments &amp; Visit QRs"
-        subtitle="Book consultations and manage your hospital visit tokens"
+        subtitle="Book consultations and receive live real-time token updates"
         backTo="/patient"
         backLabel="Back to Patient Dashboard"
         actions={
@@ -119,7 +124,7 @@ export function AppointmentsPage() {
                     v.status === "COMPLETED"
                       ? "bg-emerald-50 text-emerald-700 border-emerald-200"
                       : v.status === "CHECKED_IN"
-                      ? "bg-blue-50 text-blue-700 border-blue-200"
+                      ? "bg-blue-50 text-blue-700 border-blue-200 animate-pulse"
                       : "bg-amber-50 text-amber-700 border-amber-200"
                   }`}
                 >
@@ -153,10 +158,10 @@ export function AppointmentsPage() {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => setConfirmedVisit(v)}
+                onClick={() => setConfirmedVisitId(v.id)}
                 className="w-full flex items-center justify-center gap-1.5"
               >
-                <QrIcon className="h-3.5 w-3.5 text-brand-700" /> View Visit QR
+                <QrIcon className="h-3.5 w-3.5 text-brand-700" /> View Visit QR &amp; Pass
               </Button>
             </div>
           </Card>
@@ -232,7 +237,7 @@ export function AppointmentsPage() {
           </div>
 
           <div className="rounded-xl bg-brand-50 p-3 text-xs text-brand-800 border border-brand-200">
-            ✓ Booking generates a <strong>Secure Hospital Visit QR Code</strong> that will be scanned at Reception, Consultation, Lab &amp; Pharmacy.
+            ✓ Booking generates a <strong>Secure Hospital Visit QR Code</strong> broadcasted in real time to Doctor &amp; Hospital Reception.
           </div>
 
           <Button type="submit" className="w-full mt-2">
@@ -242,50 +247,68 @@ export function AppointmentsPage() {
       </Modal>
 
       {/* Appointment Confirmed / Show QR Modal */}
-      {confirmedVisit && (
+      {activeConfirmedVisit && (
         <Modal
-          open={!!confirmedVisit}
-          onClose={() => setConfirmedVisit(null)}
+          open={!!activeConfirmedVisit}
+          onClose={() => setConfirmedVisitId(null)}
           title="Hospital Visit QR &amp; Appointment Pass"
           className="max-w-md text-center"
         >
           <div className="space-y-4">
             <div className="flex items-center justify-center gap-1.5 text-emerald-700 font-bold text-sm">
               <CheckCircle2 className="h-5 w-5" />
-              <span>Appointment Active &amp; QR Generated</span>
+              <span>Appointment Active &amp; QR Live</span>
             </div>
+
+            {/* Realtime token status alert badge */}
+            {activeConfirmedVisit.tokenNumber ? (
+              <div className="rounded-2xl border-2 border-emerald-500 bg-emerald-50 p-3 text-center animate-in zoom-in-95">
+                <span className="text-[10px] font-bold text-emerald-800 uppercase tracking-wide">
+                  ⚡ Real-Time Check-In Confirmed
+                </span>
+                <p className="text-3xl font-black text-emerald-900 font-mono">
+                  Token: {activeConfirmedVisit.tokenNumber}
+                </p>
+                <p className="text-xs text-emerald-700 mt-0.5 font-medium">
+                  Please proceed to {activeConfirmedVisit.department} ({activeConfirmedVisit.doctorName})
+                </p>
+              </div>
+            ) : (
+              <div className="flex items-center justify-center gap-1.5 rounded-xl bg-amber-50 border border-amber-200 p-2 text-xs text-amber-800 font-medium">
+                <Zap className="h-3.5 w-3.5 text-amber-600 animate-pulse" />
+                <span>Awaiting Reception Check-In Scan (Token will update live)</span>
+              </div>
+            )}
 
             {/* Scannable Quiet Zone QR */}
             <div className="mx-auto inline-flex flex-col items-center justify-center rounded-2xl border-2 border-brand-600 bg-white p-4 shadow-lg">
-              <QRCode value={confirmedVisit.qrToken} size={160} />
+              <QRCode value={activeConfirmedVisit.qrToken} size={160} />
               <p className="mt-2 font-mono text-xs font-bold text-brand-900 tracking-wider">
-                {confirmedVisit.visitNumber}
+                {activeConfirmedVisit.visitNumber}
               </p>
             </div>
 
             <div className="rounded-xl bg-brand-50/70 border border-brand-200 p-3 text-left space-y-1 text-xs">
               <div className="flex justify-between">
                 <span className="text-muted">Doctor:</span>
-                <span className="font-bold text-fg">{confirmedVisit.doctorName}</span>
+                <span className="font-bold text-fg">{activeConfirmedVisit.doctorName}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-muted">Hospital:</span>
-                <span className="font-semibold text-fg">{confirmedVisit.facilityName}</span>
+                <span className="font-semibold text-fg">{activeConfirmedVisit.facilityName}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-muted">Department:</span>
-                <span className="font-semibold text-fg">{confirmedVisit.department}</span>
+                <span className="font-semibold text-fg">{activeConfirmedVisit.department}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-muted">Patient ID:</span>
-                <span className="font-mono font-bold text-brand-700">{confirmedVisit.patientId}</span>
+                <span className="font-mono font-bold text-brand-700">{activeConfirmedVisit.patientId}</span>
               </div>
-              {confirmedVisit.tokenNumber && (
-                <div className="flex justify-between border-t border-brand-200 pt-1">
-                  <span className="text-muted">Queue Token:</span>
-                  <span className="font-bold text-emerald-700">{confirmedVisit.tokenNumber}</span>
-                </div>
-              )}
+              <div className="flex justify-between border-t border-brand-200 pt-1">
+                <span className="text-muted">Status:</span>
+                <span className="font-bold text-brand-800">{activeConfirmedVisit.status.replace(/_/g, " ")}</span>
+              </div>
             </div>
 
             <div className="grid grid-cols-2 gap-2">
@@ -297,7 +320,7 @@ export function AppointmentsPage() {
               </Button>
             </div>
 
-            <Link to="/patient/my-qr" onClick={() => setConfirmedVisit(null)}>
+            <Link to="/patient/my-qr" onClick={() => setConfirmedVisitId(null)}>
               <Button className="w-full mt-1">
                 Open Fullscreen "My QR" Page <ArrowRight className="h-4 w-4" />
               </Button>

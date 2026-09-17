@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { HeartPulse, Sparkles, ArrowRight } from "lucide-react";
+import { HeartPulse, Sparkles, ArrowRight, Mail, User as UserIcon, Zap } from "lucide-react";
 import { useAuthStore } from "@/stores/authStore";
 import { Button } from "@/components/ui/Button";
 import { Input, Select } from "@/components/ui/Input";
@@ -10,26 +10,30 @@ import { useLanguage } from "@/components/utils/LanguageContext";
 import { UserRole } from "@/dto/constants/UserRole";
 import { demoAccounts } from "@/lib/database/seedData";
 import { roleRoutes } from "@/components/shared/DemoSwitcher";
+import { isSupabaseConfigured } from "@/lib/supabase";
 
 export function LoginPage() {
   const [role, setRole] = useState<UserRole>(UserRole.PATIENT);
   const [identifier, setIdentifier] = useState("");
+  const [password, setPassword] = useState("");
+  const [authMode, setAuthMode] = useState<"ID_DEMO" | "EMAIL_PASSWORD">("ID_DEMO");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const login = useAuthStore((s) => s.login);
   const loginUser = useAuthStore((s) => s.loginUser);
   const navigate = useNavigate();
   const { t } = useLanguage();
+  const hasSupabase = isSupabaseConfigured();
 
   const handleStandardLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError("");
     try {
-      await login(identifier.trim(), role);
+      await login(identifier.trim(), role, password || undefined);
       navigate(roleRoutes[role]);
     } catch {
-      setError("Login failed. Please verify your ID or select a demo account.");
+      setError("Login failed. Please verify your credentials or select a demo account.");
     } finally {
       setLoading(false);
     }
@@ -52,12 +56,41 @@ export function LoginPage() {
           </div>
           <h1 className="text-2xl font-black tracking-tight">{t("app_name")}</h1>
           <p className="text-xs text-brand-100 mt-1 font-medium">{t("tagline")}</p>
-          <div className="mt-3 flex justify-center">
+          
+          <div className="mt-3 flex items-center justify-center gap-2">
+            <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-bold ${
+              hasSupabase ? "bg-emerald-500/20 text-emerald-200 border border-emerald-400/30" : "bg-white/15 text-brand-100"
+            }`}>
+              <Zap className="h-3 w-3" />
+              {hasSupabase ? "Supabase Realtime Cloud Connected" : "Local Realtime Synced"}
+            </span>
             <LanguageSwitch />
           </div>
         </div>
 
         <div className="p-6 space-y-5 bg-surface">
+          {/* Auth Mode Tabs */}
+          <div className="flex rounded-xl bg-muted/20 p-1 border border-border">
+            <button
+              type="button"
+              onClick={() => setAuthMode("ID_DEMO")}
+              className={`flex-1 rounded-lg py-1.5 text-xs font-bold transition flex items-center justify-center gap-1.5 ${
+                authMode === "ID_DEMO" ? "bg-surface text-brand-800 shadow-sm" : "text-muted hover:text-fg"
+              }`}
+            >
+              <UserIcon className="h-3.5 w-3.5" /> Swasthya ID &amp; Quick Demo
+            </button>
+            <button
+              type="button"
+              onClick={() => setAuthMode("EMAIL_PASSWORD")}
+              className={`flex-1 rounded-lg py-1.5 text-xs font-bold transition flex items-center justify-center gap-1.5 ${
+                authMode === "EMAIL_PASSWORD" ? "bg-surface text-brand-800 shadow-sm" : "text-muted hover:text-fg"
+              }`}
+            >
+              <Mail className="h-3.5 w-3.5" /> Supabase Email / Password
+            </button>
+          </div>
+
           {/* Form */}
           <form onSubmit={handleStandardLogin} className="space-y-4">
             <div>
@@ -83,16 +116,41 @@ export function LoginPage() {
               </Select>
             </div>
 
-            <div>
-              <label className="mb-1 block text-xs font-semibold text-fg">
-                Swasthya Patient ID, Username, or Mobile
-              </label>
-              <Input
-                placeholder={`e.g. ${currentRoleDemoAccounts[0]?.username || "patient01"} or SS-IND-00024581`}
-                value={identifier}
-                onChange={(e) => setIdentifier(e.target.value)}
-              />
-            </div>
+            {authMode === "ID_DEMO" ? (
+              <div>
+                <label className="mb-1 block text-xs font-semibold text-fg">
+                  Swasthya Patient ID, Username, or Mobile
+                </label>
+                <Input
+                  placeholder={`e.g. ${currentRoleDemoAccounts[0]?.username || "patient01"} or SS-IND-00024581`}
+                  value={identifier}
+                  onChange={(e) => setIdentifier(e.target.value)}
+                />
+              </div>
+            ) : (
+              <div className="space-y-3">
+                <div>
+                  <label className="mb-1 block text-xs font-semibold text-fg">Email Address</label>
+                  <Input
+                    type="email"
+                    placeholder="doctor.anita@swasthyasetu.org"
+                    value={identifier}
+                    onChange={(e) => setIdentifier(e.target.value)}
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="mb-1 block text-xs font-semibold text-fg">Password</label>
+                  <Input
+                    type="password"
+                    placeholder="••••••••"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                </div>
+              </div>
+            )}
 
             {error && <p className="text-xs text-red-600 font-medium">{error}</p>}
 
@@ -102,34 +160,36 @@ export function LoginPage() {
           </form>
 
           {/* 1-Click Demo Accounts Selector for the Chosen Role */}
-          <div className="rounded-xl border border-border bg-brand-50/40 p-3.5 space-y-2">
-            <div className="flex items-center justify-between">
-              <span className="flex items-center gap-1 text-xs font-bold text-brand-800">
-                <Sparkles className="h-3.5 w-3.5 text-brand-600" />
-                1-Click Demo Accounts ({currentRoleDemoAccounts.length})
-              </span>
-              <span className="text-[10px] text-muted">Click any to instantly enter</span>
+          {authMode === "ID_DEMO" && (
+            <div className="rounded-xl border border-border bg-brand-50/40 p-3.5 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="flex items-center gap-1 text-xs font-bold text-brand-800">
+                  <Sparkles className="h-3.5 w-3.5 text-brand-600" />
+                  1-Click Instant Login ({currentRoleDemoAccounts.length})
+                </span>
+                <span className="text-[10px] text-muted">Click any to enter</span>
+              </div>
+              <div className="grid gap-1.5 sm:grid-cols-2">
+                {currentRoleDemoAccounts.map((acc) => (
+                  <button
+                    key={acc.username}
+                    type="button"
+                    onClick={() => handleQuickDemoLogin(acc)}
+                    className="flex items-center justify-between rounded-lg border border-border bg-surface px-2.5 py-1.5 text-left text-xs transition hover:border-brand-600 hover:bg-brand-50"
+                  >
+                    <div className="min-w-0 pr-2">
+                      <p className="font-semibold text-fg truncate">{acc.user.name.split("(")[0]}</p>
+                      <p className="text-[10px] text-muted font-mono">{acc.username}</p>
+                    </div>
+                    <ArrowRight className="h-3.5 w-3.5 shrink-0 text-muted" />
+                  </button>
+                ))}
+              </div>
             </div>
-            <div className="grid gap-1.5 sm:grid-cols-2">
-              {currentRoleDemoAccounts.map((acc) => (
-                <button
-                  key={acc.username}
-                  type="button"
-                  onClick={() => handleQuickDemoLogin(acc)}
-                  className="flex items-center justify-between rounded-lg border border-border bg-surface px-2.5 py-1.5 text-left text-xs transition hover:border-brand-600 hover:bg-brand-50"
-                >
-                  <div className="min-w-0 pr-2">
-                    <p className="font-semibold text-fg truncate">{acc.user.name.split("(")[0]}</p>
-                    <p className="text-[10px] text-muted font-mono">{acc.username}</p>
-                  </div>
-                  <ArrowRight className="h-3.5 w-3.5 shrink-0 text-muted" />
-                </button>
-              ))}
-            </div>
-          </div>
+          )}
 
           <div className="flex items-center justify-between border-t border-border pt-4 text-xs">
-            <span className="text-muted">New rural citizen?</span>
+            <span className="text-muted">New citizen or medical staff?</span>
             <Link to="/register" className="font-bold text-brand-700 hover:underline flex items-center gap-1">
               Create SwasthyaSetu ID <ArrowRight className="h-3 w-3" />
             </Link>

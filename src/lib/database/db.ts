@@ -11,8 +11,15 @@ import type { MedicineTransaction, DispensedItemRecord } from "@/dto/medicine/Me
 import type { Bill } from "@/dto/billing/Bill";
 import type { AuditLog } from "@/dto/audit/AuditLog";
 import type { Facility } from "@/dto/facility/Facility";
-
-
+import {
+  supabase,
+  isSupabaseConfigured,
+  broadcastRealtimeToast,
+  mapVisitToSupabaseRow,
+  mapSupabaseRowToVisit,
+  mapPatientToSupabaseRow,
+  mapSupabaseRowToPatient,
+} from "@/lib/supabase";
 
 import {
   initialPatients,
@@ -36,6 +43,10 @@ interface DBState {
   bills: Bill[];
   auditLogs: AuditLog[];
   facilities: Facility[];
+  isRealtimeConnected: boolean;
+
+  // Realtime Sync Init
+  initRealtimeSync: () => () => void;
 
   // Patient Actions
   registerPatient: (patient: Omit<Patient, "swasthyaId" | "registeredAt">) => Patient;
@@ -138,6 +149,127 @@ export const useHospitalDB = create<DBState>()(
       transactions: initialTransactions,
       bills: initialBills,
       auditLogs: initialAuditLogs,
+      isRealtimeConnected: false,
+
+      initRealtimeSync: () => {
+        if (!isSupabaseConfigured()) {
+          set({ isRealtimeConnected: false });
+          return () => {};
+        }
+
+        set({ isRealtimeConnected: true });
+
+        // 1. Initial background fetch from Supabase
+        (async () => {
+          try {
+            const { data: remoteVisits } = await supabase
+              .from("visits")
+              .select("*")
+              .order("created_at", { ascending: false })
+              .limit(50);
+
+            if (remoteVisits && remoteVisits.length > 0) {
+              const mapped = remoteVisits.map(mapSupabaseRowToVisit);
+              set((s) => {
+                const merged = [...s.visits];
+                mapped.forEach((mv) => {
+                  const idx = merged.findIndex((x) => x.id === mv.id);
+                  if (idx !== -1) {
+                    merged[idx] = mv;
+                  } else {
+                    merged.unshift(mv);
+                  }
+                });
+                return { visits: merged };
+              });
+            }
+
+            const { data: remotePatients } = await supabase
+              .from("profiles")
+              .select("*")
+              .limit(50);
+
+            if (remotePatients && remotePatients.length > 0) {
+              const mappedP = remotePatients.map(mapSupabaseRowToPatient);
+              set((s) => {
+                const merged = [...s.patients];
+                mappedP.forEach((mp) => {
+                  const idx = merged.findIndex((x) => x.swasthyaId === mp.swasthyaId);
+                  if (idx !== -1) {
+                    merged[idx] = mp;
+                  } else {
+                    merged.push(mp);
+                  }
+                });
+                return { patients: merged };
+              });
+            }
+          } catch (err) {
+            console.warn("Supabase initial sync:", err);
+          }
+        })();
+
+        // 2. Subscribe to Realtime PostgreSQL replication channel
+        const channel = supabase
+          .channel("swasthyasetu-realtime")
+          .on(
+            "postgres_changes",
+            { event: "*", schema: "public", table: "visits" },
+            (payload) => {
+              if (payload.eventType === "INSERT") {
+                const newV = mapSupabaseRowToVisit(payload.new);
+                set((s) => {
+                  if (s.visits.some((v) => v.id === newV.id)) return s;
+                  return { visits: [newV, ...s.visits] };
+                });
+                broadcastRealtimeToast({
+                  type: "VISIT_BOOKED",
+                  title: "⚡ Realtime: New Appointment Booked",
+                  message: `${newV.patientName} (${newV.patientId}) booked with ${newV.doctorName} (${newV.department})`,
+                  data: newV,
+                });
+              } else if (payload.eventType === "UPDATE") {
+                const updatedV = mapSupabaseRowToVisit(payload.new);
+                set((s) => ({
+                  visits: s.visits.map((v) => (v.id === updatedV.id ? updatedV : v)),
+                }));
+
+                if (updatedV.status === "CHECKED_IN") {
+                  broadcastRealtimeToast({
+                    type: "PATIENT_CHECKED_IN",
+                    title: `⚡ Realtime: Patient Checked In [Token ${updatedV.tokenNumber || "Assigned"}]`,
+                    message: `${updatedV.patientName} is ready in the OPD waiting queue for ${updatedV.doctorName}`,
+                    data: updatedV,
+                  });
+                } else if (updatedV.status === "COMPLETED") {
+                  broadcastRealtimeToast({
+                    type: "CONSULTATION_COMPLETED",
+                    title: `⚡ Realtime: Consultation Finished`,
+                    message: `Dr. ${updatedV.doctorName} completed consultation for ${updatedV.patientName}`,
+                    data: updatedV,
+                  });
+                }
+              }
+            }
+          )
+          .on(
+            "postgres_changes",
+            { event: "INSERT", schema: "public", table: "high_risk_alerts" },
+            (payload) => {
+              broadcastRealtimeToast({
+                type: "HIGH_RISK_ALERT",
+                title: "⚠️ High-Risk Patient Alert from ASHA Worker",
+                message: `Patient ${payload.new.patient_name} flagged: ${payload.new.symptoms}`,
+                data: payload.new,
+              });
+            }
+          )
+          .subscribe();
+
+        return () => {
+          supabase.removeChannel(channel);
+        };
+      },
 
       registerPatient: (data) => {
         const state = get();
@@ -164,6 +296,15 @@ export const useHospitalDB = create<DBState>()(
           patients: [newPatient, ...s.patients],
           auditLogs: [newAudit, ...s.auditLogs],
         }));
+
+        if (isSupabaseConfigured()) {
+          supabase
+            .from("profiles")
+            .insert(mapPatientToSupabaseRow(newPatient))
+            .then(({ error }) => {
+              if (error) console.warn("Supabase profile insert error:", error);
+            });
+        }
 
         return newPatient;
       },
@@ -239,6 +380,24 @@ export const useHospitalDB = create<DBState>()(
           ),
         }));
 
+        // Broadcast realtime toast
+        broadcastRealtimeToast({
+          type: "VISIT_BOOKED",
+          title: "Appointment Booked & Visit QR Generated",
+          message: `${patient.name} booked with ${doctorName} (${department}) at ${facility.name}`,
+          data: newVisit,
+        });
+
+        // Supabase Cloud Sync
+        if (isSupabaseConfigured()) {
+          supabase
+            .from("visits")
+            .insert(mapVisitToSupabaseRow(newVisit))
+            .then(({ error }) => {
+              if (error) console.warn("Supabase visit insert error:", error);
+            });
+        }
+
         return newVisit;
       },
 
@@ -294,6 +453,25 @@ export const useHospitalDB = create<DBState>()(
           auditLogs: [newAudit, ...s.auditLogs],
         }));
 
+        // Broadcast realtime toast
+        broadcastRealtimeToast({
+          type: "PATIENT_CHECKED_IN",
+          title: `Patient Checked In · Token ${tokenNumber}`,
+          message: `${visit.patientName} checked in for ${visit.department} (${visit.doctorName})`,
+          data: updatedVisit,
+        });
+
+        // Supabase Cloud Sync
+        if (isSupabaseConfigured()) {
+          supabase
+            .from("visits")
+            .update(mapVisitToSupabaseRow(updatedVisit))
+            .eq("id", visit.id)
+            .then(({ error }) => {
+              if (error) console.warn("Supabase visit check-in error:", error);
+            });
+        }
+
         return { visit: updatedVisit, tokenNumber };
       },
 
@@ -301,6 +479,15 @@ export const useHospitalDB = create<DBState>()(
         set((s) => ({
           visits: s.visits.map((v) => (v.id === visitId ? { ...v, status } : v)),
         }));
+        if (isSupabaseConfigured()) {
+          supabase
+            .from("visits")
+            .update({ status })
+            .eq("id", visitId)
+            .then(({ error }) => {
+              if (error) console.warn("Supabase updateVisitStatus error:", error);
+            });
+        }
       },
 
       saveConsultation: ({ visitId, doctorName, vitals, diagnosis, clinicalNotes, riskLevel, medicines, tests }) => {
@@ -383,6 +570,7 @@ export const useHospitalDB = create<DBState>()(
           prescriptionsCount: newPrescription ? 1 : 0,
           testsCount: newTestOrders.length,
           consultedAt: new Date().toISOString(),
+          completedAt: tests && tests.length > 0 ? undefined : medicines && medicines.length > 0 ? undefined : new Date().toISOString(),
         };
 
         const newAudits: AuditLog[] = [
@@ -400,36 +588,6 @@ export const useHospitalDB = create<DBState>()(
           },
         ];
 
-        if (newPrescription) {
-          newAudits.push({
-            id: `log-${Date.now()}-rx`,
-            timestamp: new Date().toISOString(),
-            actorId: "doc",
-            actorName: doctorName,
-            actorRole: UserRole.DOCTOR,
-            facilityId: visit.facilityId,
-            action: "PRESCRIPTION_CREATED",
-            details: `Issued Prescription ${newPrescription.id} with ${newPrescription.items.length} medicines.`,
-            targetEntity: "PRESCRIPTION",
-            targetId: newPrescription.id,
-          });
-        }
-
-        if (newTestOrders.length > 0) {
-          newAudits.push({
-            id: `log-${Date.now()}-t`,
-            timestamp: new Date().toISOString(),
-            actorId: "doc",
-            actorName: doctorName,
-            actorRole: UserRole.DOCTOR,
-            facilityId: visit.facilityId,
-            action: "TESTS_ORDERED",
-            details: `Ordered tests: ${newTestOrders.map((t) => t.testName).join(", ")}.`,
-            targetEntity: "TEST_ORDER",
-            targetId: newTestOrders[0].id,
-          });
-        }
-
         set((s) => ({
           visits: s.visits.map((v) => (v.id === visit.id ? updatedVisit : v)),
           prescriptions: newPrescription ? [newPrescription, ...s.prescriptions] : s.prescriptions,
@@ -439,6 +597,46 @@ export const useHospitalDB = create<DBState>()(
             p.swasthyaId === visit.patientId && riskLevel ? { ...p, riskLevel } : p
           ),
         }));
+
+        broadcastRealtimeToast({
+          type: "CONSULTATION_COMPLETED",
+          title: "Consultation Completed",
+          message: `Dr. ${doctorName} completed consultation for ${visit.patientName}. Status: ${updatedVisit.status.replace(/_/g, " ")}`,
+          data: updatedVisit,
+        });
+
+        // Supabase Cloud Sync
+        if (isSupabaseConfigured()) {
+          supabase
+            .from("visits")
+            .update(mapVisitToSupabaseRow(updatedVisit))
+            .eq("id", visit.id)
+            .then(({ error }) => {
+              if (error) console.warn("Supabase consultation visit update error:", error);
+            });
+
+          if (newPrescription) {
+            supabase
+              .from("prescriptions")
+              .insert({
+                id: newPrescription.id,
+                visit_id: newPrescription.visitId,
+                patient_id: newPrescription.patientId,
+                patient_name: newPrescription.patientName,
+                doctor_name: newPrescription.doctorName,
+                facility_id: newPrescription.facilityId,
+                facility_name: newPrescription.facilityName,
+                date: newPrescription.date,
+                diagnosis: newPrescription.diagnosis,
+                status: newPrescription.status,
+                items: newPrescription.items,
+                notes: newPrescription.notes,
+              })
+              .then(({ error }) => {
+                if (error) console.warn("Supabase prescription insert error:", error);
+              });
+          }
+        }
 
         return { visit: updatedVisit, prescription: newPrescription, tests: newTestOrders };
       },
@@ -471,7 +669,6 @@ export const useHospitalDB = create<DBState>()(
           targetId: test.id,
         };
 
-        // Check if all tests for this visit are completed
         const otherTests = state.testOrders.filter((t) => t.visitId === test.visitId && t.id !== test.id);
         const allTestsCompleted = status === "COMPLETED" && otherTests.every((t) => t.status === "COMPLETED");
 
@@ -490,6 +687,21 @@ export const useHospitalDB = create<DBState>()(
           }),
         }));
 
+        if (isSupabaseConfigured()) {
+          supabase
+            .from("test_orders")
+            .update({
+              status,
+              summary: updatedTest.summary,
+              lab_technician: updatedTest.labTechnician,
+              completed_at: updatedTest.completedAt,
+            })
+            .eq("id", test.id)
+            .then(({ error }) => {
+              if (error) console.warn("Supabase test update error:", error);
+            });
+        }
+
         return updatedTest;
       },
 
@@ -500,7 +712,6 @@ export const useHospitalDB = create<DBState>()(
 
         const facility = state.facilities.find((f) => f.id === prescription.facilityId) || state.facilities[0];
 
-        // 1. Process dispensed items, update stock atomically
         const updatedMedicines = [...state.medicines];
         const recordItems: DispensedItemRecord[] = [];
         const billItems = [];
@@ -512,7 +723,6 @@ export const useHospitalDB = create<DBState>()(
             const med = { ...updatedMedicines[medIndex] };
             const batchIndex = med.batches.findIndex((b: MedicineBatch) => b.batchNo === item.batchNo);
             let unitPrice = med.mrp || 2.5;
-
 
             if (batchIndex !== -1) {
               const batch = { ...med.batches[batchIndex] };
@@ -554,7 +764,6 @@ export const useHospitalDB = create<DBState>()(
           }
         }
 
-        // 2. Generate Transaction
         const txnId = `TXN-MED-${Date.now().toString().slice(-4)}`;
         const billId = `BILL-2026-${String(state.bills.length + 413).padStart(5, "0")}`;
 
@@ -577,7 +786,6 @@ export const useHospitalDB = create<DBState>()(
           status: "COMPLETED",
         };
 
-        // 3. Generate Bill
         const bill: Bill = {
           id: billId,
           billNumber: `INV-SS-${new Date().getFullYear()}-${String(state.bills.length + 413).padStart(5, "0")}`,
@@ -594,13 +802,12 @@ export const useHospitalDB = create<DBState>()(
           doctorName: prescription.doctorName,
           items: billItems,
           subtotal: totalBillAmount,
-          discount: totalBillAmount, // 100% Subsidized / Free Govt Rural Scheme
+          discount: totalBillAmount,
           totalAmount: 0.0,
           paymentMode: "GOVT_FREE_SCHEME",
           status: "PAID",
         };
 
-        // 4. Update Prescription Status
         const updatedPrescription: Prescription = {
           ...prescription,
           status: "DISPENSED",
@@ -612,7 +819,6 @@ export const useHospitalDB = create<DBState>()(
           }),
         };
 
-        // 5. Audit Log
         const newAudit: AuditLog = {
           id: `log-${Date.now()}-pharm`,
           timestamp: new Date().toISOString(),
@@ -642,6 +848,16 @@ export const useHospitalDB = create<DBState>()(
               : v
           ),
         }));
+
+        if (isSupabaseConfigured()) {
+          supabase
+            .from("prescriptions")
+            .update({ status: "DISPENSED", dispensed_at: new Date().toISOString() })
+            .eq("id", prescription.id)
+            .then(({ error }) => {
+              if (error) console.warn("Supabase prescription dispense error:", error);
+            });
+        }
 
         return { transaction, bill };
       },

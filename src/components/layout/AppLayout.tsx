@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import { Sidebar } from "./Sidebar";
 import { Topbar } from "./Topbar";
 import { DemoSwitcher } from "@/components/shared/DemoSwitcher";
+import { RealtimeNotificationBanner } from "@/components/shared/RealtimeNotificationBanner";
 import { useAuthStore } from "@/stores/authStore";
 import { UserRole } from "@/dto/constants/UserRole";
 
@@ -23,6 +24,7 @@ export function AppLayout() {
         </main>
       </div>
       <DemoSwitcher />
+      <RealtimeNotificationBanner />
     </div>
   );
 }

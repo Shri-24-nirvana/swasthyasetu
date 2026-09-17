@@ -4,6 +4,7 @@ import { useAuthStore } from "@/stores/authStore";
 import { useTheme } from "@/components/utils/ThemeContext";
 import { useLanguage } from "@/components/utils/LanguageContext";
 import { LanguageSwitch } from "@/components/shared/LanguageSwitch";
+import { RealtimeStatusBadge } from "@/components/shared/RealtimeNotificationBanner";
 import { UserRole } from "@/dto/constants/UserRole";
 
 const roleLabels: Record<UserRole, string> = {
@@ -50,14 +51,16 @@ export function Topbar({ onMenu, hasSidebar = true }: { onMenu: () => void; hasS
         </Link>
       )}
 
-      <div className="flex-1">
-        <h1 className="text-sm font-semibold text-fg">
+      <div className="flex-1 min-w-0">
+        <h1 className="text-sm font-semibold text-fg truncate">
           {t("welcome")}, {user?.name?.split(" ")[0]}
         </h1>
-        <p className="text-xs text-muted">
+        <p className="text-xs text-muted truncate">
           {user?.role ? roleLabels[user.role as UserRole] || user.role : ""} Portal
         </p>
       </div>
+
+      <RealtimeStatusBadge />
 
       {isPatient && (
         <Link
@@ -65,7 +68,7 @@ export function Topbar({ onMenu, hasSidebar = true }: { onMenu: () => void; hasS
           className="flex items-center gap-1.5 rounded-xl border border-brand-200 bg-brand-50/60 px-3 py-1.5 text-xs font-semibold text-brand-800 hover:bg-brand-100 transition shadow-xs"
         >
           <LayoutDashboard className="h-3.5 w-3.5 text-brand-700" />
-          <span>Dashboard</span>
+          <span className="hidden md:inline">Dashboard</span>
         </Link>
       )}
 
