@@ -293,33 +293,33 @@ export function DoctorConsultationPage() {
 
   return (
     <div className="space-y-6">
-      {/* Top Patient Header Bar */}
-      <div className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-4 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+      {/* Top Patient Header Bar - Highlighted */}
+      <div className="flex flex-col gap-3 rounded-3xl border border-brand-500/30 bg-surface p-5 shadow-md sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
-          <Link to="/doctor" className="rounded-lg p-1.5 text-muted hover:bg-brand-50 hover:text-fg">
+          <Link to="/doctor" className="rounded-xl p-2 text-muted hover:bg-surface-hover hover:text-fg transition">
             <ArrowLeft className="h-5 w-5" />
           </Link>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-lg font-bold text-fg">{activePatient.name}</h1>
-              <span className="font-mono text-xs font-bold text-brand-700 bg-brand-50 px-2 py-0.5 rounded border border-brand-200">
+              <h1 className="text-lg font-black text-fg">{activePatient.name}</h1>
+              <span className="font-mono text-xs font-bold text-brand-700 dark:text-brand-300 bg-brand-500/15 px-2.5 py-0.5 rounded-lg border border-brand-500/30">
                 {activePatient.swasthyaId}
               </span>
               {activeVisit.tokenNumber && (
-                <span className="font-mono font-black text-xs text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded border border-emerald-300">
+                <span className="font-mono font-black text-xs text-emerald-600 dark:text-emerald-400 bg-emerald-500/15 px-2.5 py-0.5 rounded-lg border border-emerald-500/30">
                   Token: {activeVisit.tokenNumber}
                 </span>
               )}
             </div>
-            <p className="text-xs text-muted">
-              {activePatient.age}y · {activePatient.gender} · Blood: <strong>{activePatient.bloodGroup}</strong> · Village: {activePatient.village}
+            <p className="text-xs text-muted mt-0.5">
+              {activePatient.age}y · {activePatient.gender} · Blood: <strong className="text-fg">{activePatient.bloodGroup}</strong> · Village: {activePatient.village}
             </p>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
           {activePatient.allergies && activePatient.allergies.length > 0 && (
-            <span className="rounded-full bg-red-100 border border-red-300 px-2.5 py-0.5 text-xs font-bold text-red-800">
+            <span className="rounded-full bg-rose-500/15 border border-rose-500/30 px-3 py-1 text-xs font-bold text-rose-600 dark:text-rose-300 shadow-xs">
               ⚠️ Allergies: {activePatient.allergies.join(", ")}
             </span>
           )}

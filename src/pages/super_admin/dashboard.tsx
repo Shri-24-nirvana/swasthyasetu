@@ -21,59 +21,59 @@ export function SuperAdminDashboard() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col gap-4 rounded-3xl border border-border bg-surface p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-4 rounded-3xl border border-orange-500/30 bg-surface p-6 shadow-md sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <span className="rounded-full bg-orange-500/10 text-orange-700 dark:text-orange-400 border border-orange-500/20 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider">
+          <span className="rounded-full bg-orange-500/15 text-orange-700 dark:text-orange-300 border border-orange-500/30 px-3 py-1 text-xs font-bold uppercase tracking-wider shadow-xs">
             National Health Mission &amp; ABDM Core
           </span>
-          <h1 className="mt-1.5 text-2xl font-black text-fg">SwasthyaSetu Central Command &amp; Governance</h1>
+          <h1 className="mt-2 text-2xl font-black text-fg">SwasthyaSetu Central Command &amp; Governance</h1>
           <p className="text-xs text-muted mt-0.5">
             Inter-Facility Health Exchange · State-Level Population Analytics · Security &amp; Compliance Audit
           </p>
         </div>
 
         <Link to="/admin/audit-logs">
-          <Button className="font-bold cursor-pointer">
+          <Button className="font-bold cursor-pointer shadow-md">
             <ShieldCheck className="h-4 w-4" /> National Audit Ledger ({auditLogs.length})
           </Button>
         </Link>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <Card className="flex items-center gap-4">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-orange-50 text-orange-700">
+        <Card className="flex items-center gap-4 border border-orange-500/25 hover:border-orange-500/50 hover:shadow-lg hover:shadow-orange-500/10 transition group">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-orange-500/15 text-orange-700 dark:text-orange-300 border border-orange-500/30 group-hover:scale-105 transition">
             <Globe className="h-6 w-6" />
           </span>
           <div>
-            <p className="text-2xl font-bold text-fg">{facilities.length}</p>
-            <p className="text-xs text-muted">Connected Health Facilities</p>
+            <p className="text-2xl font-black text-fg">{facilities.length}</p>
+            <p className="text-xs text-muted font-medium">Connected Health Facilities</p>
           </div>
         </Card>
-        <Card className="flex items-center gap-4">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-50 text-brand-700">
+        <Card className="flex items-center gap-4 border border-brand-500/25 hover:border-brand-500/50 hover:shadow-lg hover:shadow-brand-500/10 transition group">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-500/15 text-brand-700 dark:text-brand-400 border border-brand-500/30 group-hover:scale-105 transition">
             <Users className="h-6 w-6" />
           </span>
           <div>
-            <p className="text-2xl font-bold text-fg">{patients.length}</p>
-            <p className="text-xs text-muted">Issued Swasthya IDs</p>
+            <p className="text-2xl font-black text-fg">{patients.length}</p>
+            <p className="text-xs text-muted font-medium">Issued Swasthya IDs</p>
           </div>
         </Card>
-        <Card className="flex items-center gap-4">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-700">
+        <Card className="flex items-center gap-4 border border-blue-500/25 hover:border-blue-500/50 hover:shadow-lg hover:shadow-blue-500/10 transition group">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-500/15 text-blue-700 dark:text-blue-300 border border-blue-500/30 group-hover:scale-105 transition">
             <BedDouble className="h-6 w-6" />
           </span>
           <div>
-            <p className="text-2xl font-bold text-fg">{occupiedBeds} / {totalBeds}</p>
-            <p className="text-xs text-muted">Bed Occupancy ({Math.round((occupiedBeds / totalBeds) * 100)}%)</p>
+            <p className="text-2xl font-black text-fg">{occupiedBeds} / {totalBeds}</p>
+            <p className="text-xs text-muted font-medium">Bed Occupancy ({Math.round((occupiedBeds / totalBeds) * 100)}%)</p>
           </div>
         </Card>
-        <Card className="flex items-center gap-4">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-700">
+        <Card className="flex items-center gap-4 border border-emerald-500/25 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/10 transition group">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30 group-hover:scale-105 transition">
             <Receipt className="h-6 w-6" />
           </span>
           <div>
-            <p className="text-2xl font-bold text-fg">{bills.length}</p>
-            <p className="text-xs text-muted">Cashless Bills Settled</p>
+            <p className="text-2xl font-black text-fg">{bills.length}</p>
+            <p className="text-xs text-muted font-medium">Cashless Bills Settled</p>
           </div>
         </Card>
       </div>

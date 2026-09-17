@@ -47,10 +47,10 @@ export function LoginPage() {
   const currentRoleDemoAccounts = demoAccounts.filter((a) => a.role === role);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-brand-50 p-4">
-      <Card className="w-full max-w-xl shadow-2xl overflow-hidden p-0 border border-border">
+    <div className="flex min-h-screen items-center justify-center bg-bg p-4">
+      <Card className="w-full max-w-xl shadow-2xl overflow-hidden p-0 border border-brand-500/30">
         {/* Top Branding Banner */}
-        <div className="bg-gradient-to-r from-brand-700 via-brand-600 to-teal-700 p-6 text-white text-center relative">
+        <div className="bg-gradient-to-r from-brand-700 via-brand-600 to-teal-700 p-6 text-white text-center relative shadow-md">
           <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/15 backdrop-blur-md text-white shadow-inner">
             <HeartPulse className="h-8 w-8" />
           </div>
@@ -70,12 +70,12 @@ export function LoginPage() {
 
         <div className="p-6 space-y-5 bg-surface">
           {/* Auth Mode Tabs */}
-          <div className="flex rounded-xl bg-muted/20 p-1 border border-border">
+          <div className="flex rounded-xl bg-surface-secondary p-1 border border-border">
             <button
               type="button"
               onClick={() => setAuthMode("ID_DEMO")}
               className={`flex-1 rounded-lg py-1.5 text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer ${
-                authMode === "ID_DEMO" ? "bg-surface text-brand-800 shadow-sm" : "text-muted hover:text-fg"
+                authMode === "ID_DEMO" ? "bg-surface text-brand-700 dark:text-brand-300 border border-border shadow-xs" : "text-muted hover:text-fg"
               }`}
             >
               <UserIcon className="h-3.5 w-3.5" /> {t("swasthya_id")} &amp; Demo
@@ -84,7 +84,7 @@ export function LoginPage() {
               type="button"
               onClick={() => setAuthMode("EMAIL_PASSWORD")}
               className={`flex-1 rounded-lg py-1.5 text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer ${
-                authMode === "EMAIL_PASSWORD" ? "bg-surface text-brand-800 shadow-sm" : "text-muted hover:text-fg"
+                authMode === "EMAIL_PASSWORD" ? "bg-surface text-brand-700 dark:text-brand-300 border border-border shadow-xs" : "text-muted hover:text-fg"
               }`}
             >
               <Mail className="h-3.5 w-3.5" /> Supabase Email / Password
@@ -152,36 +152,36 @@ export function LoginPage() {
               </div>
             )}
 
-            {error && <p className="text-xs text-red-600 font-medium">{error}</p>}
+            {error && <p className="text-xs text-rose-500 font-medium">{error}</p>}
 
-            <Button type="submit" className="w-full cursor-pointer" disabled={loading}>
+            <Button type="submit" className="w-full cursor-pointer shadow-md font-bold" disabled={loading}>
               {loading ? "Signing in…" : `${t("login")}`}
             </Button>
           </form>
 
           {/* 1-Click Demo Accounts Selector for the Chosen Role */}
           {authMode === "ID_DEMO" && (
-            <div className="rounded-xl border border-border bg-brand-50/40 p-3.5 space-y-2">
+            <div className="rounded-2xl border border-brand-500/30 bg-surface-secondary/50 p-4 space-y-2.5">
               <div className="flex items-center justify-between">
-                <span className="flex items-center gap-1 text-xs font-bold text-brand-800">
-                  <Sparkles className="h-3.5 w-3.5 text-brand-600" />
+                <span className="flex items-center gap-1.5 text-xs font-bold text-brand-700 dark:text-brand-300">
+                  <Sparkles className="h-3.5 w-3.5 text-brand-500" />
                   {t("demo_accounts")} ({currentRoleDemoAccounts.length})
                 </span>
                 <span className="text-[10px] text-muted">{t("click_any_to_enter")}</span>
               </div>
-              <div className="grid gap-1.5 sm:grid-cols-2">
+              <div className="grid gap-2 sm:grid-cols-2">
                 {currentRoleDemoAccounts.map((acc) => (
                   <button
                     key={acc.username}
                     type="button"
                     onClick={() => handleQuickDemoLogin(acc)}
-                    className="flex items-center justify-between rounded-lg border border-border bg-surface px-2.5 py-1.5 text-left text-xs transition hover:border-brand-600 hover:bg-brand-50 cursor-pointer"
+                    className="flex items-center justify-between rounded-xl border border-border bg-surface px-3 py-2 text-left text-xs transition hover:border-brand-500 hover:bg-surface-hover cursor-pointer shadow-2xs group"
                   >
                     <div className="min-w-0 pr-2">
-                      <p className="font-semibold text-fg truncate">{acc.user.name.split("(")[0]}</p>
+                      <p className="font-bold text-fg truncate group-hover:text-brand-600 dark:group-hover:text-brand-400">{acc.user.name.split("(")[0]}</p>
                       <p className="text-[10px] text-muted font-mono">{acc.username}</p>
                     </div>
-                    <ArrowRight className="h-3.5 w-3.5 shrink-0 text-muted" />
+                    <ArrowRight className="h-3.5 w-3.5 shrink-0 text-muted group-hover:text-brand-500 group-hover:translate-x-0.5 transition" />
                   </button>
                 ))}
               </div>
@@ -190,7 +190,7 @@ export function LoginPage() {
 
           <div className="flex items-center justify-between border-t border-border pt-4 text-xs">
             <span className="text-muted">New citizen or medical staff?</span>
-            <Link to="/register" className="font-bold text-brand-700 hover:underline flex items-center gap-1">
+            <Link to="/register" className="font-bold text-brand-700 dark:text-brand-400 hover:underline flex items-center gap-1">
               {t("register")} <ArrowRight className="h-3 w-3" />
             </Link>
           </div>

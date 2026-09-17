@@ -125,13 +125,13 @@ export function LabDashboard() {
 
   return (
     <div className="space-y-6">
-      {/* Header Banner - Clean Single-Color Card */}
-      <div className="flex flex-col gap-4 rounded-3xl border border-border bg-surface p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+      {/* Header Banner - Clean & Highlighted Card */}
+      <div className="flex flex-col gap-4 rounded-3xl border border-purple-500/30 bg-surface p-6 shadow-md sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <span className="rounded-full bg-purple-500/10 text-purple-700 dark:text-purple-300 border border-purple-500/20 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider">
+          <span className="rounded-full bg-purple-500/15 text-purple-700 dark:text-purple-300 border border-purple-500/30 px-3 py-1 text-xs font-bold uppercase tracking-wider shadow-xs">
             {t("lab_diagnostics")}
           </span>
-          <h1 className="mt-1.5 text-2xl font-black text-fg">{t("lab_diagnostics")}</h1>
+          <h1 className="mt-2 text-2xl font-black text-fg">{t("lab_diagnostics")}</h1>
           <p className="text-xs text-muted mt-0.5">
             QR-Based Patient Specimen Tracking · Results Entry · Auto-Publish to Doctor &amp; Patient
           </p>
@@ -141,49 +141,49 @@ export function LabDashboard() {
           <Button
             onClick={() => setScannerOpen(true)}
             size="lg"
-            className="font-bold flex items-center gap-2 cursor-pointer"
+            className="font-bold flex items-center gap-2 cursor-pointer shadow-md"
           >
             <QrIcon className="h-5 w-5" /> {t("scan_patient_qr")}
           </Button>
         </div>
       </div>
 
-      {/* KPI Stats */}
+      {/* KPI Stats - Highlighted Glowing Borders */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <Card className="flex items-center gap-4">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-500/10 text-purple-700 dark:text-purple-300 border border-purple-500/20">
+        <Card className="flex items-center gap-4 border border-purple-500/25 hover:border-purple-500/50 hover:shadow-lg hover:shadow-purple-500/10 transition group">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-500/15 text-purple-700 dark:text-purple-300 border border-purple-500/30 group-hover:scale-105 transition">
             <FlaskConical className="h-6 w-6" />
           </span>
           <div>
-            <p className="text-2xl font-bold text-fg">{testOrders.length}</p>
-            <p className="text-xs text-muted">{t("diagnostic_tests")}</p>
+            <p className="text-2xl font-black text-fg">{testOrders.length}</p>
+            <p className="text-xs text-muted font-medium">{t("diagnostic_tests")}</p>
           </div>
         </Card>
-        <Card className="flex items-center gap-4">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/20">
+        <Card className="flex items-center gap-4 border border-amber-500/25 hover:border-amber-500/50 hover:shadow-lg hover:shadow-amber-500/10 transition group">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30 group-hover:scale-105 transition">
             <Clock className="h-6 w-6" />
           </span>
           <div>
-            <p className="text-2xl font-bold text-fg">{pendingCount}</p>
-            <p className="text-xs text-muted">{t("status_tests_pending")}</p>
+            <p className="text-2xl font-black text-fg">{pendingCount}</p>
+            <p className="text-xs text-muted font-medium">{t("status_tests_pending")}</p>
           </div>
         </Card>
-        <Card className="flex items-center gap-4">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-500/10 text-blue-700 dark:text-blue-300 border border-blue-500/20">
+        <Card className="flex items-center gap-4 border border-blue-500/25 hover:border-blue-500/50 hover:shadow-lg hover:shadow-blue-500/10 transition group">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-500/15 text-blue-700 dark:text-blue-300 border border-blue-500/30 group-hover:scale-105 transition">
             <Upload className="h-6 w-6" />
           </span>
           <div>
-            <p className="text-2xl font-bold text-fg">{processingCount}</p>
-            <p className="text-xs text-muted">{t("status_processing")}</p>
+            <p className="text-2xl font-black text-fg">{processingCount}</p>
+            <p className="text-xs text-muted font-medium">{t("status_processing")}</p>
           </div>
         </Card>
-        <Card className="flex items-center gap-4">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">
+        <Card className="flex items-center gap-4 border border-emerald-500/25 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/10 transition group">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30 group-hover:scale-105 transition">
             <CheckCircle2 className="h-6 w-6" />
           </span>
           <div>
-            <p className="text-2xl font-bold text-fg">{completedCount}</p>
-            <p className="text-xs text-muted">{t("status_completed")}</p>
+            <p className="text-2xl font-black text-fg">{completedCount}</p>
+            <p className="text-xs text-muted font-medium">{t("status_completed")}</p>
           </div>
         </Card>
       </div>

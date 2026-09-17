@@ -31,17 +31,17 @@ export function EmergencyPage() {
 
       {!active ? (
         <>
-          <Card className="border-red-200 bg-red-50 text-center">
-            <Siren className="mx-auto h-12 w-12 text-red-600" />
-            <h2 className="mt-3 text-xl font-bold text-red-700">In an emergency?</h2>
-            <p className="mx-auto mt-1 max-w-md text-sm text-red-600">
+          <Card className="border border-rose-500/40 bg-rose-500/10 text-center shadow-lg p-6">
+            <Siren className="mx-auto h-12 w-12 text-rose-600 dark:text-rose-400 animate-pulse" />
+            <h2 className="mt-3 text-xl font-black text-rose-700 dark:text-rose-300">In an emergency?</h2>
+            <p className="mx-auto mt-1 max-w-md text-xs text-muted">
               Trigger this to alert the nearest facility and share your health-critical
               details (allergies, blood group, conditions) with them instantly.
             </p>
             <Button
               variant="danger"
               size="lg"
-              className="mt-5"
+              className="mt-5 font-bold shadow-md"
               onClick={triggerEmergency}
             >
               <Siren className="h-5 w-5" /> Trigger Emergency Alert
@@ -49,16 +49,16 @@ export function EmergencyPage() {
           </Card>
 
           <div className="mt-4">
-            <Card>
-              <h3 className="font-semibold">Emergency Contact Numbers</h3>
+            <Card className="border border-border">
+              <h3 className="font-bold text-sm text-fg">Emergency Contact Numbers</h3>
               <div className="mt-3 space-y-2">
                 {info.emergencyNumbers.map((n: EmergencyContact) => (
-                  <div key={n.number} className="flex items-center justify-between rounded-lg border border-border p-3">
-                    <span className="flex items-center gap-2">
-                      <PhoneCall className="h-4 w-4 text-brand-700" />
+                  <div key={n.number} className="flex items-center justify-between rounded-xl border border-border bg-surface-secondary/40 p-3 hover:border-brand-500/30 transition">
+                    <span className="flex items-center gap-2 text-xs font-semibold text-fg">
+                      <PhoneCall className="h-4 w-4 text-brand-600 dark:text-brand-400" />
                       {n.name}
                     </span>
-                    <a href={`tel:${n.number.replace(/\s/g, "")}`} className="font-bold text-brand-700">
+                    <a href={`tel:${n.number.replace(/\s/g, "")}`} className="font-bold font-mono text-sm text-brand-700 dark:text-brand-400 hover:underline">
                       {n.number}
                     </a>
                   </div>
@@ -69,50 +69,50 @@ export function EmergencyPage() {
         </>
       ) : (
         <>
-          <Card className="border-green-200 bg-green-50">
-            <div className="flex items-center gap-3">
-              <Ambulance className="h-10 w-10 text-green-700" />
+          <Card className="border border-emerald-500/40 bg-emerald-500/10 shadow-lg">
+            <div className="flex items-center gap-3.5">
+              <Ambulance className="h-10 w-10 text-emerald-600 dark:text-emerald-400 animate-bounce" />
               <div>
-                <p className="text-lg font-bold text-green-700">Ambulance dispatched</p>
-                <p className="text-sm text-green-600">
+                <p className="text-lg font-black text-emerald-700 dark:text-emerald-300">Ambulance dispatched</p>
+                <p className="text-xs text-emerald-600 dark:text-emerald-400">
                   ETA {info.ambulanceETA} · Nearest facility alerted
                 </p>
               </div>
             </div>
           </Card>
 
-          <Card className="mt-4">
-            <h3 className="font-semibold text-fg">{info.nearestFacility.name}</h3>
-            <p className="mt-1 text-sm text-muted">
-              <MapPin className="mr-1 inline h-3 w-3" />
+          <Card className="mt-4 border border-border">
+            <h3 className="font-bold text-fg">{info.nearestFacility.name}</h3>
+            <p className="mt-1 text-xs text-muted">
+              <MapPin className="mr-1 inline h-3.5 w-3.5 text-brand-600" />
               {info.nearestFacility.village}, {info.nearestFacility.district} ·{" "}
               {info.nearestFacility.distanceKm?.toFixed(1)}km away
             </p>
             <div className="mt-4 grid grid-cols-3 gap-3 text-center">
-              <div className="rounded-lg bg-brand-50 p-2">
-                <p className="text-lg font-bold text-brand-700">{info.nearestFacility.doctorsAvailable}</p>
-                <p className="text-xs text-muted">Doctors</p>
+              <div className="rounded-xl border border-brand-500/30 bg-brand-500/10 p-3">
+                <p className="text-xl font-black text-brand-700 dark:text-brand-300">{info.nearestFacility.doctorsAvailable}</p>
+                <p className="text-[10px] uppercase font-bold text-muted mt-0.5">Doctors</p>
               </div>
-              <div className="rounded-lg bg-green-50 p-2">
-                <p className="text-lg font-bold text-green-700">{info.nearestFacility.availableBeds}</p>
-                <p className="text-xs text-muted">Free Beds</p>
+              <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-3">
+                <p className="text-xl font-black text-emerald-600 dark:text-emerald-400">{info.nearestFacility.availableBeds}</p>
+                <p className="text-[10px] uppercase font-bold text-muted mt-0.5">Free Beds</p>
               </div>
-              <div className="rounded-lg bg-sky-50 p-2">
-                <p className="text-lg font-bold text-sky-700">24/7</p>
-                <p className="text-xs text-muted">Emergency</p>
+              <div className="rounded-xl border border-sky-500/30 bg-sky-500/10 p-3">
+                <p className="text-xl font-black text-sky-600 dark:text-sky-400">24/7</p>
+                <p className="text-[10px] uppercase font-bold text-muted mt-0.5">Emergency</p>
               </div>
             </div>
-            <Button className="mt-4 w-full">
+            <Button className="mt-4 w-full font-bold shadow-md">
               Directions <ArrowRight className="h-4 w-4" />
             </Button>
           </Card>
 
-          <Card className="mt-4">
-            <h3 className="font-semibold">Your health-critical info shared with facility</h3>
-            <ul className="mt-2 space-y-1 text-sm">
-              <li>⚠ Blood group {(info.nearestFacility.availableBeds ?? 0) >= 0 && "O+"} · <span className="text-red-600">Allergies: Penicillin, Sulfa</span></li>
-              <li>Active conditions: Hypertension, Type 2 Diabetes</li>
-              <li>Current medications will be visible to attending staff</li>
+          <Card className="mt-4 border border-border">
+            <h3 className="font-bold text-fg text-sm">Your health-critical info shared with facility</h3>
+            <ul className="mt-2 space-y-1.5 text-xs text-muted">
+              <li className="flex items-center gap-1.5"><span className="text-rose-500 font-bold">⚠️ Blood group {(info.nearestFacility.availableBeds ?? 0) >= 0 && "O+"}</span> · <span className="text-rose-600 dark:text-rose-400 font-bold">Allergies: Penicillin, Sulfa</span></li>
+              <li>• Active conditions: <strong className="text-fg">Hypertension, Type 2 Diabetes</strong></li>
+              <li>• Current medications will be visible to attending emergency staff</li>
             </ul>
           </Card>
         </>
