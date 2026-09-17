@@ -59,13 +59,13 @@ export function DoctorDashboard() {
 
   return (
     <div className="space-y-6">
-      {/* Doctor Header Banner - Clean Single-Color Card */}
-      <div className="flex flex-col gap-4 rounded-3xl border border-border bg-surface p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+      {/* Doctor Header Banner - Clean & Highlighted Card */}
+      <div className="flex flex-col gap-4 rounded-3xl border border-brand-500/30 bg-surface p-6 shadow-md sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <span className="rounded-full bg-brand-500/10 text-brand-700 dark:text-brand-400 border border-brand-500/20 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider">
+          <span className="rounded-full bg-brand-500/15 text-brand-700 dark:text-brand-300 border border-brand-500/30 px-3 py-1 text-xs font-bold uppercase tracking-wider shadow-xs">
             {t("doctor_consultation")}
           </span>
-          <h1 className="mt-1.5 text-2xl font-black text-fg">{doctorName}</h1>
+          <h1 className="mt-2 text-2xl font-black text-fg">{doctorName}</h1>
           <p className="text-xs text-muted mt-0.5">
             Active OPD Queue · Clinical Consultation Suite · E-Prescription &amp; Diagnostic Orders
           </p>
@@ -75,7 +75,7 @@ export function DoctorDashboard() {
           <Button
             onClick={() => setScannerOpen(true)}
             size="lg"
-            className="font-bold flex items-center gap-2 cursor-pointer"
+            className="font-bold flex items-center gap-2 cursor-pointer shadow-md"
           >
             <QrIcon className="h-5 w-5" /> {t("scan_patient_qr")}
           </Button>
@@ -89,42 +89,42 @@ export function DoctorDashboard() {
         </div>
       </div>
 
-      {/* Stats Cards */}
+      {/* Stats Cards - Highlighted Glowing Borders */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <Card className="flex items-center gap-4">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-500/20">
+        <Card className="flex items-center gap-4 border border-blue-500/25 hover:border-blue-500/50 hover:shadow-lg hover:shadow-blue-500/10 transition group">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-500/15 text-blue-700 dark:text-blue-400 border border-blue-500/30 group-hover:scale-105 transition">
             <Users className="h-6 w-6" />
           </span>
           <div>
-            <p className="text-2xl font-bold text-fg">{waitingQueue.length}</p>
-            <p className="text-xs text-muted">{t("waiting_queue")}</p>
+            <p className="text-2xl font-black text-fg">{waitingQueue.length}</p>
+            <p className="text-xs text-muted font-medium">{t("waiting_queue")}</p>
           </div>
         </Card>
-        <Card className="flex items-center gap-4">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">
+        <Card className="flex items-center gap-4 border border-emerald-500/25 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/10 transition group">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30 group-hover:scale-105 transition">
             <CheckCircle2 className="h-6 w-6" />
           </span>
           <div>
-            <p className="text-2xl font-bold text-fg">{completedToday.length}</p>
-            <p className="text-xs text-muted">{t("status_completed")}</p>
+            <p className="text-2xl font-black text-fg">{completedToday.length}</p>
+            <p className="text-xs text-muted font-medium">{t("status_completed")}</p>
           </div>
         </Card>
-        <Card className="flex items-center gap-4">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-500/10 text-purple-700 dark:text-purple-400 border border-purple-500/20">
+        <Card className="flex items-center gap-4 border border-purple-500/25 hover:border-purple-500/50 hover:shadow-lg hover:shadow-purple-500/10 transition group">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-500/15 text-purple-700 dark:text-purple-400 border border-purple-500/30 group-hover:scale-105 transition">
             <FlaskConical className="h-6 w-6" />
           </span>
           <div>
-            <p className="text-2xl font-bold text-fg">{testOrders.length}</p>
-            <p className="text-xs text-muted">{t("diagnostic_tests")}</p>
+            <p className="text-2xl font-black text-fg">{testOrders.length}</p>
+            <p className="text-xs text-muted font-medium">{t("diagnostic_tests")}</p>
           </div>
         </Card>
-        <Card className="flex items-center gap-4">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-pink-500/10 text-pink-700 dark:text-pink-400 border border-pink-500/20">
+        <Card className="flex items-center gap-4 border border-pink-500/25 hover:border-pink-500/50 hover:shadow-lg hover:shadow-pink-500/10 transition group">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-pink-500/15 text-pink-700 dark:text-pink-400 border border-pink-500/30 group-hover:scale-105 transition">
             <Pill className="h-6 w-6" />
           </span>
           <div>
-            <p className="text-2xl font-bold text-fg">{prescriptions.length}</p>
-            <p className="text-xs text-muted">{t("prescriptions")}</p>
+            <p className="text-2xl font-black text-fg">{prescriptions.length}</p>
+            <p className="text-xs text-muted font-medium">{t("prescriptions")}</p>
           </div>
         </Card>
       </div>

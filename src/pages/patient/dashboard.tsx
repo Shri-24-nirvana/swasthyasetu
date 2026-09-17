@@ -105,10 +105,10 @@ export function PatientDashboard() {
 
   return (
     <div className="space-y-6">
-      {/* Patient Header Banner with ID - Simple, clean, single-color card */}
-      <div className="flex flex-col gap-4 rounded-3xl border border-border bg-surface p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+      {/* Patient Header Banner with ID - Highlighted & Fresh */}
+      <div className="flex flex-col gap-4 rounded-3xl border border-brand-500/30 bg-surface p-6 shadow-md sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-4">
-          <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-700 text-white shadow-sm text-xl font-bold">
+          <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-600 to-emerald-600 text-white shadow-lg shadow-brand-500/25 text-xl font-black">
             {currentPatient.name.charAt(0)}
           </span>
           <div>
@@ -118,7 +118,7 @@ export function PatientDashboard() {
             </div>
             <p className="mt-1 text-xs text-muted flex flex-wrap items-center gap-1.5">
               <span>{t("permanent_id_label")}:</span>
-              <span className="font-mono font-bold text-brand-700 dark:text-brand-400 bg-brand-500/10 px-2 py-0.5 rounded-md border border-brand-500/20">
+              <span className="font-mono font-bold text-brand-700 dark:text-brand-300 bg-brand-500/15 px-2.5 py-0.5 rounded-lg border border-brand-500/30">
                 {currentPatient.swasthyaId}
               </span>
               <span>· {currentPatient.village}, {currentPatient.district}</span>
@@ -142,16 +142,16 @@ export function PatientDashboard() {
 
       {/* ACTIVE VISIT & LIVE QUEUE TRACKER */}
       {activeVisit && (
-        <Card className="border border-border bg-surface shadow-sm p-5 space-y-4">
+        <Card className="border border-brand-500/30 bg-surface shadow-md p-5 space-y-4">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-b border-border pb-3">
             <div className="flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-700 text-white shadow-sm">
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-600 text-white shadow-md shadow-brand-500/20">
                 <Stethoscope className="h-5 w-5" />
               </span>
               <div>
                 <div className="flex items-center gap-2">
                   <h3 className="font-bold text-base text-fg">{t("current_hospital_visit")}</h3>
-                  <span className="font-mono text-xs font-bold text-brand-700 dark:text-brand-400 bg-brand-500/10 border border-brand-500/20 px-2 py-0.5 rounded">
+                  <span className="font-mono text-xs font-bold text-brand-700 dark:text-brand-300 bg-brand-500/15 border border-brand-500/30 px-2 py-0.5 rounded-md">
                     {activeVisit.visitNumber}
                   </span>
                 </div>
@@ -162,7 +162,7 @@ export function PatientDashboard() {
             </div>
 
             <div className="flex items-center gap-2">
-              <span className="rounded-full bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 text-xs font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
+              <span className="rounded-full bg-emerald-500/15 border border-emerald-500/30 px-3 py-1 text-xs font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5 shadow-xs">
                 <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
                 {t("stage")}: {t(`status_${activeVisit.status.toLowerCase()}`, activeVisit.status.replace(/_/g, " "))}
               </span>
@@ -174,34 +174,34 @@ export function PatientDashboard() {
             </div>
           </div>
 
-          {/* Live OPD Queue Status Box */}
+          {/* Live OPD Queue Status Box - 4 Highlighted Colored Stat Tiles */}
           {queueInfo && (
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 rounded-2xl bg-surface border border-border p-4 shadow-sm text-center">
-              <div className="border-r border-border last:border-0">
-                <span className="text-[11px] text-muted font-semibold uppercase">{t("your_opd_token")}</span>
-                <p className="text-2xl font-black text-brand-700 dark:text-brand-400 mt-0.5">{queueInfo.token}</p>
-                <p className="text-[10px] text-muted">{activeVisit.department}</p>
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+              <div className="rounded-2xl border border-brand-500/30 bg-brand-500/10 dark:bg-brand-500/15 p-4 text-center transition hover:border-brand-500/50 shadow-xs">
+                <span className="text-[11px] text-brand-700 dark:text-brand-300 font-bold uppercase tracking-wider">{t("your_opd_token")}</span>
+                <p className="text-3xl font-black text-brand-700 dark:text-brand-300 mt-1">{queueInfo.token}</p>
+                <p className="text-[10px] text-muted mt-0.5">{activeVisit.department}</p>
               </div>
-              <div className="border-r border-border last:border-0">
-                <span className="text-[11px] text-muted font-semibold uppercase">{t("currently_serving")}</span>
-                <p className="text-2xl font-black text-emerald-600 dark:text-emerald-400 mt-0.5">{queueInfo.currentlyServing}</p>
-                <p className="text-[10px] text-emerald-600 dark:text-emerald-400">{t("in_doctor_room")}</p>
+              <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 dark:bg-emerald-500/15 p-4 text-center transition hover:border-emerald-500/50 shadow-xs">
+                <span className="text-[11px] text-emerald-700 dark:text-emerald-300 font-bold uppercase tracking-wider">{t("currently_serving")}</span>
+                <p className="text-3xl font-black text-emerald-600 dark:text-emerald-400 mt-1">{queueInfo.currentlyServing}</p>
+                <p className="text-[10px] text-emerald-600 dark:text-emerald-400 mt-0.5">{t("in_doctor_room")}</p>
               </div>
-              <div className="border-r border-border last:border-0">
-                <span className="text-[11px] text-muted font-semibold uppercase">{t("patients_ahead")}</span>
-                <p className="text-2xl font-black text-amber-600 dark:text-amber-400 mt-0.5">{queueInfo.ahead}</p>
-                <p className="text-[10px] text-muted">{t("in_queue")}</p>
+              <div className="rounded-2xl border border-amber-500/30 bg-amber-500/10 dark:bg-amber-500/15 p-4 text-center transition hover:border-amber-500/50 shadow-xs">
+                <span className="text-[11px] text-amber-700 dark:text-amber-300 font-bold uppercase tracking-wider">{t("patients_ahead")}</span>
+                <p className="text-3xl font-black text-amber-600 dark:text-amber-400 mt-1">{queueInfo.ahead}</p>
+                <p className="text-[10px] text-muted mt-0.5">{t("in_queue")}</p>
               </div>
-              <div>
-                <span className="text-[11px] text-muted font-semibold uppercase">{t("estimated_wait")}</span>
-                <p className="text-2xl font-black text-fg mt-0.5">~{queueInfo.estMinutes}m</p>
-                <p className="text-[10px] text-muted">{t("realtime_sync")}</p>
+              <div className="rounded-2xl border border-sky-500/30 bg-sky-500/10 dark:bg-sky-500/15 p-4 text-center transition hover:border-sky-500/50 shadow-xs">
+                <span className="text-[11px] text-sky-700 dark:text-sky-300 font-bold uppercase tracking-wider">{t("estimated_wait")}</span>
+                <p className="text-3xl font-black text-sky-600 dark:text-sky-400 mt-1">~{queueInfo.estMinutes}m</p>
+                <p className="text-[10px] text-muted mt-0.5">{t("realtime_sync")}</p>
               </div>
             </div>
           )}
 
           {/* Patient Hospital Journey Progress Bar */}
-          <div className="space-y-1.5 pt-1">
+          <div className="space-y-2 pt-1">
             <span className="text-xs font-bold text-fg">{t("hospital_journey_workflow")}</span>
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-6 text-center text-xs">
               {visitLifecycleStepKeys.map((step, idx) => {
@@ -212,10 +212,10 @@ export function PatientDashboard() {
                     key={step.key}
                     className={`rounded-xl border p-2.5 transition ${
                       isCurrent
-                        ? "border-brand-700 bg-brand-700 text-white font-bold shadow-sm"
+                        ? "border-brand-500 bg-gradient-to-r from-brand-600 to-emerald-600 text-white font-bold shadow-md shadow-brand-500/25"
                         : isDone
-                        ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-medium"
-                        : "border-border bg-surface text-muted"
+                        ? "border-emerald-500/30 bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 font-medium"
+                        : "border-border bg-surface-secondary/40 text-muted"
                     }`}
                   >
                     <div className="text-[10px] uppercase tracking-wider mb-1">
@@ -230,42 +230,42 @@ export function PatientDashboard() {
         </Card>
       )}
 
-      {/* KPI Cards */}
+      {/* KPI Cards - Highlighted Glowing Borders */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <Card className="flex items-center gap-4">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-500/10 text-brand-700 dark:text-brand-400 border border-brand-500/20">
+        <Card className="flex items-center gap-4 border border-brand-500/25 hover:border-brand-500/50 hover:shadow-lg hover:shadow-brand-500/10 transition group">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-500/15 text-brand-700 dark:text-brand-400 border border-brand-500/30 group-hover:scale-105 transition">
             <CalendarClock className="h-6 w-6" />
           </span>
           <div>
-            <p className="text-2xl font-bold text-fg">{patientVisits.length}</p>
-            <p className="text-xs text-muted">{t("hospital_visits")}</p>
+            <p className="text-2xl font-black text-fg">{patientVisits.length}</p>
+            <p className="text-xs text-muted font-medium">{t("hospital_visits")}</p>
           </div>
         </Card>
-        <Card className="flex items-center gap-4">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-500/20">
+        <Card className="flex items-center gap-4 border border-blue-500/25 hover:border-blue-500/50 hover:shadow-lg hover:shadow-blue-500/10 transition group">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-500/15 text-blue-700 dark:text-blue-400 border border-blue-500/30 group-hover:scale-105 transition">
             <FlaskConical className="h-6 w-6" />
           </span>
           <div>
-            <p className="text-2xl font-bold text-fg">{patientTests.length}</p>
-            <p className="text-xs text-muted">{t("diagnostic_tests")}</p>
+            <p className="text-2xl font-black text-fg">{patientTests.length}</p>
+            <p className="text-xs text-muted font-medium">{t("diagnostic_tests")}</p>
           </div>
         </Card>
-        <Card className="flex items-center gap-4">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-pink-500/10 text-pink-700 dark:text-pink-400 border border-pink-500/20">
+        <Card className="flex items-center gap-4 border border-pink-500/25 hover:border-pink-500/50 hover:shadow-lg hover:shadow-pink-500/10 transition group">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-pink-500/15 text-pink-700 dark:text-pink-400 border border-pink-500/30 group-hover:scale-105 transition">
             <Pill className="h-6 w-6" />
           </span>
           <div>
-            <p className="text-2xl font-bold text-fg">{patientPrescriptions.length}</p>
-            <p className="text-xs text-muted">{t("prescriptions")}</p>
+            <p className="text-2xl font-black text-fg">{patientPrescriptions.length}</p>
+            <p className="text-xs text-muted font-medium">{t("prescriptions")}</p>
           </div>
         </Card>
-        <Card className="flex items-center gap-4">
-          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">
+        <Card className="flex items-center gap-4 border border-emerald-500/25 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/10 transition group">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30 group-hover:scale-105 transition">
             <Receipt className="h-6 w-6" />
           </span>
           <div>
-            <p className="text-2xl font-bold text-fg">{patientBills.length}</p>
-            <p className="text-xs text-muted">{t("medicine_bills")}</p>
+            <p className="text-2xl font-black text-fg">{patientBills.length}</p>
+            <p className="text-xs text-muted font-medium">{t("medicine_bills")}</p>
           </div>
         </Card>
       </div>
@@ -276,15 +276,15 @@ export function PatientDashboard() {
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {quickActions.map((a) => (
             <Link key={a.to} to={a.to}>
-              <Card className="flex items-center gap-3 p-3.5 transition hover:shadow-md hover:border-brand-500/50">
-                <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-white ${a.color}`}>
+              <Card className="flex items-center gap-3 p-3.5 transition border border-border hover:border-brand-500/40 hover:bg-surface-hover hover:shadow-md group">
+                <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-white shadow-xs ${a.color} group-hover:scale-105 transition`}>
                   <a.icon className="h-5 w-5" />
                 </span>
                 <div className="min-w-0 flex-1">
                   <p className="text-xs font-bold text-fg truncate">{t(a.labelKey)}</p>
                   <p className="text-[11px] text-muted truncate">{t(a.descKey, "")}</p>
                 </div>
-                <ArrowRight className="h-4 w-4 text-muted shrink-0" />
+                <ArrowRight className="h-4 w-4 text-muted group-hover:text-brand-500 group-hover:translate-x-0.5 transition shrink-0" />
               </Card>
             </Link>
           ))}
@@ -294,7 +294,7 @@ export function PatientDashboard() {
       {/* Two Column Grid: Recent Prescriptions & Tests */}
       <div className="grid gap-4 lg:grid-cols-2">
         {/* Prescriptions */}
-        <Card>
+        <Card className="border border-border">
           <div className="flex items-center justify-between border-b border-border pb-3">
             <CardTitle>{t("recent_prescriptions")}</CardTitle>
             <Link to="/patient/medicine-availability" className="text-xs text-brand-700 dark:text-brand-400 font-semibold hover:underline">
@@ -306,25 +306,25 @@ export function PatientDashboard() {
               <p className="text-xs text-muted py-4 text-center">{t("no_prescriptions_yet")}</p>
             ) : (
               patientPrescriptions.map((rx) => (
-                <div key={rx.id} className="rounded-xl border border-border p-3 space-y-1.5">
+                <div key={rx.id} className="rounded-2xl border border-border dark:border-slate-700/60 bg-surface-secondary/30 p-3.5 space-y-2 hover:border-brand-500/30 transition">
                   <div className="flex items-center justify-between">
                     <span className="font-bold text-xs text-fg">{rx.doctorName}</span>
                     <span
-                      className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${
+                      className={`rounded-full px-2.5 py-0.5 text-[10px] font-bold ${
                         rx.status === "DISPENSED"
-                          ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20"
-                          : "bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20"
+                          ? "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30"
+                          : "bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30"
                       }`}
                     >
                       {t(`status_${rx.status.toLowerCase()}`, rx.status)}
                     </span>
                   </div>
-                  <p className="text-xs text-muted">{t("diagnosis")}: {rx.diagnosis}</p>
+                  <p className="text-xs text-muted">{t("diagnosis")}: <span className="text-fg font-medium">{rx.diagnosis}</span></p>
                   <div className="space-y-1 pt-1">
                     {rx.items.map((item) => (
-                      <div key={item.id} className="flex justify-between text-xs bg-muted/10 px-2 py-1 rounded border border-border/40">
+                      <div key={item.id} className="flex justify-between text-xs bg-surface/80 px-2.5 py-1.5 rounded-lg border border-border">
                         <span className="font-medium text-fg">• {item.medicineName}</span>
-                        <span className="text-muted">{item.dosage} ({item.quantity} {t("units")})</span>
+                        <span className="text-muted font-mono">{item.dosage} ({item.quantity} {t("units")})</span>
                       </div>
                     ))}
                   </div>
@@ -335,7 +335,7 @@ export function PatientDashboard() {
         </Card>
 
         {/* Diagnostic Lab Tests */}
-        <Card>
+        <Card className="border border-border">
           <div className="flex items-center justify-between border-b border-border pb-3">
             <CardTitle>{t("diagnostic_lab_orders")}</CardTitle>
             <Link to="/patient/diagnostics" className="text-xs text-brand-700 dark:text-brand-400 font-semibold hover:underline">
@@ -347,16 +347,16 @@ export function PatientDashboard() {
               <p className="text-xs text-muted py-4 text-center">{t("no_tests_yet")}</p>
             ) : (
               patientTests.map((testItem) => (
-                <div key={testItem.id} className="rounded-xl border border-border p-3 space-y-1">
+                <div key={testItem.id} className="rounded-2xl border border-border dark:border-slate-700/60 bg-surface-secondary/30 p-3.5 space-y-1.5 hover:border-brand-500/30 transition">
                   <div className="flex items-center justify-between">
                     <span className="font-bold text-xs text-fg">{testItem.testName}</span>
                     <span
-                      className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${
+                      className={`rounded-full px-2.5 py-0.5 text-[10px] font-bold ${
                         testItem.status === "COMPLETED"
-                          ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20"
+                          ? "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30"
                           : testItem.status === "PROCESSING"
-                          ? "bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20"
-                          : "bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20"
+                          ? "bg-blue-500/15 text-blue-600 dark:text-blue-400 border border-blue-500/30"
+                          : "bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30"
                       }`}
                     >
                       {t(`status_${testItem.status.toLowerCase()}`, testItem.status.replace(/_/g, " "))}
@@ -364,7 +364,7 @@ export function PatientDashboard() {
                   </div>
                   <p className="text-xs text-muted">{testItem.doctorName} · {testItem.facilityName}</p>
                   {testItem.summary && (
-                    <p className="text-xs font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 p-2 rounded-lg border border-emerald-500/20 mt-1">
+                    <p className="text-xs font-medium text-emerald-600 dark:text-emerald-300 bg-emerald-500/15 p-2.5 rounded-xl border border-emerald-500/30 mt-1">
                       {t("result")}: {testItem.summary}
                     </p>
                   )}

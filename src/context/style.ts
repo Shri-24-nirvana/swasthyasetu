@@ -45,7 +45,7 @@ export interface ThemeColors {
 }
 
 // ============================================================================
-// 1. AYUSHMAN TEAL (Clean Single-Tone Palette)
+// 1. AYUSHMAN TEAL (Fresh, High-Contrast & Highlighted Palette)
 // ============================================================================
 export const lightVibrantColors: ThemeColors = {
   background: "#F8FAFC",
@@ -57,16 +57,16 @@ export const lightVibrantColors: ThemeColors = {
   textSecondary: "#475569",
   textTertiary: "#94A3B8",
   
-  primary: "#0D9488", // Teal Primary
+  primary: "#0D9488", // Crisp Teal Primary
   primaryHover: "#0F766E",
-  primaryLight: "rgba(13, 148, 136, 0.1)",
-  primaryGlow: "rgba(13, 148, 136, 0.2)",
+  primaryLight: "rgba(13, 148, 136, 0.12)",
+  primaryGlow: "rgba(13, 148, 136, 0.25)",
   
-  secondary: "#2563EB",
+  secondary: "#0284C7",
   success: "#059669",
   warning: "#D97706",
   error: "#DC2626",
-  info: "#0284C7",
+  info: "#2563EB",
   
   hover: "#F1F5F9",
   focus: "rgba(13, 148, 136, 0.25)",
@@ -79,13 +79,13 @@ export const lightVibrantColors: ThemeColors = {
   overlay: "rgba(15, 23, 42, 0.5)",
 
   opdTokenBg: "#F0FDFA",
-  opdTokenBorder: "#CCFBF1",
+  opdTokenBorder: "#99F6E4",
   opdTokenText: "#0F766E",
-  riskLowBg: "#F0FDF4",
+  riskLowBg: "#DCFCE7",
   riskLowText: "#166534",
-  riskModerateBg: "#FFFBEB",
+  riskModerateBg: "#FEF3C7",
   riskModerateText: "#92400E",
-  riskHighBg: "#FEF2F2",
+  riskHighBg: "#FEE2E2",
   riskHighText: "#991B1B",
   vitalsCardBg: "#FFFFFF",
   vitalsCardBorder: "#E2E8F0",
@@ -93,58 +93,58 @@ export const lightVibrantColors: ThemeColors = {
 };
 
 export const darkVibrantColors: ThemeColors = {
-  background: "#0B0F17", // Single cohesive deep dark background
-  surface: "#111827",    // Simple, clean single-color surface
-  surfaceSecondary: "#1F2937",
-  surfaceHover: "#1E293B",
+  background: "#070C16", // Deep Midnight Navy background
+  surface: "#0E172A",    // Crisp, highlighted slate surface card
+  surfaceSecondary: "#162238",
+  surfaceHover: "#1E2D48",
   
-  text: "#F9FAFB",
-  textSecondary: "#9CA3AF",
-  textTertiary: "#6B7280",
+  text: "#FFFFFF",        // Ultra crisp white text
+  textSecondary: "#CBD5E1",
+  textTertiary: "#94A3B8",
   
-  primary: "#14B8A6", // Refined Teal Accent
-  primaryHover: "#2DD4BF",
-  primaryLight: "rgba(20, 184, 166, 0.12)",
-  primaryGlow: "rgba(20, 184, 166, 0.2)",
+  primary: "#2DD4BF",     // Luminous Cyan-Teal Accent
+  primaryHover: "#14B8A6",
+  primaryLight: "rgba(45, 212, 191, 0.18)",
+  primaryGlow: "rgba(45, 212, 191, 0.35)",
   
-  secondary: "#38BDF8",
-  success: "#34D399",
-  warning: "#FBBF24",
-  error: "#F87171",
-  info: "#60A5FA",
+  secondary: "#38BDF8",   // Electric Sky Blue
+  success: "#34D399",     // Bright Emerald
+  warning: "#FBBF24",     // Radiant Amber
+  error: "#F87171",       // Vivid Coral
+  info: "#60A5FA",        // Vivid Blue
   
-  hover: "#1F2937",
-  focus: "rgba(20, 184, 166, 0.25)",
-  border: "#1F2937",
-  borderLight: "#1F2937",
-  borderHover: "#374151",
+  hover: "#1A2840",
+  focus: "rgba(45, 212, 191, 0.35)",
+  border: "#1E2F4D",      // Highlighted distinct border
+  borderLight: "rgba(255, 255, 255, 0.08)",
+  borderHover: "#2E4770",
   
-  shadow: "0 1px 3px 0 rgba(0, 0, 0, 0.3)",
-  shadowHover: "0 4px 6px -1px rgba(0, 0, 0, 0.4)",
-  overlay: "rgba(0, 0, 0, 0.75)",
+  shadow: "0 4px 20px -2px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.06)",
+  shadowHover: "0 8px 28px -4px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(45, 212, 191, 0.35)",
+  overlay: "rgba(0, 0, 0, 0.8)",
 
-  opdTokenBg: "rgba(20, 184, 166, 0.1)",
-  opdTokenBorder: "rgba(20, 184, 166, 0.25)",
+  opdTokenBg: "rgba(45, 212, 191, 0.15)",
+  opdTokenBorder: "rgba(45, 212, 191, 0.4)",
   opdTokenText: "#2DD4BF",
-  riskLowBg: "rgba(52, 211, 153, 0.1)",
+  riskLowBg: "rgba(52, 211, 153, 0.15)",
   riskLowText: "#34D399",
-  riskModerateBg: "rgba(251, 191, 36, 0.1)",
-  riskModerateText: "#FBBF24",
-  riskHighBg: "rgba(248, 113, 113, 0.1)",
-  riskHighText: "#F87171",
-  vitalsCardBg: "#111827",
-  vitalsCardBorder: "#1F2937",
-  cardGlow: "none",
+  riskModerateBg: "rgba(251, 191, 36, 0.15)",
+  riskModerateText: "#FDE68A",
+  riskHighBg: "rgba(248, 113, 113, 0.15)",
+  riskHighText: "#FCA5A5",
+  vitalsCardBg: "#0E172A",
+  vitalsCardBorder: "#1E2F4D",
+  cardGlow: "rgba(45, 212, 191, 0.15)",
 };
 
 // ============================================================================
-// 2. AYUSHMAN SAFFRON (Clean Warm Single-Tone Palette)
+// 2. AYUSHMAN SAFFRON (Fresh Warm Palette)
 // ============================================================================
 export const lightOrangeColors: ThemeColors = {
-  background: "#FAFAF9",
+  background: "#FAF8F5",
   surface: "#FFFFFF",
-  surfaceSecondary: "#F5F5F4",
-  surfaceHover: "#FAFAF9",
+  surfaceSecondary: "#FFF7ED",
+  surfaceHover: "#FFF1E6",
   
   text: "#1C1917",
   textSecondary: "#57534E",
@@ -152,8 +152,8 @@ export const lightOrangeColors: ThemeColors = {
   
   primary: "#EA580C", // Saffron Primary
   primaryHover: "#C2410C",
-  primaryLight: "rgba(234, 88, 12, 0.1)",
-  primaryGlow: "rgba(234, 88, 12, 0.2)",
+  primaryLight: "rgba(234, 88, 12, 0.12)",
+  primaryGlow: "rgba(234, 88, 12, 0.25)",
   
   secondary: "#0284C7",
   success: "#059669",
@@ -161,24 +161,24 @@ export const lightOrangeColors: ThemeColors = {
   error: "#DC2626",
   info: "#2563EB",
   
-  hover: "#F5F5F4",
+  hover: "#FFF7ED",
   focus: "rgba(234, 88, 12, 0.25)",
   border: "#E7E5E4",
-  borderLight: "#F5F5F4",
-  borderHover: "#D6D3D1",
+  borderLight: "#FFEDD5",
+  borderHover: "#FDBA74",
   
   shadow: "0 1px 3px 0 rgba(0, 0, 0, 0.06)",
   shadowHover: "0 4px 6px -1px rgba(0, 0, 0, 0.08)",
   overlay: "rgba(28, 25, 23, 0.5)",
 
   opdTokenBg: "#FFF7ED",
-  opdTokenBorder: "#FFEDD5",
+  opdTokenBorder: "#FDBA74",
   opdTokenText: "#C2410C",
-  riskLowBg: "#F0FDF4",
+  riskLowBg: "#DCFCE7",
   riskLowText: "#166534",
-  riskModerateBg: "#FFFBEB",
+  riskModerateBg: "#FEF3C7",
   riskModerateText: "#92400E",
-  riskHighBg: "#FEF2F2",
+  riskHighBg: "#FEE2E2",
   riskHighText: "#991B1B",
   vitalsCardBg: "#FFFFFF",
   vitalsCardBorder: "#E7E5E4",
@@ -186,19 +186,19 @@ export const lightOrangeColors: ThemeColors = {
 };
 
 export const darkOrangeColors: ThemeColors = {
-  background: "#0C0A09",
-  surface: "#1C1917",
-  surfaceSecondary: "#292524",
-  surfaceHover: "#322D29",
+  background: "#0A0705",
+  surface: "#18120E",
+  surfaceSecondary: "#261D17",
+  surfaceHover: "#33261F",
   
-  text: "#FAFAF9",
-  textSecondary: "#A8A29E",
-  textTertiary: "#78716C",
+  text: "#FFFFFF",
+  textSecondary: "#D6D3D1",
+  textTertiary: "#A8A29E",
   
-  primary: "#F97316", // Saffron Accent
-  primaryHover: "#FB923C",
-  primaryLight: "rgba(249, 115, 22, 0.12)",
-  primaryGlow: "rgba(249, 115, 22, 0.2)",
+  primary: "#FB923C", // Luminous Saffron Accent
+  primaryHover: "#F97316",
+  primaryLight: "rgba(251, 146, 60, 0.18)",
+  primaryGlow: "rgba(251, 146, 60, 0.35)",
   
   secondary: "#38BDF8",
   success: "#34D399",
@@ -206,28 +206,28 @@ export const darkOrangeColors: ThemeColors = {
   error: "#F87171",
   info: "#60A5FA",
   
-  hover: "#292524",
-  focus: "rgba(249, 115, 22, 0.25)",
-  border: "#292524",
-  borderLight: "#292524",
-  borderHover: "#44403C",
+  hover: "#2A1F18",
+  focus: "rgba(251, 146, 60, 0.35)",
+  border: "#33241C",
+  borderLight: "rgba(255, 255, 255, 0.08)",
+  borderHover: "#4D362A",
   
-  shadow: "0 1px 3px 0 rgba(0, 0, 0, 0.3)",
-  shadowHover: "0 4px 6px -1px rgba(0, 0, 0, 0.4)",
-  overlay: "rgba(0, 0, 0, 0.75)",
+  shadow: "0 4px 20px -2px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.06)",
+  shadowHover: "0 8px 28px -4px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(251, 146, 60, 0.35)",
+  overlay: "rgba(0, 0, 0, 0.8)",
 
-  opdTokenBg: "rgba(249, 115, 22, 0.1)",
-  opdTokenBorder: "rgba(249, 115, 22, 0.25)",
+  opdTokenBg: "rgba(251, 146, 60, 0.15)",
+  opdTokenBorder: "rgba(251, 146, 60, 0.4)",
   opdTokenText: "#FB923C",
-  riskLowBg: "rgba(52, 211, 153, 0.1)",
+  riskLowBg: "rgba(52, 211, 153, 0.15)",
   riskLowText: "#34D399",
-  riskModerateBg: "rgba(251, 191, 36, 0.1)",
-  riskModerateText: "#FBBF24",
-  riskHighBg: "rgba(248, 113, 113, 0.1)",
-  riskHighText: "#F87171",
-  vitalsCardBg: "#1C1917",
-  vitalsCardBorder: "#292524",
-  cardGlow: "none",
+  riskModerateBg: "rgba(251, 191, 36, 0.15)",
+  riskModerateText: "#FDE68A",
+  riskHighBg: "rgba(248, 113, 113, 0.15)",
+  riskHighText: "#FCA5A5",
+  vitalsCardBg: "#18120E",
+  vitalsCardBorder: "#33241C",
+  cardGlow: "rgba(251, 146, 60, 0.15)",
 };
 
 // Helper to get active palette based on isDark and colorTheme
@@ -252,6 +252,7 @@ export const createThemedStyles = (colors: ThemeColors, isDark: boolean) => ({
     border: `1px solid ${colors.border}`,
     borderRadius: "24px",
     padding: "24px",
+    boxShadow: colors.shadow,
   },
 
   card: {
@@ -260,7 +261,7 @@ export const createThemedStyles = (colors: ThemeColors, isDark: boolean) => ({
     padding: "20px",
     border: `1px solid ${colors.border}`,
     boxShadow: colors.shadow,
-    transition: "all 0.2s ease",
+    transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
   },
 
   cardHover: {
@@ -274,9 +275,9 @@ export const createThemedStyles = (colors: ThemeColors, isDark: boolean) => ({
     background: colors.opdTokenBg,
     color: colors.opdTokenText,
     border: `1px solid ${colors.opdTokenBorder}`,
-    borderRadius: "10px",
+    borderRadius: "12px",
     padding: "6px 14px",
-    fontWeight: 700,
+    fontWeight: 800,
     fontFamily: "monospace",
     display: "inline-flex",
     alignItems: "center",
@@ -292,13 +293,13 @@ export const createThemedStyles = (colors: ThemeColors, isDark: boolean) => ({
 
   buttonPrimary: {
     background: colors.primary,
-    color: isDark ? "#0B0F17" : "#FFFFFF",
+    color: isDark ? "#070C16" : "#FFFFFF",
     borderRadius: "12px",
     padding: "10px 20px",
-    fontWeight: 700,
+    fontWeight: 800,
     border: "none",
     cursor: "pointer",
-    boxShadow: "none",
+    boxShadow: isDark ? `0 0 20px ${colors.primaryGlow}` : "0 2px 8px rgba(0,0,0,0.1)",
     transition: "all 0.15s ease",
   },
 

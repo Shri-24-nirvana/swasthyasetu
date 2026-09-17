@@ -3,13 +3,13 @@ import { cn } from "@/lib/utils";
 import { RiskLevel } from "@/dto/constants/RiskLevel";
 
 const tone: Record<string, string> = {
-  LOW: "bg-emerald-100 text-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-300 dark:border dark:border-emerald-800/60",
-  GREEN: "bg-emerald-100 text-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-300 dark:border dark:border-emerald-800/60",
-  MODERATE: "bg-amber-100 text-amber-800 dark:bg-amber-950/70 dark:text-amber-300 dark:border dark:border-amber-800/60",
-  YELLOW: "bg-amber-100 text-amber-800 dark:bg-amber-950/70 dark:text-amber-300 dark:border dark:border-amber-800/60",
-  HIGH: "bg-rose-100 text-rose-800 dark:bg-rose-950/70 dark:text-rose-300 dark:border dark:border-rose-800/60",
-  RED: "bg-rose-100 text-rose-800 dark:bg-rose-950/70 dark:text-rose-300 dark:border dark:border-rose-800/60",
-  INFO: "bg-brand-100 text-brand-800 dark:bg-brand-900/60 dark:text-brand-300 dark:border dark:border-brand-700/50",
+  LOW: "bg-emerald-100 text-emerald-800 dark:bg-emerald-500/15 dark:text-emerald-300 dark:border dark:border-emerald-500/30",
+  GREEN: "bg-emerald-100 text-emerald-800 dark:bg-emerald-500/15 dark:text-emerald-300 dark:border dark:border-emerald-500/30",
+  MODERATE: "bg-amber-100 text-amber-800 dark:bg-amber-500/15 dark:text-amber-300 dark:border dark:border-amber-500/30",
+  YELLOW: "bg-amber-100 text-amber-800 dark:bg-amber-500/15 dark:text-amber-300 dark:border dark:border-amber-500/30",
+  HIGH: "bg-rose-100 text-rose-800 dark:bg-rose-500/15 dark:text-rose-300 dark:border dark:border-rose-500/30",
+  RED: "bg-rose-100 text-rose-800 dark:bg-rose-500/15 dark:text-rose-300 dark:border dark:border-rose-500/30",
+  INFO: "bg-brand-100 text-brand-800 dark:bg-brand-500/15 dark:text-brand-300 dark:border dark:border-brand-500/30",
 };
 
 export function RiskBadge({
