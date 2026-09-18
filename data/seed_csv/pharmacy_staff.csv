@@ -1,0 +1,6 @@
+swasthya_id,name,role,email,password,phone,facility_id,facility_name,counter_name,pharmacist_reg_no,shift
+ph-01,Ravi Shastri,PHARMACY,pharmacy.ravi@swasthyasetu.org,Pharmacy@123,+91-98444-00001,phc-1,Rampur Primary Health Centre,OPD Pharmacy Counter 1,PCI-UP-98214,Morning
+ph-02,Neha Aggarwal,PHARMACY,pharmacy.neha@swasthyasetu.org,Pharmacy@123,+91-98444-00002,dh-1,Kosi District Hospital,Main Central Dispensary,PCI-UP-88401,Morning
+ph-03,Sunil Pal,PHARMACY,pharmacy.sunil@swasthyasetu.org,Pharmacy@123,+91-98444-00003,chc-1,Kosi Community Health Centre,Community Drug Store,PCI-UP-76120,Evening
+ph-04,Praveen Joshi,PHARMACY,pharmacy.praveen@swasthyasetu.org,Pharmacy@123,+91-98444-00004,phc-1,Rampur Primary Health Centre,Inventory & Stock Warehouse,PCI-UP-64918,Morning
+ph-05,Anjali Saxena,PHARMACY,pharmacy.anjali@swasthyasetu.org,Pharmacy@123,+91-98444-00005,dh-1,Kosi District Hospital,Emergency 24x7 Counter,PCI-UP-55109,Night

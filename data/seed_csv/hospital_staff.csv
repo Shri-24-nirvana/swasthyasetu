@@ -1,0 +1,6 @@
+swasthya_id,name,role,email,password,phone,facility_id,facility_name,department,counter_type,shift
+hs-01,Rajesh Tiwari,HOSPITAL_STAFF,reception.rajesh@swasthyasetu.org,Staff@123,+91-98333-00001,phc-1,Rampur Primary Health Centre,OPD Reception Desk,Walk-in Registration,Morning
+hs-02,Amit Choudhary,HOSPITAL_STAFF,admissions.amit@swasthyasetu.org,Staff@123,+91-98333-00002,dh-1,Kosi District Hospital,Central Admissions,IPD & Bed Allocation,Full-Day
+hs-03,Kiran Bala,HOSPITAL_STAFF,token.kiran@swasthyasetu.org,Staff@123,+91-98333-00003,chc-1,Kosi Community Health Centre,Triage Token Desk,OPD Queue Routing,Morning
+hs-04,Vikas Sharma,HOSPITAL_STAFF,ops.vikas@swasthyasetu.org,Staff@123,+91-98333-00004,phc-1,Rampur Primary Health Centre,OPD Operations,Patient Flow Management,Evening
+hs-05,Deepak Rawat,HOSPITAL_STAFF,helpdesk.deepak@swasthyasetu.org,Staff@123,+91-98333-00005,dh-1,Kosi District Hospital,Patient Navigator,Citizen Helpdesk,Morning

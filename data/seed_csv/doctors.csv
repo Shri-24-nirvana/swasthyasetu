@@ -1,0 +1,6 @@
+swasthya_id,name,role,email,password,phone,facility_id,facility_name,department,specialization,license_number,shift
+doc-01,Dr. Anita Rao,DOCTOR,doctor.anita@swasthyasetu.org,Doctor@123,+91-98111-00001,phc-1,Rampur Primary Health Centre,General Medicine,Senior Physician,MCI-UP-48921,Morning
+doc-02,Dr. Rajesh Kumar,DOCTOR,doctor.rajesh@swasthyasetu.org,Doctor@123,+91-98111-00002,dh-1,Kosi District Hospital,Cardiology,Interventional Cardiologist,MCI-UP-51024,Full-Day
+doc-03,Dr. Priya Singh,DOCTOR,doctor.priya@swasthyasetu.org,Doctor@123,+91-98111-00003,chc-1,Kosi Community Health Centre,Pediatrics,Child Specialist & Neonatologist,MCI-UP-63912,Morning
+doc-04,Dr. Suresh Verma,DOCTOR,doctor.suresh@swasthyasetu.org,Doctor@123,+91-98111-00004,dh-1,Kosi District Hospital,Orthopedics,Orthopedic Surgeon,MCI-UP-39201,Evening
+doc-05,Dr. Meenakshi Sundaram,DOCTOR,doctor.meenakshi@swasthyasetu.org,Doctor@123,+91-98111-00005,phc-1,Rampur Primary Health Centre,Obstetrics & Gynecology,Consultant Gynecologist,MCI-UP-72819,Morning

@@ -277,12 +277,73 @@ export function QRScannerModal({
             </div>
 
             {/* Least-Privilege Role Context Notification */}
-            <div className="rounded-lg bg-surface border border-border p-2 text-[11px] text-muted">
-              Role: <strong>{role}</strong> · Authorized workflow will load on confirmation.
+            <div className="rounded-xl bg-surface border border-border p-3 text-xs space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="font-semibold text-fg">Active Access Level:</span>
+                <span className="rounded-full bg-brand-500/20 text-brand-700 dark:text-brand-300 font-bold px-2 py-0.5 text-[11px] border border-brand-500/30">
+                  {role} Scope
+                </span>
+              </div>
+              
+              {/* Role-Specific Data Preview Badges */}
+              {role === UserRole.PHARMACY && (
+                <div className="space-y-1">
+                  <p className="text-[11px] text-emerald-700 dark:text-emerald-400 font-medium">
+                    ✓ Authorized: Active Prescriptions, Dosage, Drug Allergy Check
+                  </p>
+                  <p className="text-[10px] text-muted">
+                    🔒 Restricted: Clinical Consult Diaries, Full Pathology Values, Referrals
+                  </p>
+                </div>
+              )}
+
+              {role === UserRole.LAB && (
+                <div className="space-y-1">
+                  <p className="text-[11px] text-emerald-700 dark:text-emerald-400 font-medium">
+                    ✓ Authorized: Prescribed Lab Orders, Specimen Barcodes, Report Uploads
+                  </p>
+                  <p className="text-[10px] text-muted">
+                    🔒 Restricted: Prescription Formulas, Patient Billing Ledger, Notes
+                  </p>
+                </div>
+              )}
+
+              {role === UserRole.DOCTOR && (
+                <div className="space-y-1">
+                  <p className="text-[11px] text-emerald-700 dark:text-emerald-400 font-medium">
+                    ✓ Authorized: Longitudinal Medical History, Vitals, Consults, Rx & Diagnostics
+                  </p>
+                  <p className="text-[10px] text-muted">
+                    🔒 Audit Trail: Access is logged to hospital governance registry
+                  </p>
+                </div>
+              )}
+
+              {role === UserRole.HEALTHCARE_WORKER && (
+                <div className="space-y-1">
+                  <p className="text-[11px] text-emerald-700 dark:text-emerald-400 font-medium">
+                    ✓ Authorized: Village Profile, Antenatal/Immunization Tracking, High-Risk Flags
+                  </p>
+                  <p className="text-[10px] text-muted">
+                    🔒 Restricted: Tertiary Surgical Operative Notes
+                  </p>
+                </div>
+              )}
+
+              {role === UserRole.HOSPITAL_STAFF && (
+                <div className="space-y-1">
+                  <p className="text-[11px] text-emerald-700 dark:text-emerald-400 font-medium">
+                    ✓ Authorized: OPD Queue Token, Check-in, Doctor Room Routing
+                  </p>
+                  <p className="text-[10px] text-muted">
+                    🔒 Restricted: Clinical Medical Record & Test Values
+                  </p>
+                </div>
+              )}
             </div>
 
-            <Button className="w-full" onClick={handleConfirm}>
-              Continue to {role.replace(/_/g, " ")} Workflow <ArrowRight className="h-4 w-4" />
+            <Button className="w-full cursor-pointer shadow-md" onClick={handleConfirm}>
+              Proceed to {role.replace(/_/g, " ")} Workspace <ArrowRight className="h-4 w-4" />
             </Button>
           </div>
         )}

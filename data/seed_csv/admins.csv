@@ -1,0 +1,7 @@
+swasthya_id,name,role,designation,email,password,phone,facility_id,facility_name,clearance_level
+ha-01,Aditya Malhotra,ADMIN,Medical Superintendent,admin.aditya@swasthyasetu.org,Admin@123,+91-98666-00001,phc-1,Rampur Primary Health Centre,FACILITY_ADMIN
+ha-02,Dr. Vandana Rao,ADMIN,Chief Medical Officer (CMO),cmo.vandana@swasthyasetu.org,Admin@123,+91-98666-00002,dh-1,Kosi District Hospital,DISTRICT_ADMIN
+ha-03,Suresh Chandra,ADMIN,Facility Operations Manager,ops.suresh@swasthyasetu.org,Admin@123,+91-98666-00003,chc-1,Kosi Community Health Centre,FACILITY_ADMIN
+ha-04,Meenakshi Iyer,ADMIN,Quality & Audit Director,audit.meenakshi@swasthyasetu.org,Admin@123,+91-98666-00004,dh-1,Kosi District Hospital,AUDITOR
+ha-05,Naveen Gupta,ADMIN,Health Administration Officer,admin.naveen@swasthyasetu.org,Admin@123,+91-98666-00005,phc-2,Sitapur Primary Health Centre,FACILITY_ADMIN
+sa-01,Super Admin National Hub,SUPER_ADMIN,National Health Mission Director,superadmin@swasthyasetu.org,SuperAdmin@123,+91-98000-00000,dh-1,National SwasthyaSetu Gateway,NATIONAL_ROOT

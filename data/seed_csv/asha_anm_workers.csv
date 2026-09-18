@@ -1,0 +1,6 @@
+swasthya_id,name,role,worker_sub_type,email,password,phone,facility_id,facility_name,assigned_villages,population_covered,supervisor_name
+hw-01,Sunita Verma,HEALTHCARE_WORKER,ASHA Facilitator,asha.sunita@swasthyasetu.org,Worker@123,+91-98222-00001,phc-1,Rampur Primary Health Centre,Rampur Sector A;Rampur Sector B,1450,Dr. Anita Rao
+hw-02,Rekha Yadav,HEALTHCARE_WORKER,ANM Nurse,anm.rekha@swasthyasetu.org,Worker@123,+91-98222-00002,chc-1,Kosi Community Health Centre,Kosi Rural;Bhadaval,2800,Dr. Priya Singh
+hw-03,Pooja Sharma,HEALTHCARE_WORKER,Community Health Officer (CHO),cho.pooja@swasthyasetu.org,Worker@123,+91-98222-00003,phc-2,Sitapur Primary Health Centre,Sitapur North;Sitapur South,3200,Dr. Rajesh Kumar
+hw-04,Manish Kumar,HEALTHCARE_WORKER,Field Health Worker,worker.manish@swasthyasetu.org,Worker@123,+91-98222-00004,phc-1,Rampur Primary Health Centre,Rampur Purva;Bilaspur East,1900,Dr. Anita Rao
+hw-05,Geeta Devi,HEALTHCARE_WORKER,Mobile Health Lead,mhu.geeta@swasthyasetu.org,Worker@123,+91-98222-00005,dh-1,Kosi District Hospital,Highway Mobile Outreach Zone,4500,Dr. Vandana Rao

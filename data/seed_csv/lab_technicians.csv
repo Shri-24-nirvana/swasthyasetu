@@ -1,0 +1,6 @@
+swasthya_id,name,role,email,password,phone,facility_id,facility_name,lab_division,technician_id,shift
+lb-01,Dinesh Kumar,LAB,lab.dinesh@swasthyasetu.org,LabTech@123,+91-98555-00001,phc-1,Rampur Primary Health Centre,Clinical Pathology,TECH-UP-34901,Morning
+lb-02,Shalini Mishra,LAB,lab.shalini@swasthyasetu.org,LabTech@123,+91-98555-00002,dh-1,Kosi District Hospital,Biochemistry Division,TECH-UP-88129,Morning
+lb-03,Mohan Lal,LAB,lab.mohan@swasthyasetu.org,LabTech@123,+91-98555-00003,chc-1,Kosi Community Health Centre,Digital Radiology & X-Ray,TECH-UP-45210,Evening
+lb-04,Priyanka Das,LAB,lab.priyanka@swasthyasetu.org,LabTech@123,+91-98555-00004,phc-1,Rampur Primary Health Centre,Microbiology & Serology,TECH-UP-23910,Morning
+lb-05,Rakesh Pandey,LAB,lab.rakesh@swasthyasetu.org,LabTech@123,+91-98555-00005,dh-1,Kosi District Hospital,Hematology & Blood Bank,TECH-UP-67123,Night
